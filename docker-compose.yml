@@ -1,0 +1,16 @@
+version: '3.3'
+
+services:
+  # mongoDB services
+  mongodb:
+    container_name: dbcontainer
+    image: mongo:latest
+    restart: always
+    env_file: ./.env
+    volumes:
+      - mongo_db_data:/data/db
+    ports:
+      - 27017:27017
+
+volumes:
+  mongo_db_data: {}
