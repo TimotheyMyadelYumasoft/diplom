@@ -13,5 +13,8 @@ router.post('/logout', userController.logout);
 router.get('/activate/:link', userController.activate);
 router.get('/refresh', userController.refresh);
 router.get('/users', authMiddleware, userController.getUsers);
+router.post('/edit_background', userController.editBackground);
+router.post('/edit_image', userController.editImage);
+router.post('/edit_user', userController.editUser);
 
 module.exports = router;

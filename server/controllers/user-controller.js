@@ -9,8 +9,8 @@ class UserController {
             if(!errors.isEmpty()){
                 return next(ApiError.BadRequest('Ошибка при валидации', errors.array()))
             }
-            const {email, password} = req.body;
-            const userData = await userService.registration(email, password);
+            const {email, password, role, backgroundImage} = req.body;
+            const userData = await userService.registration(email, password, role, backgroundImage);
             res.cookie('refreshToken', userData.refreshToken, {maxAge: 30*25*60*60*1000, httpOnly: true})
             return res.json(userData)
         }
@@ -75,6 +75,38 @@ class UserController {
             res.json(users);
         }
         catch (e) {
+            next(e);
+        }
+    }
+
+    async editBackground(req, res, next) {
+        try{
+            const {_id, backgroundImage} = req.body;
+            const user = await userService.editBackground(_id, backgroundImage);
+            res.json(user)
+        }
+        catch (e) {
+            next(e);
+        }
+    }
+
+    async editImage(req, res, next) {
+        try{
+            const {_id, imageUrl} = req.body;
+            const user = await userService.editImage(_id, imageUrl);
+            res.json(user)
+        }
+        catch (e) {
+            next(e);
+        }
+    }
+
+    async editUser(req, res, next) {
+        try{
+            const {_id ,email, password, firstname, secondname, imageUrl, backgroundImage, gender, departament, location, phoneNumber, skills, projectHisory, birthDay, hiredDate, firedDate} = req.body;
+            const user = await userService.editUser(_id, email, password, firstname, secondname, imageUrl, backgroundImage, gender, departament, location, phoneNumber, skills, projectHisory, birthDay, hiredDate, firedDate);
+            res.json(user)
+        } catch(e) {
             next(e);
         }
     }

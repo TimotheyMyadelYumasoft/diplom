@@ -7,7 +7,7 @@ const UserDto = require('../dtos/user-dto')
 const ApiError = require('../exceptions/api-error')
 
 class UserService {
-    async registration(email, password) {
+    async registration(email, password, role, backgroundImage) {
         const candidate = await UserModel.findOne({email})
         if (candidate) {
             throw ApiError.BadRequest(`Пользователь с почтовым адресом ${email} уже существует`)
@@ -15,7 +15,7 @@ class UserService {
         const hashPassword = await bcrypt.hash(password, 3);
         const activationLink = uuid.v4();   // uniq str
 
-        const user = await UserModel.create({email, password: hashPassword, activationLink})
+        const user = await UserModel.create({email, password: hashPassword, activationLink, role: role, backgroundImage: backgroundImage})
         await mailService.sendActivationMail(email, `${process.env.API_URL}/api/user/activate/${activationLink}`);
 
         const userDto = new UserDto(user); // id, email, isActivated
@@ -36,6 +36,7 @@ class UserService {
 
     async login(email, password) {
         const user = await UserModel.findOne({email})
+        console.log(user)
         if(!user) {
             throw ApiError.BadRequest('Пользователь с таким email не найден')
         }
@@ -80,6 +81,38 @@ class UserService {
     async getAllUsers() {
         const users = await UserModel.find();
         return users;
+    }
+
+    async editUser(_id, _email, _password, _firstname, _secondname, _imageUrl, _backgroundImage, _gender, _departament, _location, _phoneNumber, _skills, _project, _birthDay, _hiredDate, _firedDate) {
+        const user = await UserModel.findByIdAndUpdate(_id, {
+            email: _email,
+            password: _password,
+            firstname: _firstname,
+            secondname: _secondname,
+            imageUrl: _imageUrl,
+            backgroundImage: _backgroundImage,
+            gender: _gender,
+            departament: _departament,
+            location: _location,
+            phoneNumber: _phoneNumber,
+            skills: _skills,
+            projectHisory: _project,
+            birthDay: _birthDay,
+            hiredDate: _hiredDate,
+            firedDate: _firedDate
+        })
+        return user
+    }
+
+    async editBackground(id, backgroundImage) {
+        console.log(id + '' + backgroundImage)
+        const user = await UserModel.findByIdAndUpdate(id, {backgroundImage: backgroundImage});
+        return user
+    }
+    async editImage(id, imageUrl) {
+        console.log(id + '' + imageUrl)
+        const user = await UserModel.findByIdAndUpdate(id, {imageUrl: imageUrl});
+        return user
     }
 }
 
