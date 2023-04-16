@@ -8,7 +8,7 @@ const initialState: UserState = {
 export const userReducer = (state: UserState = initialState, action: UserAction): UserState => {
     switch(action.type){
         case UserActionTypes.FETCH_USERS:
-            return {isAuth: true, user: []}
+            return { ...state, isAuth: true, user: [ ...action.payload ]}
         default:
             return state;
     }
