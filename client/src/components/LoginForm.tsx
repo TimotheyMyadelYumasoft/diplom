@@ -1,9 +1,13 @@
 import React, {FC, useEffect, useState} from 'react';
 import { useTypeSelector } from '../hooks/useTypedSelector';
 import { useAction } from '../hooks/useAction';
-import { Button, Form, Input } from 'antd';
-import { LockOutlined, UserOutlined } from '@ant-design/icons';
+// import { Button, Form, Input } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import "bootstrap/dist/css/bootstrap.min.css"
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Image from 'react-bootstrap/Image'
+import Form from 'react-bootstrap/Form'
 
 const LoginForm: FC = () => {
     const [email, setEmail] = useState<string>('')
@@ -26,36 +30,22 @@ const LoginForm: FC = () => {
     }
 
     return (
-        <Form className='login-form'
-            initialValues={{remember: true}}
-            onFinish={ () => {login(email,password)} }
-        >
-                <Form.Item
-                    name="email"
-                    rules={[{ required: true, message: 'Пожалуйста, заполните email'}]}
-                >
-                    <Input
-                        className='login-form-input'
-                        onChange={e => setEmail(e.target.value)}
-                        value={email}
-                        type='text'
-                        placeholder='Email'/>
-                </Form.Item>
-                <Form.Item name="password"
-                rules={[{ required: true, message: 'Пожалуйста, заполните password'}]}
-                >
-                    <Input
-                        className='login-form-input'
-                        onChange={e => setPassword(e.target.value)}
-                        type="password"
-                        placeholder='Password'/>
-                </Form.Item>
-                <Form.Item>
-                    <Button type='primary' htmlType='submit' className="login-form-button" >
-                        Login
-                    </Button>
-                </Form.Item>
-        </Form>
+        <Card style={{ width: '18rem', marginTop: '15%', marginLeft: '41%'}}>
+            <Card.Img variant='top' src='https://www.yumasoft.com/fonts/svg/yumasoft_logo.svg' />
+            <Card.Body>
+                <Form >
+                        <Form.Group className="mb-3">
+                            <Form.Label htmlFor="disabledTextInput">Email</Form.Label>
+                            <Form.Control id="disabledTextInput" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)}/>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label htmlFor="disabledTextInput">Password</Form.Label>
+                            <Form.Control id="disabledTextInput" placeholder="Password" type='password' value={password} onChange={e => setPassword(e.target.value)}/>
+                        </Form.Group>
+                        <Button onClick={() => login(email, password)} >Login</Button>
+                </Form>
+            </Card.Body>
+        </Card>
     );
 };
 

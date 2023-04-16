@@ -4,10 +4,10 @@ import PersonalHeader  from '../components/personalPage/ProfileHeader'
 import { useTypeSelector } from '../hooks/useTypedSelector'
 import { useAction } from '../hooks/useAction'
 import { useNavigate } from 'react-router-dom'
+import Navigation from '../components/Navigation'
 
 function PersonalPage() {
 
-    const {auth, isAuth} = useTypeSelector(state => state.auth)
 
     const {refresh, logout} = useAction()
     useEffect(() => {
@@ -16,15 +16,10 @@ function PersonalPage() {
         }
     }, [])
 
-    const navigate = useNavigate();
-    if(!isAuth) {
-        navigate('/login')
-    }
-
     return (
         <div>
+            <Navigation />
             <PersonalHeader />
-            <button onClick={() => logout()}>Выйти</button>
         </div>
     )
 }
