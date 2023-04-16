@@ -130,6 +130,37 @@ class UserController {
             next(e)
         }
     }
+    async createCandidate (req, res, next) {
+        try{
+            const {firstname, secondname, email, phoneNumber, departament} = req.body;
+            const user = await userService.createCandidate(firstname, secondname, email, phoneNumber, departament)
+            res.json(user)
+        } catch(e) {
+            next(e)
+        }
+     }
+
+     async createEmployeeByCandidate (req, res, next) {
+        try{
+            const {_id, password, status} = req.body;
+            const candidate = await userService.createCandidateById(_id, password, status)
+            res.json(candidate)
+        }
+        catch(e) {
+            next(e)
+        }
+     }
+
+     async resetPassword (req, res, next) {
+        try{
+            const {_id, password} = req.body;
+            const user = await userService.resetPassword(_id, password)
+            console.log(user)
+            res.json(user)
+        } catch (e) {
+            next(e)
+        }
+     }
 }
 
 module.exports = new UserController();

@@ -93,6 +93,17 @@ class UserService {
         return await UserModel.findById(_id)
     }
 
+    async createCandidate(firstname, secondname, email, phoneNumber, departament) {
+        const user = await UserModel.create({firstname, secondname, email, phoneNumber, departament})
+        return user
+    }
+    async createCandidateById(_id, password, status) {
+        const hashPassword = await bcrypt.hash(password, 3);
+        const candidate = await UserModel.findByIdAndUpdate(_id, {password: hashPassword, status: status})
+        console.log(candidate)
+        return await UserModel.findById(_id)
+    }
+
     async getUserById(_id) {
         console.log(_id)
         const user = await UserModel.findById(_id)
@@ -129,6 +140,12 @@ class UserService {
         console.log(id + '' + imageUrl)
         const user = await UserModel.findByIdAndUpdate(id, {imageUrl: imageUrl});
         return user
+    }
+
+    async resetPassword(_id, password) {
+        const hashPassword = await bcrypt.hash(password, 3);
+        const candidate = await UserModel.findByIdAndUpdate(_id, {password: hashPassword})
+        return await UserModel.findById(_id)
     }
 }
 

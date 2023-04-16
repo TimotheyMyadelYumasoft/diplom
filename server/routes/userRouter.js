@@ -18,5 +18,8 @@ router.post('/edit_image', userController.editImage);
 router.post('/edit_user', userController.editUser);
 router.get('/get_user', userController.getUserById)
 router.post('/set_candidate_status', userController.setStatusCandidate)
+router.post('/create_candidate', userController.createCandidate)
+router.post('/create_employee', userController.createEmployeeByCandidate)
+router.post('/reset_password', userController.resetPassword)
 
 module.exports = router;
