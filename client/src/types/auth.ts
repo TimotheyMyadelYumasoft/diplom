@@ -2,7 +2,8 @@ import { IUser } from "./user";
 
 export enum AuthTypes {
     LOGIN='LOGIN',
-    LOGOUT='LOGOUT'
+    LOGOUT='LOGOUT',
+    REFRESH='REFRESH'
 }
 
 export interface AuthResponse {
@@ -31,6 +32,12 @@ interface LogoutAction {
     payload: LogoutAction;
 }
 
+interface RefreshAction {
+    type: AuthTypes.REFRESH;
+    payload: AuthResponse;
+}
+
 export type AuthAction =
     LoginAction
     | LogoutAction
+    | RefreshAction

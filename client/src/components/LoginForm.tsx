@@ -8,14 +8,17 @@ const LoginForm: FC = () => {
 
     const {auth, isAuth} = useTypeSelector(state => state.auth)
 
-    const {login} = useAction()
+    const {login, refresh} = useAction()
 
     useEffect(() => {
-
+        if(localStorage.getItem('token')){
+            refresh();
+        }
     }, [])
 
     return (
         <div>
+            <h1>{isAuth ? `Пользователь ${auth.user?.email} авторизован`: 'Авторизуйтесь'}</h1>
             <input
                 onChange={e => setEmail(e.target.value)}
                 value={email}
