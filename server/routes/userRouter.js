@@ -16,5 +16,7 @@ router.get('/users', authMiddleware, userController.getUsers);
 router.post('/edit_background', userController.editBackground);
 router.post('/edit_image', userController.editImage);
 router.post('/edit_user', userController.editUser);
+router.get('/get_user', userController.getUserById)
+router.post('/set_candidate_status', userController.setStatusCandidate)
 
 module.exports = router;

@@ -110,6 +110,26 @@ class UserController {
             next(e);
         }
     }
+
+    async getUserById(req, res, next) {
+        try{
+            const {_id} = req.body;
+            const user = await userService.getUserById(_id)
+            res.json(user)
+        } catch(e) {
+            next(e)
+        }
+    }
+
+    async setStatusCandidate(req, res, next) {
+        try{
+            const { _id, statusCandidate } = req.body;
+            const user = await userService.setStatusCandidate(_id, statusCandidate)
+            res.json(user)
+        } catch(e) {
+            next(e)
+        }
+    }
 }
 
 module.exports = new UserController();

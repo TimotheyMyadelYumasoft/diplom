@@ -2,9 +2,9 @@ const { Schema, model} = require('mongoose');
 
 
 const UserSchema = new Schema({
-    email: { type: String, unique: true, required: true},
-    password: {type: String, require: true},
-    role: { type: String, require: true },
+    email: { type: String, unique: true },
+    password: {type: String },
+    role: { type: String },
     isActivated: {type: Boolean, default: false},
     activationLink: {type: String},
     firstname: { type: String },
@@ -16,7 +16,7 @@ const UserSchema = new Schema({
     location: { type: String },
     phoneNumber: { type: String },
     skills: [{ type: String }],
-    project: [{type: Schema.Types.ObjectId, ref: 'Project'}],
+    statusCandidate: {type: String},
     birthDay: { type: Date },
     hiredDate: { type: Date },
     firedDate: { type: Date },

@@ -83,6 +83,22 @@ class UserService {
         return users;
     }
 
+    async setStatusCandidate(_id, statusCandidate) {
+        const user = await UserModel.findById(_id);
+        if(!user) {
+            throw ApiError.BadRequest('Данный пользователь не найден')
+        }
+
+        const candidate = await UserModel.findByIdAndUpdate(_id, {statusCandidate: statusCandidate})
+        return await UserModel.findById(_id)
+    }
+
+    async getUserById(_id) {
+        console.log(_id)
+        const user = await UserModel.findById(_id)
+        return user
+    }
+
     async editUser(_id, _email, _password, _firstname, _secondname, _imageUrl, _backgroundImage, _gender, _departament, _location, _phoneNumber, _skills, _project, _birthDay, _hiredDate, _firedDate) {
         const user = await UserModel.findByIdAndUpdate(_id, {
             email: _email,
