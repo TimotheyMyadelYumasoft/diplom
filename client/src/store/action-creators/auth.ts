@@ -2,6 +2,8 @@ import { Dispatch } from "redux"
 import { AuthAction, AuthResponse, AuthTypes } from "../../types/auth"
 import UserService from "../../services/AuthService"
 import axios from "axios"
+import { redirect, useNavigate } from "react-router-dom"
+
 
 export const login = (email: string, password: string) => {
     return async (dispatch: Dispatch<AuthAction>) => {
