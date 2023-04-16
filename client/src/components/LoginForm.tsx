@@ -8,7 +8,7 @@ const LoginForm: FC = () => {
 
     const {auth, isAuth} = useTypeSelector(state => state.auth)
 
-    const {login, refresh} = useAction()
+    const {login, refresh, logout} = useAction()
 
     useEffect(() => {
         if(localStorage.getItem('token')){
@@ -34,8 +34,8 @@ const LoginForm: FC = () => {
             <button onClick={() => login(email, password)}>
                 Login
             </button>
-            <button>
-                Registration
+            <button onClick={() => logout()}>
+                logout
             </button>
         </div>
     );

@@ -38,3 +38,19 @@ export const refresh = () => {
         }
     }
 }
+
+export const logout = () => {
+    return async (dispatch: Dispatch<AuthAction>) => {
+        try{
+            console.log('logout')
+            const response = await UserService.logout()
+            console.log(response)
+            localStorage.removeItem('token')
+            dispatch({
+                type: AuthTypes.LOGOUT
+            })
+        } catch(e) {
+            console.log(e)
+        }
+    }
+}

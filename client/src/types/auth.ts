@@ -29,7 +29,6 @@ interface LoginAction {
 
 interface LogoutAction {
     type: AuthTypes.LOGOUT;
-    payload: LogoutAction;
 }
 
 interface RefreshAction {

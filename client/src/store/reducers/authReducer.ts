@@ -13,7 +13,7 @@ export const authReducer = (state: AuthState = initialState, action: AuthAction)
         case AuthTypes.LOGIN:
             return {...state, isAuth: true, auth: action.payload }
         case AuthTypes.LOGOUT:
-            return {...state, isAuth: false }
+            return {...state, isAuth: false}
         case AuthTypes.REFRESH:
             return {...state, isAuth: true, auth: action.payload }
         default:
