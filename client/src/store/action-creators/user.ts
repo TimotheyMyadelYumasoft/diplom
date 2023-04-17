@@ -32,3 +32,20 @@ export const fetchUserByIdAction = (_id: any) => {
         }
     }
 }
+
+export const updateThisUser = (_id: string, email: string, firstname: string, secondname: string, gender: string, phonenumber: string, department: string) => {
+    return async (dispatch: Dispatch<UserAction>) => {
+        try{
+            console.log(_id, email, firstname, secondname, gender, phonenumber, department)
+            const response = await UserService.updateUser(_id, email, firstname, secondname, gender, phonenumber, department)
+            console.log('response')
+            console.log(response)
+            dispatch({
+                type: UserActionTypes.UPDATE_USER,
+                payload: response.data
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}

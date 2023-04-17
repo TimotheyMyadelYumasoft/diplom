@@ -133,7 +133,7 @@ class UserService {
             hiredDate: _hiredDate,
             firedDate: _firedDate
         })
-        return user
+        return await UserModel.findById(_id)
     }
 
     async editBackground(id, backgroundImage) {

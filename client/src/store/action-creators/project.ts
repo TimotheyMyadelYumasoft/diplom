@@ -21,10 +21,7 @@ export const fetchProjects = () => {
 export const fetchProjectByIdAction = (_id: any) => {
     return async (dispatch: Dispatch<ProjectAction>) => {
         try {
-            console.log('project')
             const response = await ProjectService.fetchProjectById(_id)
-            console.log('response')
-            console.log(response)
             dispatch({
                 type: ProjectActionTypes.FETCH_PROJECTS_BY_ID,
                 payload: response.data

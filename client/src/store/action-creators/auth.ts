@@ -8,9 +8,7 @@ import { redirect, useNavigate } from "react-router-dom"
 export const login = (email: string, password: string) => {
     return async (dispatch: Dispatch<AuthAction>) => {
         try{
-            console.log('hey')
             const response = await UserService.login(email, password)
-            console.log(response)
             dispatch({
                 type: AuthTypes.LOGIN,
                 payload: response.data
@@ -26,9 +24,7 @@ export const login = (email: string, password: string) => {
 export const refresh = () => {
     return async (dispatch: Dispatch<AuthAction>) => {
         try{
-            console.log('refresh')
             const response = await axios.get<AuthResponse>(`http://localhost:5000/api/user/refresh`, {withCredentials: true})
-            console.log(response)
             dispatch({
                 type: AuthTypes.REFRESH,
                 payload: response.data
@@ -44,9 +40,7 @@ export const refresh = () => {
 export const logout = () => {
     return async (dispatch: Dispatch<AuthAction>) => {
         try{
-            console.log('logout')
             const response = await UserService.logout()
-            console.log(response)
             localStorage.removeItem('token')
             dispatch({
                 type: AuthTypes.LOGOUT

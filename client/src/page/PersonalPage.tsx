@@ -12,12 +12,8 @@ function PersonalPage() {
     const {refresh, logout, fetchProjectByIdAction, fetchUserByIdAction} = useAction()
 
     useEffect(() => {
-        console.log('hi boi')
-        console.log(auth.auth?.user?.id)
         fetchUserByIdAction(auth.auth.user.id)
         fetchProjectByIdAction(auth.auth.user.id)
-        // const users = fetchUsers();
-        // console.log(user)
     }, [])
 
     useEffect(() => {

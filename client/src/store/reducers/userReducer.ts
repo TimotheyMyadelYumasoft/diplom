@@ -34,6 +34,9 @@ export const userReducer = (state: UserState = initialState, action: UserAction)
             return { ...state, isAuth: true, users: [ ...action.payload ]}
         case UserActionTypes.FETCH_USERS_BY_ID:
             return {...state, user: action.payload }
+        case UserActionTypes.UPDATE_USER:
+            return {...state, user: action.payload}
+
         default:
             return state;
     }

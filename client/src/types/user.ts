@@ -1,6 +1,8 @@
 export enum UserActionTypes {
     FETCH_USERS='FETCH_USERS',
     FETCH_USERS_BY_ID='FETCH_USERS_BY_ID',
+    UPDATE_USER='UPDATE_USER',
+
     UPDATE_BACKGROUND_IMAGE='UPDATE_BACKGROUND_IMAGE',
     UPDATE_PROFILE_IMAGE='UPDATE_PROFILE_IMAGE',
     UPDATE_PROFILE='UPDATE_PROFILE'
@@ -44,6 +46,12 @@ interface FetchUserByIdAction {
     payload: IUser
 }
 
+interface UpdateUserAction {
+    type: UserActionTypes.UPDATE_USER,
+    payload: IUser
+}
+
 export type UserAction =
     FetchUsersAction
     | FetchUserByIdAction
+    | UpdateUserAction
