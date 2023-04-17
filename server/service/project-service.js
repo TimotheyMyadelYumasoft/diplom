@@ -33,7 +33,7 @@ class ProjectService {
     }
 
     async getOne(_id) {
-        const project = await ProjectModel.findById(_id)
+        const project = await ProjectModel.find({userId: _id})
         console.log(_id)
         if(!project){
             throw ApiError.BadRequest(`Данного проекта не существует`)

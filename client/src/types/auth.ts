@@ -9,11 +9,11 @@ export enum AuthTypes {
 export interface AuthResponse {
     accessToken: string;
     refreshToken: string;
-    user: IUser | null
+    user: IUser
 }
 
 export interface AuthState {
-    auth: AuthResponse;
+    auth: AuthResponse ;
     isAuth: boolean;
 }
 

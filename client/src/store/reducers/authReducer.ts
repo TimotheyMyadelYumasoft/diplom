@@ -1,10 +1,32 @@
 import { AuthAction, AuthState, AuthTypes } from "../../types/auth";
 
+const date = "2012-04-23T18:25:43.511Z";
+
 const initialState: AuthState = {
     auth: {
         accessToken: '',
         refreshToken: '',
-        user: null
+        user: {
+            departament: '',
+            activationLink: '',
+            backgroundImage: '',
+            birthDay: '',
+            email: '',
+            firedDate: '',
+            firstname: '',
+            gender: '',
+            hiredDate: '',
+            id: '',
+            imageUrl: '',
+            isActivated: false,
+            location: '',
+            password: '',
+            phoneNumber: '',
+            role: '',
+            secondname: '',
+            skills: [''],
+            statusCandidate: ''
+        }
     },
     isAuth: false
 }

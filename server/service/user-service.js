@@ -109,6 +109,7 @@ class UserService {
     }
 
     async getUserById(_id) {
+        console.log('_id')
         console.log(_id)
         const user = await UserModel.findById(_id)
         return user

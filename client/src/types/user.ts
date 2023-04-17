@@ -1,5 +1,9 @@
 export enum UserActionTypes {
     FETCH_USERS='FETCH_USERS',
+    FETCH_USERS_BY_ID='FETCH_USERS_BY_ID',
+    UPDATE_BACKGROUND_IMAGE='UPDATE_BACKGROUND_IMAGE',
+    UPDATE_PROFILE_IMAGE='UPDATE_PROFILE_IMAGE',
+    UPDATE_PROFILE='UPDATE_PROFILE'
 }
 
 export interface IUser {
@@ -7,10 +11,26 @@ export interface IUser {
     isActivated: boolean;
     id: string;
     role: string;
+    password: string;
+    activationLink: string;
+    firstname: string;
+    secondname: string;
+    imageUrl: string;
+    backgroundImage: string;
+    gender: string;
+    departament: string;
+    location: string;
+    phoneNumber: string;
+    skills: Array<string>;
+    statusCandidate: string;
+    birthDay: string;
+    hiredDate: string;
+    firedDate: string;
 }
 
 export interface UserState {
-    user: IUser[],
+    users: IUser[],
+    user: IUser | null,
     isAuth: boolean
 }
 
@@ -19,4 +39,11 @@ interface FetchUsersAction {
     payload: IUser[]
 }
 
-export type UserAction = FetchUsersAction
+interface FetchUserByIdAction {
+    type: UserActionTypes.FETCH_USERS_BY_ID,
+    payload: IUser
+}
+
+export type UserAction =
+    FetchUsersAction
+    | FetchUserByIdAction
