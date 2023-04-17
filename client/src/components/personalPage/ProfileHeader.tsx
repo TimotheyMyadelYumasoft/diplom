@@ -12,12 +12,12 @@ import {Tag } from 'antd'
 
 const ProfileHeader = () => {
 
-    const [isOpen, setIsOpen] = useState(false);
-    const {auth, user} = useTypeSelector(state => state)
+    const [modalActive, setModalActive] = useState(false);
+    const {auth, user, project} = useTypeSelector(state => state)
 
 
     // const hiddenBackgroundInput = useRef<HTMLInputElement>(null)
-    const {fetchUserByIdAction , fetchUsers} = useAction()
+    const {fetchUserByIdAction , fetchUsers, fetchProjectByIdAction} = useAction()
 
     const userProjects = [{
         _id: "643b852116870e6de902f736",
@@ -38,13 +38,6 @@ const ProfileHeader = () => {
         ]
     }]
 
-    useEffect(() => {
-        console.log('hi boi')
-        console.log(auth.auth?.user?.id)
-        fetchUserByIdAction(auth.auth.user.id)
-        // const users = fetchUsers();
-        // console.log(user)
-    }, [])
 
     // const uploadBackground =(e: any) =>{
     //     const file = e.target.files[0];
@@ -65,7 +58,7 @@ const ProfileHeader = () => {
                             style={{width: '250px', height: '250px', borderRadius: '150px', backgroundColor: 'black'}} /></th>
                         <th></th>
                         <th><div>
-                            <Button onClick={() => setIsOpen(true)}>Изменить пользователя</Button></div></th>
+                            <Button onClick={() => setModalActive(true)}>Изменить пользователя</Button></div></th>
                         <th></th>
                     </tr>
                 </thead>
@@ -91,12 +84,13 @@ const ProfileHeader = () => {
                         <td><h5>Отдел:</h5><h3>{user.user?.departament}</h3></td>
                     </tr>
                     <tr>
-                        <td style={{display: 'block', marginLeft: '10px', width: '150px'}}>{userProjects?.map(proj =>
+                        <td style={{display: 'block', marginLeft: '10px', width: '150px'}}>{project.projects?.map(proj =>
                                 // <h4 style={{marginRight: '10px', border: 'solid 2px', borderRadius:'15px', padding:'2px 2px'}}>{proj.title}</h4>)}
                                 <Tag key={proj.title}>{proj.title}</Tag>)}
                         </td>
                         <td>
-                            {isOpen && <Modal setIsOpen={setIsOpen} modalHeader='Editing'><EditUserFrom setIsOpen={setIsOpen} /></Modal>}
+                            {/* {isOpen && <Modal setIsOpen={setIsOpen} modalHeader='Editing'><EditUserFrom setIsOpen={setIsOpen} /></Modal>} */}
+                            <Modal active={modalActive} setActive={setModalActive} modalHeader='Изменить пользователя'><EditUserFrom setIsOpen={setModalActive}/></Modal>
                         </td>
                     </tr>
                 </tbody>

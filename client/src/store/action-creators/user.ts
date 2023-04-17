@@ -21,10 +21,7 @@ export const fetchUsers = () => {
 export const fetchUserByIdAction = (_id: any) => {
     return async (dispatch: Dispatch<UserAction>) => {
         try {
-            console.log(_id)
             const response = await UserService.fetchUserById(_id)
-            console.log('response')
-            console.log(response)
             dispatch({
                 type: UserActionTypes.FETCH_USERS_BY_ID,
                 payload: response.data

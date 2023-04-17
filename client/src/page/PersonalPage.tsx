@@ -8,12 +8,16 @@ import Navigation from '../components/Navigation'
 
 function PersonalPage() {
 
+    const {auth, user, project} = useTypeSelector(state => state)
+    const {refresh, logout, fetchProjectByIdAction, fetchUserByIdAction} = useAction()
 
-    const {refresh, logout} = useAction()
     useEffect(() => {
-        if(localStorage.getItem('token')){
-            refresh();
-        }
+        console.log('hi boi')
+        console.log(auth.auth?.user?.id)
+        fetchUserByIdAction(auth.auth.user.id)
+        fetchProjectByIdAction(auth.auth.user.id)
+        // const users = fetchUsers();
+        // console.log(user)
     }, [])
 
     return (
