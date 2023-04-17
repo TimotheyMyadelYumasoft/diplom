@@ -20,6 +20,10 @@ function PersonalPage() {
         // console.log(user)
     }, [])
 
+    useEffect(() => {
+        fetchProjectByIdAction(auth.auth.user.id)
+    }, [user])
+
     return (
         <div>
             <Navigation />

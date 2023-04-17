@@ -15,30 +15,6 @@ const ProfileHeader = () => {
     const [modalActive, setModalActive] = useState(false);
     const {auth, user, project} = useTypeSelector(state => state)
 
-
-    // const hiddenBackgroundInput = useRef<HTMLInputElement>(null)
-    const {fetchUserByIdAction , fetchUsers, fetchProjectByIdAction} = useAction()
-
-    const userProjects = [{
-        _id: "643b852116870e6de902f736",
-        title: "asdfasd",
-        country: "BLR",
-        userId: [
-            "643b7c482197e811f647b346",
-            "643b7c482197e811f647b34a"
-        ]
-    },
-    {
-        _id: "643b881476a53a80cf4c9545",
-        title: "Ultrade",
-        country: "USA",
-        userId: [
-            "643b7c482197e811f647b346",
-            "643b7c482197e811f647b34a"
-        ]
-    }]
-
-
     // const uploadBackground =(e: any) =>{
     //     const file = e.target.files[0];
     //     const reader = new FileReader();
@@ -47,6 +23,7 @@ const ProfileHeader = () => {
     //     //     setProfileImage()
     //     // }
     // }
+
     return(
 
         <Card>
