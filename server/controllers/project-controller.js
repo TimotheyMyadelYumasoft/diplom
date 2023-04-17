@@ -36,7 +36,7 @@ class ProjectController {
 
     async getOne(req, res, next) {
         try{
-            const { _id } = req.body;
+            const {_id} = req.params;
             const project = await projectService.getOne(_id)
             return res.json(project)
         }

@@ -21,7 +21,7 @@ export interface IUser {
     departament: string;
     location: string;
     phoneNumber: string;
-    skills: Array<string>;
+    skills: string[];
     statusCandidate: string;
     birthDay: string;
     hiredDate: string;
@@ -30,7 +30,7 @@ export interface IUser {
 
 export interface UserState {
     users: IUser[],
-    user: IUser | null,
+    user: IUser,
     isAuth: boolean
 }
 

@@ -6,8 +6,9 @@ import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
 import Image from 'react-bootstrap/Image'
 import Modal from '../Modal';
-import EditForm from '../Modals/EditForm';
+import EditUserFrom from '../Forms/EditUserFrom';
 import ProjectItem from '../Items/ProjectItem';
+import {Tag } from 'antd'
 
 const ProfileHeader = () => {
 
@@ -70,34 +71,32 @@ const ProfileHeader = () => {
                 </thead>
                 <tbody>
                     <tr>
-                        {/* <td><h2>Skills</h2></td>
-                        <td><h5>День рождения</h5><h3>{user.user?.birthDay.split('T')[0]}</h3></td>
-                        <td><h5>День найма</h5><h3>{user.user?.hiredDate.split('T')[0]}</h3></td>
-                        { user.user?.firedDate ? <td><h5>День увольнения</h5><h3>{user.user?.firedDate.split('T')[0]}</h3></td> : ''} */}
+                        <td style={{display: 'flex', marginLeft: '10px', marginTop: '10px'}}><h2>Skills</h2></td>
+                        <td><h5>День рождения</h5><h3>{user.user?.birthDay?.split('T')[0]}</h3></td>
+                        <td><h5>День найма</h5><h3>{user.user?.hiredDate?.split('T')[0]}</h3></td>
+                        { user.user?.firedDate ? <td><h5>День увольнения</h5><h3>{user.user?.firedDate?.split('T')[0]}</h3></td> : ''}
                     </tr>
                     <tr>
-                        {/* <td style={{display: 'flex', marginLeft: '10px'}}>{user.user?.skills.map(skill =>
-                            <h4 style={{marginRight: '10px', border: 'solid 2px', borderRadius:'15px', padding:'2px 2px'}}>{skill}</h4>)}
-                        </td> */}
+                        <td style={{display: 'flex', marginLeft: '10px'}}>
+                            {user.user.skills?.map((skill) => (<Tag key={skill}>{skill}</Tag>))}
+                        </td>
                         <td><h5>Имя:</h5><h3>{user.user?.firstname}</h3></td>
                         <td><h5>Фамилия:</h5><h3>{user.user?.secondname}</h3></td>
                         <td><h5>Пол: </h5><h3>{user.user?.gender}</h3></td>
                     </tr>
                     <tr>
-                        <td><h2>Projects</h2></td>
+                        <td style={{display: 'flex', marginLeft: '10px', marginTop: '10px'}}><h2>Projects</h2></td>
                         <td><h5>Email:</h5><h3>{user.user?.email}</h3></td>
                         <td><h5>Телефон:</h5><h3>{user.user?.phoneNumber}</h3></td>
                         <td><h5>Отдел:</h5><h3>{user.user?.departament}</h3></td>
                     </tr>
                     <tr>
-                        <td>
-                            <ProjectItem />
+                        <td style={{display: 'block', marginLeft: '10px', width: '150px'}}>{userProjects?.map(proj =>
+                                // <h4 style={{marginRight: '10px', border: 'solid 2px', borderRadius:'15px', padding:'2px 2px'}}>{proj.title}</h4>)}
+                                <Tag key={proj.title}>{proj.title}</Tag>)}
                         </td>
-                        {/* <td style={{display: 'flex', marginLeft: '10px'}}>{userProjects.map(proj =>
-                                <h4 style={{marginRight: '10px', border: 'solid 2px', borderRadius:'15px', padding:'2px 2px'}}>{proj.title}</h4>)}
-                        </td> */}
                         <td>
-                            {isOpen && <Modal setIsOpen={setIsOpen} modalHeader='Editing'><EditForm setIsOpen={setIsOpen} /></Modal>}
+                            {isOpen && <Modal setIsOpen={setIsOpen} modalHeader='Editing'><EditUserFrom setIsOpen={setIsOpen} /></Modal>}
                         </td>
                     </tr>
                 </tbody>

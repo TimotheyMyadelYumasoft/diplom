@@ -2,7 +2,7 @@ type Props = {
     setIsOpen: (isOpen: boolean) => void;
 }
 
-const EditForm = ({ setIsOpen }: Props) => {
+const EditUserFrom = ({ setIsOpen }: Props) => {
     console.log('hey')
     return (
         <div>
@@ -11,4 +11,4 @@ const EditForm = ({ setIsOpen }: Props) => {
     )
 }
 
-export default EditForm;
+export default EditUserFrom;

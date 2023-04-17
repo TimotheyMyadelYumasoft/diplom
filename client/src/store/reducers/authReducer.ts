@@ -1,6 +1,6 @@
 import { AuthAction, AuthState, AuthTypes } from "../../types/auth";
 
-const date = "2012-04-23T18:25:43.511Z";
+const date = new Date("2023-04-13T08:30:00Z");
 
 const initialState: AuthState = {
     auth: {

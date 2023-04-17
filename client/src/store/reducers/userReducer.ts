@@ -1,8 +1,30 @@
 import {UserAction, UserState, UserActionTypes} from '../../types/user'
 
+const date = new Date("2023-04-13T08:30:00Z");
+
 const initialState: UserState = {
     users: [],
-    user: null,
+    user: {
+        departament: '',
+        activationLink: '',
+        backgroundImage: '',
+        birthDay: '',
+        email: '',
+        firedDate: '',
+        firstname: '',
+        gender: '',
+        hiredDate: '',
+        id: '',
+        imageUrl: '',
+        isActivated: false,
+        location: '',
+        password: '',
+        phoneNumber: '',
+        role: '',
+        secondname: '',
+        skills: ['Node.js', 'React.js'],
+        statusCandidate: ''
+    },
     isAuth: false
 }
 

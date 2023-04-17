@@ -1,5 +1,6 @@
 import {CloseOutlined} from '@ant-design/icons'
 import {Button} from 'antd'
+import "../style/Modal.css"
 
 type Props = {
     children : string | JSX.Element | JSX.Element[];
@@ -10,7 +11,6 @@ type Props = {
 export default function Modal({ setIsOpen, children, modalHeader}: Props) {
 
     return(
-        <>
             <div className="modal" onClick={() => setIsOpen(false)}>
                 <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                     <div className="modal-header">
@@ -19,6 +19,5 @@ export default function Modal({ setIsOpen, children, modalHeader}: Props) {
                     </div>
                 </div>
             </div>
-        </>
     )
 }
