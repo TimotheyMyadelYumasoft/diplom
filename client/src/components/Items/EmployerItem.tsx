@@ -29,9 +29,9 @@ const EmployerItem = ({employer}: Props) => {
     }
 
     return (
-      <Card style={{ width: '38rem', margin:'4px 4px 4px 4px'}} >
+      <Card style={{ width: '25rem', margin:'2rem 6rem 2rem 6rem', display: 'grid', justifyItems: 'center'}} >
       {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
-        <Card.Body>
+        <Card.Body style={{alignContent: 'center'}}>
             <Card.Title>{employer.firstname} {employer.secondname}</Card.Title>
             <Card.Text>
                 Email: {employer.email}

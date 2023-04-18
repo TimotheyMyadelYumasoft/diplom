@@ -4,7 +4,7 @@ import { IVacation } from "../types/vacation";
 
 export default class VacationService {
     static async fetchVacations(): Promise<AxiosResponse<IVacation[]>> {
-        return $api.get<IVacation[]>(`/vacation/`)
+        return $api.get<IVacation[]>(`/vacation`)
     }
     static async fetchVacationById(_id: string): Promise<AxiosResponse<IVacation>> {
         return $api.get<IVacation>(`/vacation/${_id}`)
