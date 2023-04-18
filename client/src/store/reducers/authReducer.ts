@@ -17,6 +17,7 @@ const initialState: AuthState = {
             gender: '',
             hiredDate: '',
             id: '',
+            _id: '',
             imageUrl: '',
             isActivated: false,
             location: '',

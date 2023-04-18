@@ -161,6 +161,17 @@ class UserController {
             next(e)
         }
      }
+
+     async del(req, res, next) {
+        try{
+            const { _id } = req.body;
+            const vacation = await userService.deleteOne(_id)
+            return res.json(vacation)
+        }
+        catch (e) {
+            next(e);
+        }
+    }
 }
 
 module.exports = new UserController();

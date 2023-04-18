@@ -33,12 +33,29 @@ export const fetchUserByIdAction = (_id: string) => {
     }
 }
 
-export const updateThisUser = (_id: string, email: string, firstname: string, secondname: string, gender: string, phonenumber: string, department: string) => {
+export const updateThisUser = (_id: string, email: string, firstname: string, secondname: string, gender: string, phonenumber: string, department: string, location: string) => {
     return async (dispatch: Dispatch<UserAction>) => {
         try{
-            const response = await UserService.updateUser(_id, email, firstname, secondname, gender, phonenumber, department)
+            console.log('_id')
+            console.log(_id)
+            const response = await UserService.updateUser(_id, email, firstname, secondname, gender, phonenumber, department, location)
+            console.log(response)
             dispatch({
                 type: UserActionTypes.UPDATE_USER,
+                payload: response.data
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const deleteUserById = (_id: string) => {
+    return async (dispatch: Dispatch<UserAction>) => {
+        try{
+            const response = await UserService.deleteUserById(_id)
+            dispatch({
+                type: UserActionTypes.DELETE_USER,
                 payload: response.data
             })
         } catch (e) {

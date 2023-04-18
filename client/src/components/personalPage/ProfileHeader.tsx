@@ -225,7 +225,7 @@ const ProfileHeader = () => {
                                 <Tag key={proj.title}>{proj.title}</Tag>)}
                         </td>
                         <td>
-                            <Modal active={modalEditActive} setActive={setEditModalActive} modalHeader='Изменить пользователя'><EditUserFrom setIsOpen={setEditModalActive}/></Modal>
+                            <Modal active={modalEditActive} setActive={setEditModalActive} modalHeader='Изменить пользователя'><EditUserFrom setIsOpen={setEditModalActive} employerId=''/></Modal>
                         </td>
                     </tr>
                 </tbody>

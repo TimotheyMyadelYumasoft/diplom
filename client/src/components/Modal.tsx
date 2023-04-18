@@ -16,7 +16,7 @@ const Modal = ({children, active, setActive, modalHeader}: Props) => {
             <div className={active ? "modal__content active" : "modal__content"} onClick={(e) => e.stopPropagation()}>
                 <div className="modal__header">
                     <h2>{modalHeader}</h2>
-                    <Button className="close-modal-button" onClick={() => setActive(true)} icon={<CloseOutlined />} />
+                    <Button className="close-modal-button" onClick={() => setActive(false)} icon={<CloseOutlined />} />
                 </div>
                 {children}
             </div>

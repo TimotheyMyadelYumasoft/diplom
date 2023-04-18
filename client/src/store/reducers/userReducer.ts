@@ -15,6 +15,7 @@ const initialState: UserState = {
         gender: '',
         hiredDate: '',
         id: '',
+        _id: '',
         imageUrl: '',
         isActivated: false,
         location: '',
@@ -35,6 +36,8 @@ export const userReducer = (state: UserState = initialState, action: UserAction)
         case UserActionTypes.FETCH_USERS_BY_ID:
             return {...state, user: action.payload }
         case UserActionTypes.UPDATE_USER:
+            return {...state, user: action.payload}
+        case UserActionTypes.DELETE_USER:
             return {...state, user: action.payload}
 
         default:

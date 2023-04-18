@@ -22,5 +22,6 @@ router.post('/set_candidate_status', userController.setStatusCandidate)
 router.post('/create_candidate', checkRole('RECRUITER' || 'ADMIN'), userController.createCandidate)
 router.post('/create_employee', checkRole('RECRUITER' || 'ADMIN'), userController.createEmployeeByCandidate)
 router.post('/reset_password', userController.resetPassword)
+router.post('/del', userController.del)
 
 module.exports = router;

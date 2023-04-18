@@ -152,6 +152,15 @@ class UserService {
         const candidate = await UserModel.findByIdAndUpdate(_id, {password: hashPassword})
         return await UserModel.findById(_id)
     }
+
+    async deleteOne(_id) {
+        const vacation = await UserModel.findByIdAndDelete(_id)
+        console.log(vacation)
+        if(!vacation){
+            throw ApiError.BadRequest(`Данного пользователя не существует`)
+        }
+        return vacation
+    }
 }
 
 module.exports = new UserService();

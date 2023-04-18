@@ -5,7 +5,6 @@ import Layout from './components/Layout';
 import LoginPage from './page/LoginPage';
 import PersonalPage from './page/PersonalPage';
 import EmployeesPage from './page/EmployeesPage';
-import EmployerPage from './page/EmployerPage';
 
 const App: FC = () => {
   return (
@@ -13,7 +12,6 @@ const App: FC = () => {
       <Route path="/" element={<PersonalPage />} />
       <Route path='/login' element={<LoginPage />} />
       <Route path='/users' element={<EmployeesPage />} />
-      <Route path='/user' element={<EmployerPage />} />
     </Routes>
   );
 };

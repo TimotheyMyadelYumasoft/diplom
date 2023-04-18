@@ -2,6 +2,7 @@ export enum UserActionTypes {
     FETCH_USERS='FETCH_USERS',
     FETCH_USERS_BY_ID='FETCH_USERS_BY_ID',
     UPDATE_USER='UPDATE_USER',
+    DELETE_USER='DELETE_USER',
 
     UPDATE_BACKGROUND_IMAGE='UPDATE_BACKGROUND_IMAGE',
     UPDATE_PROFILE_IMAGE='UPDATE_PROFILE_IMAGE',
@@ -12,6 +13,7 @@ export interface IUser {
     email: string;
     isActivated: boolean;
     id: string;
+    _id: string;
     role: string;
     password: string;
     activationLink: string;
@@ -51,7 +53,13 @@ interface UpdateUserAction {
     payload: IUser
 }
 
+interface DeleteUserByIdAction {
+    type: UserActionTypes.DELETE_USER,
+    payload: IUser
+}
+
 export type UserAction =
     FetchUsersAction
     | FetchUserByIdAction
     | UpdateUserAction
+    | DeleteUserByIdAction

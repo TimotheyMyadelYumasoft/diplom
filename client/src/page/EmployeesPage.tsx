@@ -9,6 +9,7 @@ import EmployersList from '../components/Lists/EmployersList'
 
 function EmployeesPage() {
     const {auth, isAuth} = useTypeSelector(state => state.auth)
+    const {users} = useTypeSelector(state => state.user)
     const {refresh, logout, fetchProjectByIdAction, fetchUserByIdAction, fetchUsers} = useAction()
 
     useEffect(() => {
@@ -27,7 +28,6 @@ function EmployeesPage() {
         <div>
             <Navigation />
             <div>
-                {auth.user.id}
                 <EmployersList />
             </div>
         </div>
