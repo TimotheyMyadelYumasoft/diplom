@@ -15,7 +15,7 @@ class VacationService {
         if(!vacation){
             throw ApiError.BadRequest(`Выходной с данным статусом ${status} не существует`)
         }
-        return vacation
+        return await VacationModel.findById(_id)
     }
 
     async getAll() {
@@ -27,8 +27,8 @@ class VacationService {
         return vacations
     }
 
-    async getOneEmployer(employerId) {
-        const vacation = await VacationModel.find({employerId: employerId})
+    async getOneVacation(_id) {
+        const vacation = await VacationModel.find({_id: _id})
         console.log(vacation)
         if(!vacation){
             throw ApiError.BadRequest(`Данного выходного не существует`)

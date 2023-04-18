@@ -36,7 +36,8 @@ class EventController {
 
     async getOne(req, res, next) {
         try{
-            const { _id } = req.body;
+            const { _id } = req.params;
+            console.log(_id)
             const event = await eventService.getOne(_id)
             return res.json(event)
         }

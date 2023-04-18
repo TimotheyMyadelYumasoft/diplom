@@ -3,6 +3,8 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { useTypeSelector } from '../../hooks/useTypedSelector';
 import { useAction } from '../../hooks/useAction';
 import { useState } from "react";
+import { DatePicker, DatePickerProps } from "antd";
+import { useForm } from "react-hook-form";
 
 type Props = {
     setIsOpen: (isOpen: boolean) => void;
@@ -21,15 +23,30 @@ const EditUserFrom = ({ setIsOpen }: Props) => {
 
     const requiredTrue = true;
     const {updateThisUser} = useAction()
-    const handleSubmit = async( event: React.SyntheticEvent) => {
-        event.preventDefault();
-        updateThisUser(auth.user.id, Email, FirstName, Surname, Gender, Phonenumber, Department);
-        setIsOpen(false);
-    }
+
+
+    const { handleSubmit } = useForm<{
+        startDate: String;
+        endDate: string;
+    }>();
 
     return (
         <div>
-            <Form onSubmit={handleSubmit}>
+            aasd
+            {/* <form
+                onSubmit={handleSubmit((data) => {
+                    console.log("data ready to submit", data)
+                })}
+                style={{"opacity: 1; pointer-events: all;"}}>
+                    <div>
+                        <DatePicker />
+                    </div>
+                    <br />
+                    <button>Submit</button>
+            </form> */}
+
+            {/* <Form onSubmit={handleSubmit}>
+
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type="email" placeholder="Enter email" value={Email} onChange={ e => setEmail(e.target.value)} required/>
@@ -59,7 +76,7 @@ const EditUserFrom = ({ setIsOpen }: Props) => {
                 <Button variant="primary" type="submit">
                     Submit
                 </Button>
-            </Form>
+            </Form> */}
         </div>
     )
 }

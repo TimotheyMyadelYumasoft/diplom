@@ -34,10 +34,11 @@ class VacationController {
         }
     }
 
-    async getOneEmployer(req, res, next) {
+    async getOneVacation(req, res, next) {
         try{
-            const { employerId } = req.body;
-            const vacation = await vacationService.getOneEmployer(employerId)
+            const { _id } = req.params;
+            console.log(_id)
+            const vacation = await vacationService.getOneVacation(_id)
             return res.json(vacation)
         }
         catch (e) {

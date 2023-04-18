@@ -7,12 +7,59 @@ import Table from 'react-bootstrap/Table';
 import Image from 'react-bootstrap/Image'
 import Modal from '../Modal';
 import EditUserFrom from '../Forms/EditUserFrom';
+import CreateVacationForm from '../Forms/CreateVacationForm';
 import ProjectItem from '../Items/ProjectItem';
 import {Tag } from 'antd'
 
+
+
+import { Control, Controller, useForm } from "react-hook-form";
+import { DatePicker, DatePickerProps } from "antd";
+import dayjs from "dayjs";
+
+interface RHFDatePickerFieldProps {
+  control: Control<any>;
+  name: string;
+  placeholder?: string;
+}
+
+const RHFDatePickerField = (props: RHFDatePickerFieldProps) => {
+  return (
+    <Controller
+      control={props.control}
+      name={props.name}
+      rules={{
+        required: "This field is required"
+      }}
+      render={({ field, fieldState }) => {
+        return (
+          <>
+            <DatePicker
+              placeholder={props.placeholder}
+              status={fieldState.error ? "error" : undefined}
+              ref={field.ref}
+              name={field.name}
+              onBlur={field.onBlur}
+              value={field.value ? dayjs(field.value) : null}
+              onChange={(date) => {
+                field.onChange(date ? date.valueOf() : null);
+              }}
+            />
+            <br />
+            {fieldState.error ? (
+              <span style={{ color: "red" }}>{fieldState.error?.message}</span>
+            ) : null}
+          </>
+        );
+      }}
+    />
+  );
+};
+
 const ProfileHeader = () => {
 
-    const [modalActive, setModalActive] = useState(false);
+    const [modalEditActive, setEditModalActive] = useState(false);
+    const [modalVacationActive, setVacationModalActive] = useState(false);
     const {auth, user, project} = useTypeSelector(state => state)
 
     // const uploadBackground =(e: any) =>{
@@ -24,6 +71,77 @@ const ProfileHeader = () => {
     //     // }
     // }
 
+    const { handleSubmit, control, watch } = useForm<{
+        startDate: string;
+        endDate: string;
+      }>();
+
+    const sendVacation = (startDate: string, endDate: string) => {
+        if(startDate && endDate == 'Invalid Date'){
+            alert('Заполните поля даты, для создания запроса на отпуск');
+        }
+        else{
+            if(startDate.split(' ')[1] > endDate.split(' ')[1] && monthIs(startDate.split(' ')[2]) == monthIs(endDate.split(' ')[2]) && startDate.split(' ')[3] == endDate.split(' ')[3] ||
+            monthIs(startDate.split(' ')[2]) > monthIs(endDate.split(' ')[2]) && startDate.split(' ')[3] == endDate.split(' ')[3] ||
+            startDate.split(' ')[3] > endDate.split(' ')[3]
+            ){
+                alert('Дата начала идет перед датой конца. Поменяйте пожалуйста')
+            }
+            else{
+                console.log(dayjs(startDate).toString())
+                console.log(dayjs(endDate).toString())
+            }
+        }
+    }
+
+    const sendSickVacation = (startDate: string, endDate: string) => {
+        if(startDate && endDate == 'Invalid Date'){
+            alert('Заполните поля даты, для создания запроса на отпуск');
+        }
+        else{
+            if(startDate.split(' ')[1] > endDate.split(' ')[1] && monthIs(startDate.split(' ')[2]) == monthIs(endDate.split(' ')[2]) && startDate.split(' ')[3] == endDate.split(' ')[3] ||
+            monthIs(startDate.split(' ')[2]) > monthIs(endDate.split(' ')[2]) && startDate.split(' ')[3] == endDate.split(' ')[3] ||
+            startDate.split(' ')[3] > endDate.split(' ')[3]
+            ){
+                alert('Дата начала идет перед датой конца. Поменяйте пожалуйста')
+            }
+            else{
+                console.log(dayjs(startDate).toString())
+                console.log(dayjs(endDate).toString())
+            }
+        }
+    }
+    const monthIs =(str: string) => {
+        switch(str){
+            case 'Jan':
+                return 1;
+            case 'Feb':
+                return 2;
+            case 'Mar':
+                return 3;
+            case 'Apr':
+                return 4;
+            case 'May':
+                return 5;
+            case 'Jun':
+                return 6;
+            case 'Jul':
+                return 7;
+            case 'Aug':
+                return 8;
+            case 'Sep':
+                return 9;
+            case 'Oct':
+                return 10;
+            case 'Nov':
+                return 11;
+            case 'Dec':
+                return 12;
+            default:
+                return 0;
+        }
+    }
+
     return(
 
         <Card>
@@ -34,9 +152,44 @@ const ProfileHeader = () => {
                         <th><Image src='https://www.yumasoft.com/fonts/svg/yumasoft_logo.svg'
                             style={{width: '250px', height: '250px', borderRadius: '150px', backgroundColor: 'black'}} /></th>
                         <th></th>
-                        <th><div>
-                            <Button onClick={() => setModalActive(true)}>Изменить пользователя</Button></div></th>
-                        <th></th>
+                        <th>
+                            <div>
+                            <Button onClick={() => setEditModalActive(true)}>Изменить пользователя</Button>
+                            </div>
+                        </th>
+                        <th>
+                            <div>
+                            <form
+                            onSubmit={handleSubmit((data) => {
+                                console.log("data ready to submit", data);
+                            })}
+                            >
+                            <div>
+                                <br />
+                                <span>C </span>
+                                <RHFDatePickerField
+                                placeholder="Start Date"
+                                control={control}
+                                name="startDate"
+                                />
+                                <br />
+                                <span>До </span>
+                                <RHFDatePickerField
+                                placeholder="End Date"
+                                control={control}
+                                name="endDate"
+                                />
+                            </div>
+                            <br />
+                            <Button onClick={() => sendVacation(dayjs(watch("startDate")).toString() , dayjs(watch("endDate")).toString())} style={{width: '150px', marginRight: '10px'}}>
+                                Запрос на отпуск
+                            </Button>
+                            <Button onClick={() => sendSickVacation(dayjs(watch("startDate")).toString() , dayjs(watch("endDate")).toString())} style={{width: '150px'}}>
+                                Запрос на выходной иного вида
+                            </Button>
+                            </form>
+                            </div>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -66,8 +219,10 @@ const ProfileHeader = () => {
                                 <Tag key={proj.title}>{proj.title}</Tag>)}
                         </td>
                         <td>
-                            {/* {isOpen && <Modal setIsOpen={setIsOpen} modalHeader='Editing'><EditUserFrom setIsOpen={setIsOpen} /></Modal>} */}
-                            <Modal active={modalActive} setActive={setModalActive} modalHeader='Изменить пользователя'><EditUserFrom setIsOpen={setModalActive}/></Modal>
+                            <Modal active={modalEditActive} setActive={setEditModalActive} modalHeader='Изменить пользователя'><EditUserFrom setIsOpen={setEditModalActive}/></Modal>
+                        </td>
+                        <td>
+                            <Modal active={modalVacationActive} setActive={setVacationModalActive} modalHeader='Запрос на отпуск'><CreateVacationForm setIsOpen={setVacationModalActive}/></Modal>
                         </td>
                     </tr>
                 </tbody>

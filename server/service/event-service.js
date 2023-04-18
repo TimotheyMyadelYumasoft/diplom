@@ -30,13 +30,14 @@ class EventService {
     async getOne(_id) {
         const event = await EventModel.findById(_id)
         console.log(_id)
+        console.log(event)
         if(!event){
             throw ApiError.BadRequest(`Данного мероприятия не существует`)
         }
         return event
     }
     async delOne(_id){
-        const event = await EventModel.deleteOne({_id: _id})
+        const event = await EventModel.findByIdAndDelete(_id)
         console.log(_id)
         if(!event){
             throw ApiError.BadRequest(`Данного мероприятия не существует`)

@@ -5,9 +5,9 @@ const authMiddleware = require('../middleware/auth-middleware')
 
 router.post('/create', vacationController.create)
 router.post('/approve', vacationController.approve)
-router.get('/get_all', vacationController.getAll)
-router.get('/get_one_employer', vacationController.getOneEmployer)
-router.delete('/del_one', vacationController.del)
+router.get('/', vacationController.getAll)
+router.get('/:_id', vacationController.getOneVacation)
+router.post('/del', vacationController.del)
 router.post('/comment_employer', vacationController.commentEmployer)
 router.post('/comment_reviewer', vacationController.commentReviewer)
 
