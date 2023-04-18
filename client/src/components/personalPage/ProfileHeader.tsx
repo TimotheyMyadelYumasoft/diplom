@@ -60,7 +60,9 @@ const ProfileHeader = () => {
 
     const [modalEditActive, setEditModalActive] = useState(false);
     const [modalVacationActive, setVacationModalActive] = useState(false);
-    const {auth, user, project} = useTypeSelector(state => state)
+    const {auth, user, project, vacation} = useTypeSelector(state => state)
+
+    const {setVacation} = useAction()
 
     // const uploadBackground =(e: any) =>{
     //     const file = e.target.files[0];
@@ -87,7 +89,11 @@ const ProfileHeader = () => {
             ){
                 alert('Дата начала идет перед датой конца. Поменяйте пожалуйста')
             }
+            else if(startDate === endDate){
+                alert('Оба поля даты пытые');
+            }
             else{
+                setVacation(dayjs(startDate).toString(), dayjs(startDate).toString(), 'vacation', auth.auth.user.id)
                 console.log(dayjs(startDate).toString())
                 console.log(dayjs(endDate).toString())
             }
@@ -98,6 +104,9 @@ const ProfileHeader = () => {
         if(startDate && endDate == 'Invalid Date'){
             alert('Заполните поля даты, для создания запроса на отпуск');
         }
+        else if(startDate === endDate){
+            alert('Оба поля даты пытые');
+        }
         else{
             if(startDate.split(' ')[1] > endDate.split(' ')[1] && monthIs(startDate.split(' ')[2]) == monthIs(endDate.split(' ')[2]) && startDate.split(' ')[3] == endDate.split(' ')[3] ||
             monthIs(startDate.split(' ')[2]) > monthIs(endDate.split(' ')[2]) && startDate.split(' ')[3] == endDate.split(' ')[3] ||
@@ -106,8 +115,7 @@ const ProfileHeader = () => {
                 alert('Дата начала идет перед датой конца. Поменяйте пожалуйста')
             }
             else{
-                console.log(dayjs(startDate).toString())
-                console.log(dayjs(endDate).toString())
+                setVacation(dayjs(startDate).toString(), dayjs(startDate).toString(), 'sickLeave', auth.auth.user.id)
             }
         }
     }
@@ -154,7 +162,7 @@ const ProfileHeader = () => {
                         <th></th>
                         <th>
                             <div>
-                            <Button onClick={() => setEditModalActive(true)}>Изменить пользователя</Button>
+                            <Button onClick={() => setEditModalActive(true)} style={{width: '150px', height: '100px', backgroundColor: 'black'}}>Изменить пользователя</Button>
                             </div>
                         </th>
                         <th>
@@ -181,10 +189,10 @@ const ProfileHeader = () => {
                                 />
                             </div>
                             <br />
-                            <Button onClick={() => sendVacation(dayjs(watch("startDate")).toString() , dayjs(watch("endDate")).toString())} style={{width: '150px', marginRight: '10px'}}>
+                            <Button onClick={() => sendVacation(dayjs(watch("startDate")).toString() , dayjs(watch("endDate")).toString())} style={{width: '150px', height: '100px', marginRight: '10px'}}>
                                 Запрос на отпуск
                             </Button>
-                            <Button onClick={() => sendSickVacation(dayjs(watch("startDate")).toString() , dayjs(watch("endDate")).toString())} style={{width: '150px'}}>
+                            <Button onClick={() => sendSickVacation(dayjs(watch("startDate")).toString() , dayjs(watch("endDate")).toString())} style={{width: '150px', height: '100px'}}>
                                 Запрос на выходной иного вида
                             </Button>
                             </form>

@@ -15,9 +15,9 @@ export interface IVacation {
     reviewerComment: string[];
 }
 
-export interface EventState {
-    events: IVacation[],
-    event: IVacation
+export interface VacationState {
+    vacations: IVacation[],
+    vacation: IVacation
 }
 
 interface FetchVacationAction {
@@ -35,7 +35,7 @@ interface UpdateVacationAction {
     payload: IVacation
 }
 
-export type EventAction =
+export type VacationAction =
     FetchVacationAction
     | FetchVacationByIdAction
     | UpdateVacationAction
