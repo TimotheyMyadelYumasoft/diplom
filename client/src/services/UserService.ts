@@ -8,7 +8,6 @@ export default class UserService {
         return $api.get<IUser[]>(`/user`)
     }
     static async fetchUserById(_id: string): Promise<AxiosResponse<IUser>> {
-        console.log(typeof _id)
         return $api.get<IUser>(`/user/${_id}`)
     }
     static async updateUser(_id: string, email: string, firstname: string, secondname: string, gender: string, phonenumber: string, department: string): Promise<AxiosResponse<IUser>> {

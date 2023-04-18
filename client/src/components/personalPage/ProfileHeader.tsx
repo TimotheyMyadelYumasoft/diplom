@@ -7,7 +7,6 @@ import Table from 'react-bootstrap/Table';
 import Image from 'react-bootstrap/Image'
 import Modal from '../Modal';
 import EditUserFrom from '../Forms/EditUserFrom';
-import CreateVacationForm from '../Forms/CreateVacationForm';
 import ProjectItem from '../Items/ProjectItem';
 import {Tag } from 'antd'
 
@@ -94,8 +93,7 @@ const ProfileHeader = () => {
             }
             else{
                 setVacation(dayjs(startDate).toString(), dayjs(startDate).toString(), 'vacation', auth.auth.user.id)
-                console.log(dayjs(startDate).toString())
-                console.log(dayjs(endDate).toString())
+
             }
         }
     }
@@ -228,9 +226,6 @@ const ProfileHeader = () => {
                         </td>
                         <td>
                             <Modal active={modalEditActive} setActive={setEditModalActive} modalHeader='Изменить пользователя'><EditUserFrom setIsOpen={setEditModalActive}/></Modal>
-                        </td>
-                        <td>
-                            <Modal active={modalVacationActive} setActive={setVacationModalActive} modalHeader='Запрос на отпуск'><CreateVacationForm setIsOpen={setVacationModalActive}/></Modal>
                         </td>
                     </tr>
                 </tbody>

@@ -3,7 +3,7 @@ import { ProjectAction, ProjectActionTypes } from "../../types/project"
 import ProjectService from "../../services/ProjectService"
 import axios from "axios"
 
-export const fetchProjects = () => {
+export const fetchAllProjects = () => {
     return async (dispatch: Dispatch<ProjectAction>) => {
         try{
             const response = await ProjectService.fetchProjects()

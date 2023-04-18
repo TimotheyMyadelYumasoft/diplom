@@ -37,7 +37,6 @@ export const setVacation = (startDate: string, endDate: string, type: string, em
     return async (dispatch: Dispatch<VacationAction>) => {
         try {
             const response = await VacationService.setVacation(startDate, endDate, type ,employerId)
-            console.log(response)
         } catch (e) {
             console.log(e)
         }

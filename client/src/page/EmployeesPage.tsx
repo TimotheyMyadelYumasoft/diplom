@@ -8,7 +8,7 @@ import Navigation from '../components/Navigation'
 import EmployersList from '../components/Lists/EmployersList'
 
 function EmployeesPage() {
-    const {auth, user, project} = useTypeSelector(state => state)
+    const {auth, isAuth} = useTypeSelector(state => state.auth)
     const {refresh, logout, fetchProjectByIdAction, fetchUserByIdAction, fetchUsers} = useAction()
 
     useEffect(() => {
@@ -18,19 +18,16 @@ function EmployeesPage() {
     }, [])
 
     useEffect(() => {
-        fetchUserByIdAction(auth.auth.user.id)
-        fetchProjectByIdAction(auth.auth.user.id)
+        fetchUserByIdAction(auth.user.id)
         fetchUsers()
-    }, [])
+    }, [auth])
 
-    useEffect(() => {
-        fetchProjectByIdAction(auth.auth.user.id)
-    }, [user])
 
     return (
         <div>
             <Navigation />
             <div>
+                {auth.user.id}
                 <EmployersList />
             </div>
         </div>

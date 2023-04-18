@@ -3,6 +3,9 @@ import { IUser } from "../../types/user"
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useNavigate } from "react-router-dom";
+import Modal from '../Modal';
+import EditUserFrom from '../Forms/EditUserFrom';
+import { useState } from "react";
 
 
 type Props = {
@@ -10,10 +13,10 @@ type Props = {
 }
 const EmployerItem = ({employer}: Props) => {
 
+    const [modalEditActive, setEditModalActive] = useState(false);
     const handleSubmit = async( event: React.SyntheticEvent) => {
-        // event.preventDefault();
+        event.preventDefault();
         console.log('hi')
-        // nav(`/user/${employer._id}`)
     }
     const nav = useNavigate()
 
@@ -35,7 +38,11 @@ const EmployerItem = ({employer}: Props) => {
             <Card.Text>
                 Место проживания: {employer.location}
             </Card.Text>
-            <Button variant="primary"  type="submit" >Go somewhere</Button>
+            <Button onClick={() => setEditModalActive(true)} style={{width: '150px', height: '100px', backgroundColor: 'black'}}>Изменить пользователя</Button>
+            <Button onClick={() => console.log('Delete')} style={{width: '150px', height: '100px', backgroundColor: 'black'}}>Удалить пользователя {employer.email} {employer.id}</Button>
+            <td>
+                <Modal active={modalEditActive} setActive={setEditModalActive} modalHeader='Изменить пользователя'><EditUserFrom setIsOpen={setEditModalActive}/></Modal>
+            </td>
             </Card.Body>
         </Card>
     </Form>
