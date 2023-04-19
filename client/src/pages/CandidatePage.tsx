@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import LoginForm from '../components/LoginForm'
-import PersonalHeader  from '../components/personalPage/ProfileHeader'
 import { useTypeSelector } from '../hooks/useTypedSelector'
 import { useAction } from '../hooks/useAction'
 import { useNavigate } from 'react-router-dom'
 import Navigation from '../components/Navigation'
-import EmployersList from '../components/Lists/EmployersList'
+import CandidateList from '../components/Lists/CandidateList'
 import MySelect from '../components/UI/select/MySelect'
 import MyInput from '../components/UI/input/MyInput'
 
@@ -60,7 +58,7 @@ const CandidatePage = () => {
                 />
             </div>
             <div>
-                <EmployersList employers={employers}/>
+                <CandidateList employers={employers}/>
             </div>
         </div>
     )

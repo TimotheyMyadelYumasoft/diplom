@@ -12,15 +12,17 @@ import MyInput from '../components/UI/input/MyInput'
 const EventPage = () => {
     const {auth, isAuth} = useTypeSelector(state => state.auth)
     const {users} = useTypeSelector(state => state.user)
-    const {refresh, logout, fetchProjectByIdAction, fetchUserByIdAction, fetchUsers} = useAction()
+    const {events} = useTypeSelector(state => state.event)
+    const {fetchAllEvents, fetchUsers} = useAction()
 
 
     useEffect(() => {
-        fetchUserByIdAction(auth.user.id)
+        fetchAllEvents()
         fetchUsers()
     }, [auth])
 
-    let employers = users;
+    let sorted = events;
+    console.log(sorted);
 
     const [selectedSort, setSelectedSort] = useState('');
     const [searchQuery, setSearchQuery] = useState<string>('');
@@ -29,13 +31,10 @@ const EventPage = () => {
         setSelectedSort(sort)
         console.log(sort)
         if(sort == 'firstname') {
-            employers = employers.sort((a, b) => a.firstname.localeCompare(b.firstname));
+            sorted = sorted.sort((a, b) => a.title.localeCompare(b.title));
         }
         else if (sort == 'email') {
-            employers = employers.sort((a, b) => a.email.localeCompare(b.email));
-        }
-        else if (sort == 'secondname') {
-            employers = employers.sort((a, b) => a.secondname.localeCompare(b.secondname));
+            sorted = sorted.sort((a, b) => a.startDate.localeCompare(b.startDate));
         }
     }
 
@@ -60,7 +59,7 @@ const EventPage = () => {
                 />
             </div>
             <div>
-                <EventList employers={employers}/>
+                <EventList events={sorted} users={users}/>
             </div>
         </div>
     )

@@ -132,8 +132,8 @@ class UserController {
     }
     async createCandidate (req, res, next) {
         try{
-            const {firstname, secondname, email, phoneNumber, departament} = req.body;
-            const user = await userService.createCandidate(firstname, secondname, email, phoneNumber, departament)
+            const {firstname, secondname, email, phoneNumber, departament, gender} = req.body;
+            const user = await userService.createCandidate(firstname, secondname, email, phoneNumber, departament, gender)
             res.json(user)
         } catch(e) {
             next(e)

@@ -5,7 +5,7 @@ export enum VacationActionTypes {
 }
 
 export interface IVacation {
-    id: string;
+    _id: string;
     startDate: string;
     endDate: string;
     employerId: string;

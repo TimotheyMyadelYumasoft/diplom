@@ -1,29 +1,36 @@
 import { Form } from "react-bootstrap";
-import { IUser } from "../../types/user"
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useNavigate } from "react-router-dom";
 import Modal from '../Modal';
 import EditUserFrom from '../Forms/EditUserFrom';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAction } from "../../hooks/useAction";
+import { IEvent } from "../../types/event";
+import { IUser} from '../../types/user'
+import { useTypeSelector } from "../../hooks/useTypedSelector";
 
 
 type Props = {
-    empl: IUser
+    ev: IEvent
 }
-const EventItem = ({empl}: Props) => {
+const EventItem = ({ev}: Props) => {
 
     const [modalEditActive, setEditModalActive] = useState(false);
     const nav = useNavigate()
     const {deleteUserById, fetchUsers} = useAction()
+    const {user, auth} = useTypeSelector(state => state)
+
+    useEffect(() => {
+        fetchUsers()
+    }, [auth])
 
     const sureDelete = () => {
         let res = prompt('Вы точно хотите удалить пользователя из системы? Напишите Да, чтобы подтвердить', 'Нет')?.toLowerCase();
         let yes = 'да'.toLowerCase();
         console.log(res)
         if(res == yes){
-            deleteUserById(empl._id);
+            deleteUserById(ev._id);
             fetchUsers();
         }
     }
@@ -32,26 +39,21 @@ const EventItem = ({empl}: Props) => {
       <Card style={{ width: '25rem', margin:'2rem 6rem 2rem 6rem', display: 'grid', justifyItems: 'center'}} >
       {/* <Card.Img variant="top" src='https://www.yumasoft.com/fonts/svg/yumasoft_logo.svg' style={{width: '100%', height: '400px', borderRadius: '200px', backgroundColor: 'black'}} /> */}
         <Card.Body style={{alignContent: 'center'}}>
-            <Card.Title>{empl.firstname} {empl.secondname}</Card.Title>
+            <Card.Title>{ev.title}</Card.Title>
             <Card.Text>
-                Email: {empl.email}
+                Дата начала: {ev.startDate}
             </Card.Text>
             <Card.Text>
-                Телефон: {empl.phoneNumber}
+                Описание: {ev.description}
             </Card.Text>
             <Card.Text>
-                Дата найма в компанию: {empl.hiredDate}
-            </Card.Text>
-            <Card.Text>
-                Страна проживания: {empl.location}
-            </Card.Text>
-            <Card.Text>
-                Отдел: {empl.departament}
+                Участники: {ev.participants}
+                {/* Участники: {ev.participants?.length()} */}
             </Card.Text>
             <Button onClick={() => setEditModalActive(true)} style={{width: '150px', height: '100px', backgroundColor: '#77C66E', marginLeft: '5px', borderColor: '#77C66E'}}>Изменить пользователя</Button>
-            <Button onClick={() => sureDelete()} style={{width: '150px', height: '100px', backgroundColor: '#77C66E', marginLeft: '15px', borderColor: '#77C66E'}}>Удалить пользователя</Button>
+            {/* <Button onClick={() => sureDelete()} style={{width: '150px', height: '100px', backgroundColor: '#77C66E', marginLeft: '15px', borderColor: '#77C66E'}}>Удалить пользователя</Button> */}
             <td>
-                <Modal active={modalEditActive} setActive={setEditModalActive} modalHeader='Изменить пользователя'><EditUserFrom setIsOpen={setEditModalActive} employerId={empl._id}/></Modal>
+                {/* <Modal active={modalEditActive} setActive={setEditModalActive} modalHeader='Изменить пользователя'><EditUserFrom setIsOpen={setEditModalActive} employerId={ev._id}/></Modal> */}
             </td>
             </Card.Body>
         </Card>

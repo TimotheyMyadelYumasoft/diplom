@@ -8,7 +8,7 @@ type Props = {
     employers: IUser[]
 }
 
-const EmployersList = ({employers}: Props) => {
+const CandidateList = ({employers}: Props) => {
     const {auth, isAuth} = useTypeSelector(state => state.auth)
     const {fetchUserByIdAction, fetchUsers} = useAction()
 
@@ -18,11 +18,11 @@ const EmployersList = ({employers}: Props) => {
         <div style={{display: 'flex', msFlexDirection: 'column', flexWrap: 'wrap'}}>
             {employers?.map( employer =>
             <>
-            {employer.password ? <EmployerItem empl={employer} /> : ''}
+            {!employer.password ? <EmployerItem empl={employer} /> : ''}
             </>
         )}
         </div>
     )
 }
 
-export default EmployersList
+export default CandidateList

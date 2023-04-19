@@ -3,6 +3,9 @@ export enum UserActionTypes {
     FETCH_USERS_BY_ID='FETCH_USERS_BY_ID',
     UPDATE_USER='UPDATE_USER',
     DELETE_USER='DELETE_USER',
+    CREATE_CANDIDATE='CREATE_CANDIDATE',
+    APPROVE_CANDIDATE='APPROVE_CANDIDATE',
+    SET_STATUS_CANDIDATE='SET_STATUS_CANDIDATE',
 
     UPDATE_BACKGROUND_IMAGE='UPDATE_BACKGROUND_IMAGE',
     UPDATE_PROFILE_IMAGE='UPDATE_PROFILE_IMAGE',
@@ -58,8 +61,28 @@ interface DeleteUserByIdAction {
     payload: IUser
 }
 
+
+interface CreateCandidateAction {
+    type: UserActionTypes.CREATE_CANDIDATE,
+    payload: IUser
+}
+
+interface SetStatusCandidateAction {
+    type: UserActionTypes.SET_STATUS_CANDIDATE,
+    payload: IUser
+}
+
+interface ApproveCandidateAction {
+    type: UserActionTypes.APPROVE_CANDIDATE,
+    payload: IUser
+}
+
 export type UserAction =
     FetchUsersAction
     | FetchUserByIdAction
     | UpdateUserAction
     | DeleteUserByIdAction
+
+    | CreateCandidateAction
+    | SetStatusCandidateAction
+    | ApproveCandidateAction

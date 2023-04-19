@@ -96,12 +96,12 @@ class UserService {
         return await UserModel.findById(_id)
     }
 
-    async createCandidate(firstname, secondname, email, phoneNumber, departament) {
+    async createCandidate(firstname, secondname, email, phoneNumber, departament, gender) {
         const candidate = await UserModel.findOne({email: email})
         if(candidate) {
             throw ApiError.BadRequest('Аккаунт на данную почту уже был создан');
         }
-        const user = await UserModel.create({firstname, secondname, email, phoneNumber, departament})
+        const user = await UserModel.create({firstname, secondname, email, phoneNumber, departament, gender})
         return user
     }
     async createCandidateById(_id, password, status) {

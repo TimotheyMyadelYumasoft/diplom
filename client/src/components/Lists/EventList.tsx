@@ -2,23 +2,25 @@ import { useEffect } from "react"
 import { useAction } from "../../hooks/useAction"
 import { useTypeSelector } from "../../hooks/useTypedSelector"
 import EventItem from "../Items/EventItem"
+import {IEvent} from '../../types/event'
 import { IUser } from "../../types/user"
 
 type Props = {
-    employers: IUser[]
+    events: IEvent[],
+    users: IUser[]
 }
 
-const EventList = ({employers}: Props) => {
+const EventList = ({events, users}: Props) => {
     const {auth, isAuth} = useTypeSelector(state => state.auth)
     const {fetchUserByIdAction, fetchUsers} = useAction()
+    console.log(events)
 
-    console.log(employers)
-
+    // !Change empl в EventItem
     return (
         <div style={{display: 'flex', msFlexDirection: 'column', flexWrap: 'wrap'}}>
-            {employers?.map( employer =>
+            {events?.map( event =>
             <>
-            <EventItem empl={employer} />
+            <EventItem ev={event} />
             </>
         )}
         </div>

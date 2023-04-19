@@ -3,7 +3,7 @@ import {VacationAction, VacationActionTypes, VacationState} from '../../types/va
 
 const initialState: VacationState = {
     vacation: {
-        id: '',
+        _id: '',
         employerId: '',
         employComment: [''],
         reviewerComment: [''],

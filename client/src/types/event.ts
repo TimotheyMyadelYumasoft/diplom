@@ -2,11 +2,12 @@ export enum EventActionTypes {
     FETCH_EVENT='FETCH_EVENT',
     FETCH_EVENT_BY_ID='FETCH_EVENT_BY_ID',
     UPDATE_EVENT='UPDATE_EVENT',
-    DELETE_EVENT='DELETE_EVENT'
+    DELETE_EVENT='DELETE_EVENT',
+    CREATE_EVENT='CREATE_EVENT'
 }
 
 export interface IEvent {
-    id: string;
+    _id: string;
     participants: string[];
     title: string;
     activationLink: string;
@@ -21,7 +22,7 @@ export interface EventState {
 
 interface FetchEventAction {
     type: EventActionTypes.FETCH_EVENT,
-    payload: IEvent
+    payload: IEvent[]
 }
 
 interface FetchEventByIdAction {
@@ -39,8 +40,14 @@ interface DeleteEventAction {
     payload: IEvent
 }
 
+interface CreateEventAction {
+    type: EventActionTypes.CREATE_EVENT,
+    payload: IEvent
+}
+
 export type EventAction =
     FetchEventAction
     | FetchEventByIdAction
     | UpdateEventAction
     | DeleteEventAction
+    | CreateEventAction

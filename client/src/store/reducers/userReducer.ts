@@ -39,6 +39,12 @@ export const userReducer = (state: UserState = initialState, action: UserAction)
             return {...state, user: action.payload}
         case UserActionTypes.DELETE_USER:
             return {...state, user: action.payload}
+        case UserActionTypes.APPROVE_CANDIDATE:
+            return {...state, user: action.payload}
+        case UserActionTypes.SET_STATUS_CANDIDATE:
+            return {...state, user: action.payload}
+        case UserActionTypes.CREATE_CANDIDATE:
+            return {...state, user: action.payload}
 
         default:
             return state;
