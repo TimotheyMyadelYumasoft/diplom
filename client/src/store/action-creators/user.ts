@@ -18,6 +18,17 @@ export const fetchUsers = () => {
     }
 }
 
+export const sortAllUsers = (arr: string[]) => {
+    return (dispatch: Dispatch<UserAction>) => {
+        try{
+            console.log(arr)
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+}
+
 export const fetchUserByIdAction = (_id: string) => {
     return async (dispatch: Dispatch<UserAction>) => {
         try {

@@ -14,7 +14,7 @@ function PersonalPage() {
     useEffect(() => {
         fetchUserByIdAction(auth.auth.user.id)
         fetchProjectByIdAction(auth.auth.user.id)
-    }, [])
+    }, [auth])
 
     useEffect(() => {
         fetchProjectByIdAction(auth.auth.user.id)

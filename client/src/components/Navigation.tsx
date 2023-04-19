@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -11,10 +11,16 @@ import { useTypeSelector } from '../hooks/useTypedSelector';
 const Navigation: FC = () => {
     const {auth, isAuth} = useTypeSelector(state => state.auth)
     const navigate = useNavigate();
-    const {logout} = useAction()
+    const {logout, refresh} = useAction()
     if(!isAuth) {
         navigate('/login')
     }
+
+    useEffect(() => {
+        if(localStorage.getItem('token')){
+            refresh();
+        }
+    }, [])
 
     return (
         <Navbar bg="dark" variant="dark">
@@ -26,6 +32,8 @@ const Navigation: FC = () => {
                 <Nav.Link href="/">Home</Nav.Link>
                 <Nav.Link href="/users">Все пользователи</Nav.Link>
                 <Nav.Link href="/vacation">Выходные</Nav.Link>
+                <Nav.Link href="/events">Мероприятия</Nav.Link>
+                <Nav.Link href="/candidates">Кандидаты</Nav.Link>
                 <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">

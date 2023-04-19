@@ -1,7 +1,8 @@
 export enum EventActionTypes {
     FETCH_EVENT='FETCH_EVENT',
     FETCH_EVENT_BY_ID='FETCH_EVENT_BY_ID',
-    UPDATE_EVENT='UPDATE_EVENT'
+    UPDATE_EVENT='UPDATE_EVENT',
+    DELETE_EVENT='DELETE_EVENT'
 }
 
 export interface IEvent {
@@ -28,12 +29,18 @@ interface FetchEventByIdAction {
     payload: IEvent
 }
 
-interface UpdatEventAction {
+interface UpdateEventAction {
     type: EventActionTypes.UPDATE_EVENT,
+    payload: IEvent
+}
+
+interface DeleteEventAction {
+    type: EventActionTypes.DELETE_EVENT,
     payload: IEvent
 }
 
 export type EventAction =
     FetchEventAction
     | FetchEventByIdAction
-    | UpdatEventAction
+    | UpdateEventAction
+    | DeleteEventAction

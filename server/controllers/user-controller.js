@@ -165,8 +165,19 @@ class UserController {
      async del(req, res, next) {
         try{
             const { _id } = req.body;
-            const vacation = await userService.deleteOne(_id)
-            return res.json(vacation)
+            const user = await userService.deleteOne(_id)
+            return res.json(user)
+        }
+        catch (e) {
+            next(e);
+        }
+    }
+
+    async sortAllUsers(req, res, next) {
+        try{
+            const {sort} = req.body;
+            const users = await userService.sortUsers(sort)
+            return res.json(users)
         }
         catch (e) {
             next(e);

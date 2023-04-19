@@ -12,7 +12,7 @@ import { useAction } from "../../hooks/useAction";
 type Props = {
     empl: IUser
 }
-const EmployerItem = ({empl}: Props) => {
+const EventItem = ({empl}: Props) => {
 
     const [modalEditActive, setEditModalActive] = useState(false);
     const nav = useNavigate()
@@ -58,4 +58,4 @@ const EmployerItem = ({empl}: Props) => {
     )
 }
 
-export default EmployerItem
+export default EventItem;

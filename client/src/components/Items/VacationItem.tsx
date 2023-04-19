@@ -10,8 +10,7 @@ type Props = {
 const VacationItem = ({vac, emp}: Props) => {
 
     return (
-      <Card style={{ width: '25rem', margin:'2rem 6rem 2rem 6rem', display: 'grid', justifyItems: 'center'}}>
-        {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
+      <Card style={{ width: '25rem', margin:'2rem 5rem 2rem 5rem', display: 'grid', justifyItems: 'center'}}>
         <Card.Body>
           <Card.Title>Тип отпуска: {vac.type == 'vacation' ? 'отпуск' : 'больничный'}</Card.Title>
           <Card.Text>

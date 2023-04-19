@@ -10,7 +10,7 @@ const VacationList = () => {
 
 
     return (
-        <div>
+        <div style={{display: 'flex', msFlexDirection: 'column', flexWrap: 'wrap'}}>
             {vacations?.map( vac =>
             <>
                 {users?.map(employer =>

@@ -80,6 +80,9 @@ class UserService {
 
     async getAllUsers() {
         const users = await UserModel.find();
+        if(!users) {
+            throw ApiError.BadRequest('Пользователей нет в базе данных')
+        }
         return users;
     }
 
@@ -160,6 +163,23 @@ class UserService {
             throw ApiError.BadRequest(`Данного пользователя не существует`)
         }
         return vacation
+    }
+
+    async byField(users, field) {
+        return users.sort(function(x1, x2) {
+            var i1 = field.indexOf(x1.name),
+                i2 = field.indexOf(x2.name);
+            return i1 < 0 ? 1 : i2 < 0 ? -1 : i1 - i2;
+          })
+      }
+    async sortUsers(sortBy) {
+        let sortUsers = await UserModel.find()
+        if(!sortUsers) {
+            throw ApiError.BadRequest('Пользователи не заданы в базу данных')
+        }
+        sortUsers.sort(this.byField(sortUsers, sortBy))
+        console.log(sortUsers)
+        return sortUsers;
     }
 }
 
