@@ -17,10 +17,10 @@ const EmployersList = ({employers}: Props) => {
     return (
         <div style={{display: 'flex', msFlexDirection: 'column', flexWrap: 'wrap'}}>
             {employers?.map( employer =>
-            <>
-            {employer.password ? <EmployerItem empl={employer} /> : ''}
-            </>
-        )}
+                <div style={{ width: '25rem', margin:'2rem 6rem 2rem 6rem', display: 'grid', justifyItems: 'center'}}>
+                    {employer.password ? <EmployerItem empl={employer} /> : ''}
+                </div>
+            )}
         </div>
     )
 }

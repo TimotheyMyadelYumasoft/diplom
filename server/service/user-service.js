@@ -104,9 +104,10 @@ class UserService {
         const user = await UserModel.create({firstname, secondname, email, phoneNumber, departament, gender})
         return user
     }
-    async createCandidateById(_id, password, status) {
+    async createCandidateById(_id, password, statusCandidate) {
         const hashPassword = await bcrypt.hash(password, 3);
-        const candidate = await UserModel.findByIdAndUpdate(_id, {password: hashPassword, status: status})
+        const candidate = await UserModel.findByIdAndUpdate(_id, {password: hashPassword, statusCandidate: statusCandidate})
+        console.log(statusCandidate)
         console.log(candidate)
         return await UserModel.findById(_id)
     }

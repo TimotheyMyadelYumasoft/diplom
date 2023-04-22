@@ -1,0 +1,38 @@
+.candidate__header__reject {
+    width: 25rem;
+    height: 3rem;
+    margin: 2rem 1rem 0rem 1rem;
+    display: grid;
+    justify-items: center;
+}
+
+.candidate__header__wait {
+    width: 25rem;
+    height: 2rem;
+    margin: 2rem 1rem 0rem 1rem;
+    display: grid;
+    justify-items: center;
+}
+
+.candidate__header__review{
+    width: 25rem;
+    height: 1rem;
+    margin: 2rem 1rem 0rem 1rem;
+    display: grid;
+    justify-items: center;
+}
+
+.candidate__header__accept{
+    width: 25rem;
+    height: 6rem;
+    margin: 2rem 1rem 0rem 1rem;
+    display: grid;
+    justify-items: center;
+}
+
+.candidate__item {
+    width: 25rem;
+    margin: 1rem 1rem 1rem 1rem;
+    display: grid;
+    justify-items: center;
+}

@@ -45,7 +45,7 @@ const CandidatePage = () => {
     return(
         <div>
             <Navigation />
-            <div>
+            {/* <div>
                 <MySelect
                     value={selectedSort}
                     onChange={sortPosts}
@@ -56,7 +56,7 @@ const CandidatePage = () => {
                         {value: 'secondname', name: 'По фамилии'}
                     ]}
                 />
-            </div>
+            </div> */}
             <div>
                 <CandidateList employers={employers}/>
             </div>

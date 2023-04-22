@@ -142,8 +142,8 @@ class UserController {
 
      async createEmployeeByCandidate (req, res, next) {
         try{
-            const {_id, password, status} = req.body;
-            const candidate = await userService.createCandidateById(_id, password, status)
+            const {_id, password, statusCandidate} = req.body;
+            const candidate = await userService.createCandidateById(_id, password, statusCandidate)
             res.json(candidate)
         }
         catch(e) {
