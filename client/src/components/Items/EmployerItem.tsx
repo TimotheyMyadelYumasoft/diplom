@@ -16,7 +16,7 @@ const EmployerItem = ({empl}: Props) => {
 
     const [modalEditActive, setEditModalActive] = useState(false);
     const nav = useNavigate()
-    const {deleteUserById, fetchUsers} = useAction()
+    const {deleteUserById, fetchUsers, setStatusCandidate} = useAction()
 
     const sureDelete = () => {
         let res = prompt('Вы точно хотите удалить пользователя из системы? Напишите Да, чтобы подтвердить', 'Нет')?.toLowerCase();
@@ -24,6 +24,16 @@ const EmployerItem = ({empl}: Props) => {
         console.log(res)
         if(res == yes){
             deleteUserById(empl._id);
+            fetchUsers();
+        }
+    }
+
+    const sureClear = () => {
+        let res = prompt('Вы точно хотите удалить кандидата из списка? Напишите Да, чтобы подтвердить', 'Нет')?.toLowerCase();
+        let yes = 'да'.toLowerCase();
+        console.log(res)
+        if(res == yes){
+            setStatusCandidate(empl._id, 'hired');
             fetchUsers();
         }
     }
@@ -49,7 +59,12 @@ const EmployerItem = ({empl}: Props) => {
                 Отдел: {empl.departament}
             </Card.Text>
             <Button onClick={() => setEditModalActive(true)} style={{width: '150px', height: '100px', backgroundColor: '#77C66E', marginLeft: '5px', borderColor: '#77C66E'}}>{empl.password ? 'Изменить пользователя' : 'Изменить кандидата'}</Button>
-            <Button onClick={() => sureDelete()} style={{width: '150px', height: '100px', backgroundColor: '#77C66E', marginLeft: '15px', borderColor: '#77C66E'}}>{empl.password ? 'Удалить пользователя' : 'Удалить кандидата'}</Button>
+            <Button onClick={() => sureDelete()} style={{width: '150px', height: '100px', backgroundColor: '#77C66E', marginLeft: '15px', borderColor: '#77C66E'}}>{empl.password ? 'Удалить пользователя' : 'Удалить кандидата из базы'}</Button>
+            { empl.statusCandidate!=='hired' && empl.password
+            ?
+            <Button onClick={() => sureClear()} style={{width: '150px', height: '100px', backgroundColor: '#77C66E', margin: '1rem 5rem 0rem 5rem', borderColor: '#77C66E'}}>Удалить кандидата из списка</Button>
+            : ''
+            }
             <td>
                 <Modal active={modalEditActive} setActive={setEditModalActive} modalHeader='Изменить пользователя'><EditUserFrom setIsOpen={setEditModalActive} employerId={empl._id}/></Modal>
             </td>

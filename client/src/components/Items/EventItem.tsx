@@ -12,9 +12,10 @@ import { useTypeSelector } from "../../hooks/useTypedSelector";
 
 
 type Props = {
-    ev: IEvent
+    ev: IEvent,
+    us: IUser[]
 }
-const EventItem = ({ev}: Props) => {
+const EventItem = ({ev, us}: Props) => {
 
     const [modalEditActive, setEditModalActive] = useState(false);
     const nav = useNavigate()
@@ -47,7 +48,22 @@ const EventItem = ({ev}: Props) => {
                 Описание: {ev.description}
             </Card.Text>
             <Card.Text>
-                Участники: {ev.participants}
+                { ev.participants.length > 1
+                ?
+                <div>
+                Спикеры: {ev.participants.map( participant =>
+                    <>
+                        {us.map( user =>
+                            <div>
+                                {participant==user._id ? user.firstname+' '+user.secondname : ''}
+                            </div>
+                        )}
+                    </>
+                )}
+                </div>
+                :
+                    ''
+                }
                 {/* Участники: {ev.participants?.length()} */}
             </Card.Text>
             <Button onClick={() => setEditModalActive(true)} style={{width: '150px', height: '100px', backgroundColor: '#77C66E', marginLeft: '5px', borderColor: '#77C66E'}}>Изменить пользователя</Button>

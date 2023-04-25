@@ -20,7 +20,7 @@ const EventList = ({events, users}: Props) => {
         <div style={{display: 'flex', msFlexDirection: 'column', flexWrap: 'wrap'}}>
             {events?.map( event =>
             <>
-            <EventItem ev={event} />
+            <EventItem ev={event} us={users} />
             </>
         )}
         </div>
