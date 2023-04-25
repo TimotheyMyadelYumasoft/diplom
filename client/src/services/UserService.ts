@@ -1,9 +1,11 @@
 import $api from "../http";
 import {AxiosResponse} from 'axios'
-import { AuthResponse } from "../types/auth";
 import { IUser } from "../types/user";
 
 export default class UserService {
+    static async createUser(email: string, password: string, role: string): Promise<AxiosResponse<IUser>> {
+        return $api.post<IUser>(`/user/registration`, {email: email, password: password, role: role})
+    }
     static async fetchUsers(): Promise<AxiosResponse<IUser[]>> {
         return $api.get<IUser[]>(`/user`)
     }

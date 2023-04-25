@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -7,9 +7,16 @@ import Button from 'react-bootstrap/Button'
 import { useAction } from '../hooks/useAction'
 import { useNavigate } from 'react-router-dom'
 import { useTypeSelector } from '../hooks/useTypedSelector';
+import Modal from './Modal';
+import CreateCandidate from "./Forms/CreateCandidate";
+import CreateUser from "./Forms/CreateUser";
 
 const Navigation: FC = () => {
     const {auth, isAuth} = useTypeSelector(state => state.auth)
+
+    const [role, setRole] = useState('');
+    const [modalCreateCandidateActive, setCreateCandidateModalActive] = useState(false);
+    const [modalCreateUserActive, setCreateUserModalActive] = useState(false);
     const navigate = useNavigate();
     const {logout, refresh} = useAction()
     if(!isAuth) {
@@ -34,21 +41,38 @@ const Navigation: FC = () => {
                 <Nav.Link href="/vacation">Выходные</Nav.Link>
                 <Nav.Link href="/events">Мероприятия</Nav.Link>
                 <Nav.Link href="/candidates">Кандидаты</Nav.Link>
+
                 <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                    Another action
+                <NavDropdown.Item onClick={() => setCreateCandidateModalActive(true)}>Создать кандидата</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => {
+                    setCreateUserModalActive(true);
+                    setRole('USER');
+                }}>
+                    Создать пользователя
                 </NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                    Separated link
-                </NavDropdown.Item>
+                {auth.user.role=='ADMIN'
+                ?
+                    <>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item onClick={() => {
+                            setCreateUserModalActive(true);
+                            setRole('RECRUITER');
+                        }}>
+                            Создать рекрутера
+                        </NavDropdown.Item>
+                    </>
+                :
+                ''
+                }
                 </NavDropdown>
             </Nav>
             </Navbar.Collapse>
         </Container>
         <Button onClick={() => logout()} className="me-5">Logout</Button>
+
+        <Modal active={modalCreateCandidateActive} setActive={setCreateCandidateModalActive} modalHeader='Создать кандидата'><CreateCandidate setIsOpen={setCreateCandidateModalActive} /></Modal>
+        <Modal active={modalCreateUserActive} setActive={setCreateUserModalActive} modalHeader='Создать пользователя'><CreateUser setIsOpen={setCreateUserModalActive} role={role}/></Modal>
         </Navbar>
     )
 }

@@ -3,10 +3,10 @@ import { UserAction, UserActionTypes } from "../../types/user"
 import CandidateService from "../../services/CandidateService"
 import axios from "axios"
 
-export const createCandidate = (_id: string, email: string, firstname: string, secondname: string, gender: string, phonenumber: string, department: string, location: string) => {
+export const createCandidate = (email: string, firstname: string, secondname: string, gender: string, phonenumber: string, department: string) => {
     return async (dispatch: Dispatch<UserAction>) => {
         try{
-            const response = await CandidateService.createCandidate(_id, email, firstname, secondname, gender, phonenumber, department, location)
+            const response = await CandidateService.createCandidate(email, firstname, secondname, gender, phonenumber, department)
             dispatch({
                 type: UserActionTypes.CREATE_CANDIDATE,
                 payload: response.data

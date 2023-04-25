@@ -1,4 +1,5 @@
 export enum UserActionTypes {
+    CREATE_USER='CREATE_USER',
     FETCH_USERS='FETCH_USERS',
     FETCH_USERS_BY_ID='FETCH_USERS_BY_ID',
     UPDATE_USER='UPDATE_USER',
@@ -41,6 +42,11 @@ export interface UserState {
     isAuth: boolean
 }
 
+interface CreateUserAction {
+    type: UserActionTypes.CREATE_USER,
+    payload: IUser;
+}
+
 interface FetchUsersAction {
     type: UserActionTypes.FETCH_USERS,
     payload: IUser[]
@@ -78,7 +84,8 @@ interface ApproveCandidateAction {
 }
 
 export type UserAction =
-    FetchUsersAction
+    CreateUserAction
+    | FetchUsersAction
     | FetchUserByIdAction
     | UpdateUserAction
     | DeleteUserByIdAction

@@ -90,7 +90,7 @@ const EmployerItem = ({empl}: Props) => {
 
             { empl.statusCandidate!=='hired' && empl.statusCandidate=='accepted'
             ?
-            <Button onClick={() => sureClear()} style={{width: '250px', height: '50px', backgroundColor: '#77C66E', margin: '1rem 4rem 0rem 4rem', borderColor: '#77C66E'}}>Удалить кандидата из списка</Button>
+            <Button onClick={() => sureClear()} style={{width: '250px', height: '60px', backgroundColor: '#77C66E', margin: '1rem 4rem 0rem 4rem', borderColor: '#77C66E'}}>Удалить из списка кандидатов</Button>
             : ''
             }
             <td>

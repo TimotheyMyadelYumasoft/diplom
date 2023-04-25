@@ -183,6 +183,21 @@ class UserController {
             next(e);
         }
     }
+
+    async createUser(req, res, next) {
+        try{
+            const errors = validationResult(req);
+            if(!errors.isEmpty()){
+                return next(ApiError.BadRequest('Ошибка при валидации', errors.array()))
+            }
+            const {email, password, role} = req.body;
+            const userData = await userService.createUser(email, password, role);
+            return res.json(userData)
+        }
+        catch (e) {
+            next(e);
+        }
+    }
 }
 
 module.exports = new UserController();

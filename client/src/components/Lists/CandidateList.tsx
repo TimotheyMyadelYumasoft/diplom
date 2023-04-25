@@ -11,9 +11,9 @@ type Props = {
 
 const CandidateList = ({employers}: Props) => {
     const {auth, isAuth} = useTypeSelector(state => state.auth)
-    const {users} = useTypeSelector(state => state.user)
     const {fetchUserByIdAction, fetchUsers} = useAction()
 
+    const {users} = useTypeSelector(state => state.user)
     useEffect(()=> {
         fetchUsers();
     },[users])

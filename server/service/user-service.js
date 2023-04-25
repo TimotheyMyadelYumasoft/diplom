@@ -182,6 +182,20 @@ class UserService {
         console.log(sortUsers)
         return sortUsers;
     }
+
+    async createUser(email, password, role) {
+        const candidate = await UserModel.findOne({email})
+        if (candidate) {
+            throw ApiError.BadRequest(`Пользователь с почтовым адресом ${email} уже существует`)
+        }
+        const hashPassword = await bcrypt.hash(password, 3);
+        const activationLink = uuid.v4();   // uniq str
+
+        const user = await UserModel.create({email, password: hashPassword, activationLink, role: role})
+        await mailService.sendActivationMail(email, `${process.env.API_URL}/api/user/activate/${activationLink}`);
+
+        return user;
+    }
 }
 
 module.exports = new UserService();

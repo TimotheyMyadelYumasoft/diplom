@@ -74,3 +74,17 @@ export const deleteUserById = (_id: string) => {
         }
     }
 }
+
+export const createUser = (email: string, password: string, role: string) => {
+    return async (dispatch: Dispatch<UserAction>) => {
+        try{
+            const response = await UserService.createUser(email, password, role)
+            dispatch({
+                type: UserActionTypes.CREATE_USER,
+                payload: response.data
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
