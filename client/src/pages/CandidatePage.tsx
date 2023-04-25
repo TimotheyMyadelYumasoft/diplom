@@ -45,18 +45,6 @@ const CandidatePage = () => {
     return(
         <div>
             <Navigation />
-            {/* <div>
-                <MySelect
-                    value={selectedSort}
-                    onChange={sortPosts}
-                    defaultValue='Сортировка'
-                    options={[
-                        {value: 'email', name: 'По email'},
-                        {value: 'firstname', name: 'По имени'},
-                        {value: 'secondname', name: 'По фамилии'}
-                    ]}
-                />
-            </div> */}
             <div>
                 <CandidateList employers={employers}/>
             </div>

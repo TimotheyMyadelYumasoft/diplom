@@ -13,7 +13,7 @@ const MySelect = ({options, defaultValue, value, onChange}) =>{
 
     return (
     <Form.Select aria-label="Default select example"
-        style={{display: 'flex', width: '12rem', margin: '2rem 2rem 0rem 12rem'}}
+        style={{display: 'flex', width: '16rem', margin: '1rem 2rem 1rem 6rem'}}
         value={value}
         onChange={event=> onChange(event.target.value)}
     >

@@ -5,8 +5,10 @@ import Card from 'react-bootstrap/Card';
 import { useNavigate } from "react-router-dom";
 import Modal from '../Modal';
 import EditUserFrom from '../Forms/EditUserFrom';
-import { useState } from "react";
+import CreateUserByCandidate from '../Forms/CreateUserByCandidate'
+import { useEffect, useState } from "react";
 import { useAction } from "../../hooks/useAction";
+import MySelect from "../UI/select/MySelect";
 
 
 type Props = {
@@ -15,6 +17,8 @@ type Props = {
 const EmployerItem = ({empl}: Props) => {
 
     const [modalEditActive, setEditModalActive] = useState(false);
+    const [modalCreateCandidateActive, setCreateCandidateModalActive] = useState(false);
+    const [selectedSort, setSelectedSort] = useState('')
     const nav = useNavigate()
     const {deleteUserById, fetchUsers, setStatusCandidate} = useAction()
 
@@ -24,7 +28,6 @@ const EmployerItem = ({empl}: Props) => {
         console.log(res)
         if(res == yes){
             deleteUserById(empl._id);
-            fetchUsers();
         }
     }
 
@@ -34,8 +37,13 @@ const EmployerItem = ({empl}: Props) => {
         console.log(res)
         if(res == yes){
             setStatusCandidate(empl._id, 'hired');
-            fetchUsers();
         }
+    }
+
+    const setStatus = (sort: string) => {
+        setSelectedSort(sort)
+        console.log(sort)
+        setStatusCandidate(empl._id, sort);
     }
 
     return (
@@ -58,15 +66,36 @@ const EmployerItem = ({empl}: Props) => {
             <Card.Text>
                 Отдел: {empl.departament}
             </Card.Text>
-            <Button onClick={() => setEditModalActive(true)} style={{width: '150px', height: '100px', backgroundColor: '#77C66E', marginLeft: '5px', borderColor: '#77C66E'}}>{empl.password ? 'Изменить пользователя' : 'Изменить кандидата'}</Button>
-            <Button onClick={() => sureDelete()} style={{width: '150px', height: '100px', backgroundColor: '#77C66E', marginLeft: '15px', borderColor: '#77C66E'}}>{empl.password ? 'Удалить пользователя' : 'Удалить кандидата из базы'}</Button>
-            { empl.statusCandidate!=='hired' && empl.password
+            { empl.statusCandidate!=='hired' && !empl.password
             ?
-            <Button onClick={() => sureClear()} style={{width: '150px', height: '100px', backgroundColor: '#77C66E', margin: '1rem 5rem 0rem 5rem', borderColor: '#77C66E'}}>Удалить кандидата из списка</Button>
+            <MySelect value={selectedSort}
+                onChange={setStatus}
+                defaultValue='изменить статус кандидата'
+                options={[
+                    {value: 'rejected', name: 'отклонен'},
+                    {value: 'wait', name: 'ожидает'},
+                    {value: 'review', name: 'рассматривается'},
+                    {value: 'accepted', name: 'найм кандидата'}
+                ]}/>
+            : ''
+            }
+            <Button onClick={() => setEditModalActive(true)} style={{width: '150px', height: '100px', backgroundColor: '#77C66E', marginLeft: '2rem', borderColor: '#77C66E'}}>{empl.password ? 'Изменить пользователя' : 'Изменить кандидата'}</Button>
+            <Button onClick={() => sureDelete()} style={{width: '150px', height: '100px', backgroundColor: '#77C66E', marginLeft: '15px', borderColor: '#77C66E'}}>{empl.password ? 'Удалить пользователя' : 'Удалить кандидата из базы'}</Button>
+
+            { empl.statusCandidate=='accepted' && !empl.password
+            ?
+            <Button onClick={() => setCreateCandidateModalActive(true)} style={{width: '250px', height: '50px', backgroundColor: '#77C66E', margin: '1rem 4rem 0rem 4rem', borderColor: '#77C66E'}}>Создать пользователя</Button>
+            : ''
+            }
+
+            { empl.statusCandidate!=='hired' && empl.statusCandidate=='accepted'
+            ?
+            <Button onClick={() => sureClear()} style={{width: '250px', height: '50px', backgroundColor: '#77C66E', margin: '1rem 4rem 0rem 4rem', borderColor: '#77C66E'}}>Удалить кандидата из списка</Button>
             : ''
             }
             <td>
                 <Modal active={modalEditActive} setActive={setEditModalActive} modalHeader='Изменить пользователя'><EditUserFrom setIsOpen={setEditModalActive} employerId={empl._id}/></Modal>
+                <Modal active={modalCreateCandidateActive} setActive={setCreateCandidateModalActive} modalHeader='Создать пользователя'><CreateUserByCandidate setIsOpen={setCreateCandidateModalActive} employerId={empl._id}/></Modal>
             </td>
             </Card.Body>
         </Card>

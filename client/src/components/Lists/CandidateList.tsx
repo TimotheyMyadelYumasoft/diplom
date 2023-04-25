@@ -11,8 +11,12 @@ type Props = {
 
 const CandidateList = ({employers}: Props) => {
     const {auth, isAuth} = useTypeSelector(state => state.auth)
+    const {users} = useTypeSelector(state => state.user)
     const {fetchUserByIdAction, fetchUsers} = useAction()
 
+    useEffect(()=> {
+        fetchUsers();
+    },[users])
     console.log(employers)
 
     return (
@@ -34,7 +38,7 @@ const CandidateList = ({employers}: Props) => {
                 <div>
                     {employers?.map( employer =>
                     <div className="candidate__item">
-                    {!employer.password && !employer.statusCandidate ?  <EmployerItem empl={employer} /> : ''}
+                    {!employer.password && !employer.statusCandidate || !employer.password && employer.statusCandidate=='wait' ?  <EmployerItem empl={employer} /> : ''}
                     </div>
                 )}
                 </div>
