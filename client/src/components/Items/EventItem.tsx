@@ -9,6 +9,7 @@ import { useAction } from "../../hooks/useAction";
 import { IEvent } from "../../types/event";
 import { IUser} from '../../types/user'
 import { useTypeSelector } from "../../hooks/useTypedSelector";
+import { fetchAllEvents } from "../../store/action-creators/event";
 
 
 type Props = {
@@ -19,7 +20,7 @@ const EventItem = ({ev, us}: Props) => {
 
     const [modalEditActive, setEditModalActive] = useState(false);
     const nav = useNavigate()
-    const {deleteUserById, fetchUsers} = useAction()
+    const {deleteUserById, fetchUsers, deleteEventById} = useAction()
     const {user, auth} = useTypeSelector(state => state)
 
     useEffect(() => {
@@ -31,18 +32,17 @@ const EventItem = ({ev, us}: Props) => {
         let yes = 'да'.toLowerCase();
         console.log(res)
         if(res == yes){
-            deleteUserById(ev._id);
-            fetchUsers();
+            deleteEventById(ev._id);
         }
     }
 
     return (
-      <Card style={{ width: '25rem', margin:'2rem 6rem 2rem 6rem', display: 'grid', justifyItems: 'center'}} >
+      <Card style={{ width: '90rem', margin:'2rem 6rem 2rem 6rem', display: 'grid', justifyItems: 'left'}} >
       {/* <Card.Img variant="top" src='https://www.yumasoft.com/fonts/svg/yumasoft_logo.svg' style={{width: '100%', height: '400px', borderRadius: '200px', backgroundColor: 'black'}} /> */}
         <Card.Body style={{alignContent: 'center'}}>
             <Card.Title>{ev.title}</Card.Title>
             <Card.Text>
-                Дата начала: {ev.startDate}
+                Дата проведения: {ev.startDate.split('T')[0]}
             </Card.Text>
             <Card.Text>
                 Описание: {ev.description}
@@ -66,6 +66,7 @@ const EventItem = ({ev, us}: Props) => {
                 }
                 {/* Участники: {ev.participants?.length()} */}
             </Card.Text>
+            <Button onClick={() => sureDelete()} style={{width: '150px', height: '60px', backgroundColor: '#77C66E', marginLeft: '15px', borderColor: '#77C66E'}}>Удалить мероприятие</Button>
             </Card.Body>
         </Card>
     )

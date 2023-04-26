@@ -22,8 +22,8 @@ function EmployeesPage() {
 
     let employers = users;
 
-    const [selectedSort, setSelectedSort] = useState('');
     const [searchQuery, setSearchQuery] = useState<string>('');
+    const [selectedSort, setSelectedSort] = useState('');
 
     const sortPosts = (sort: string) => {
         setSelectedSort(sort)

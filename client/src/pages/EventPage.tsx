@@ -24,6 +24,10 @@ const EventPage = () => {
         fetchUsers()
     }, [auth])
 
+    useEffect(() => {
+        fetchAllEvents()
+    }, [events])
+
     let sorted = events;
     console.log(sorted);
 

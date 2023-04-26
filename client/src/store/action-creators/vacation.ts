@@ -42,3 +42,33 @@ export const setVacation = (startDate: string, endDate: string, type: string, em
         }
     }
 }
+
+export const approveVacation = (_id: string, status: string) => {
+    return async (dispatch: Dispatch<VacationAction>) => {
+        try {
+            const response = await VacationService.approveVacation(_id, status)
+            dispatch({
+                type: VacationActionTypes.APPROVE_VACATION,
+                payload: response.data
+            })
+            console.log(response)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}
+
+export const deleteVacation = (_id: string) => {
+    return async (dispatch: Dispatch<VacationAction>) => {
+        try{
+            const response = await VacationService.deleteVacationById(_id)
+            dispatch({
+                type: VacationActionTypes.DELETE_VACATION,
+                payload: response.data
+            })
+            console.log(response)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+}

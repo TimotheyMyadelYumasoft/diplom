@@ -59,7 +59,7 @@ const EmployerItem = ({empl}: Props) => {
                 Телефон: {empl.phoneNumber}
             </Card.Text>
             <Card.Text>
-                Дата найма в компанию: {empl.hiredDate}
+                Дата найма в компанию: {empl.hiredDate?.split('T')[0]}
             </Card.Text>
             <Card.Text>
                 Страна проживания: {empl.location}

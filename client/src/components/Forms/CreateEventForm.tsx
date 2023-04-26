@@ -5,6 +5,16 @@ import { useAction } from '../../hooks/useAction';
 import { useState } from "react";
 import { IUser } from "../../types/user";
 import MySelect from "../UI/select/MySelect";
+import RHFDatePickerField from "../UI/RHFDatePickerField";
+import { Control, Controller, useForm } from "react-hook-form";
+import dayjs from "dayjs";
+
+
+
+import React from 'react';
+import type { DatePickerProps, TimePickerProps } from 'antd';
+import { DatePicker, Select, Space, TimePicker } from 'antd';
+
 
 type Props = {
     setIsOpen: (isOpen: boolean) => void;
@@ -13,7 +23,11 @@ type Props = {
 
 const CreateEventForm = ({ setIsOpen, employers }: Props) => {
 
-    const {fetchUsers} = useAction()
+    const { handleSubmit, control, watch } = useForm<{
+        startDate: string;
+        endDate: string;
+      }>();
+
     const { auth } = useTypeSelector(state => state.auth);
 
 
@@ -22,15 +36,16 @@ const CreateEventForm = ({ setIsOpen, employers }: Props) => {
     const [ Title, setTitle] = useState<string>('')
     const [ Description, setDescription ] = useState<string>('')
     const [ Participants, setParticipants ] = useState<Array<string>>([])
+    const [ DateOfEvent, setDateOfEvent] = useState<string>('')
 
 
     const requiredTrue = true;
-    const {createCandidate} = useAction()
-    const handleSubmit = async( event: React.SyntheticEvent) => {
+    const {createEvent, fetchAllEvents} = useAction()
+    const handleSubmitEventForm = async( event: React.SyntheticEvent) => {
         event.preventDefault();
-            // createCandidate(Email, FirstName, Surname, Gender, Phonenumber, Department);
+            createEvent(Participants, Title, Description, DateOfEvent)
             setIsOpen(false);
-            fetchUsers()
+            fetchAllEvents()
     }
 
     const setUser = (sort: string) => {
@@ -57,7 +72,7 @@ const CreateEventForm = ({ setIsOpen, employers }: Props) => {
 
     return (
         <div>
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmitEventForm}>
 
                 <Form.Group className="mb-1" controlId="formBasicTitle">
                     <Form.Label>Title</Form.Label>
@@ -76,12 +91,27 @@ const CreateEventForm = ({ setIsOpen, employers }: Props) => {
                 Спикеры: {Participants.map( participant =>
                     <>
                         {employers.map( user =>
-                            <div>
+                            <div key={user._id}>
                                 {participant==user._id ? user.firstname+' '+user.secondname : ''}
                             </div>
                         )}
                     </>
                 )}
+                </div>
+
+                <div>
+                    <form
+                    onSubmit={handleSubmit((data) => {
+                        console.log("data ready to submit", data);
+                    })}
+                    >
+                        <div>
+                            <br />
+                            <span>Дата проведения мероприятия </span>
+                            <DatePicker picker='date' onChange={(value) => setDateOfEvent(dayjs(value).toString())} />
+                        </div>
+                        <br />
+                    </form>
                 </div>
 
                 <Button variant="primary" type="submit">

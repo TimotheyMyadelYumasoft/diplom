@@ -21,7 +21,10 @@ export const vacationReducer = (state: VacationState = initialState, action: Vac
             return {...state, vacations: [ ...action.payload] }
         case VacationActionTypes.FETCH_VACATION_BY_ID:
             return {...state, vacation: action.payload }
-
+        case VacationActionTypes.APPROVE_VACATION:
+            return {...state, vacation: action.payload }
+        case VacationActionTypes.DELETE_VACATION:
+            return {...state, vacation: action.payload }
         default:
             return state;
     }
