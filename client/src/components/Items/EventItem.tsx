@@ -48,7 +48,7 @@ const EventItem = ({ev, us}: Props) => {
                 Описание: {ev.description}
             </Card.Text>
             <Card.Text>
-                { ev.participants.length > 1
+                { ev.participants.length > 0
                 ?
                 <div>
                 Спикеры: {ev.participants.map( participant =>
