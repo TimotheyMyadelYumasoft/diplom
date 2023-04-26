@@ -3,8 +3,8 @@ import {AxiosResponse} from 'axios'
 import { IUser } from "../types/user";
 
 export default class UserService {
-    static async createUser(email: string, password: string, role: string): Promise<AxiosResponse<IUser>> {
-        return $api.post<IUser>(`/user/registration`, {email: email, password: password, role: role})
+    static async createUser(email: string, password: string, role: string): Promise<AxiosResponse<IUser[]>> {
+        return $api.post<IUser[]>(`/user/create_user`, {email: email, password: password, role: role}, {withCredentials: true})
     }
     static async fetchUsers(): Promise<AxiosResponse<IUser[]>> {
         return $api.get<IUser[]>(`/user`)

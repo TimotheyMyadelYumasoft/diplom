@@ -5,6 +5,7 @@ const ApiError = require('../exceptions/api-error')
 class UserController {
     async registration(req, res, next) {
         try{
+            console.log('registration')
             const errors = validationResult(req);
             if(!errors.isEmpty()){
                 return next(ApiError.BadRequest('Ошибка при валидации', errors.array()))
@@ -186,6 +187,7 @@ class UserController {
 
     async createUser(req, res, next) {
         try{
+            console.log('createUser')
             const errors = validationResult(req);
             if(!errors.isEmpty()){
                 return next(ApiError.BadRequest('Ошибка при валидации', errors.array()))

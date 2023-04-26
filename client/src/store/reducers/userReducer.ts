@@ -32,7 +32,7 @@ const initialState: UserState = {
 export const userReducer = (state: UserState = initialState, action: UserAction): UserState => {
     switch(action.type){
         case UserActionTypes.CREATE_USER:
-            return {...state, user: action.payload}
+            return {...state, users: [ ...action.payload]}
         case UserActionTypes.FETCH_USERS:
             return { ...state, isAuth: true, users: [ ...action.payload ]}
         case UserActionTypes.FETCH_USERS_BY_ID:

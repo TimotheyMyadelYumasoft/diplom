@@ -44,7 +44,7 @@ export interface UserState {
 
 interface CreateUserAction {
     type: UserActionTypes.CREATE_USER,
-    payload: IUser;
+    payload: IUser[];
 }
 
 interface FetchUsersAction {

@@ -28,6 +28,7 @@ const EmployerItem = ({empl}: Props) => {
         console.log(res)
         if(res == yes){
             deleteUserById(empl._id);
+            fetchUsers()
         }
     }
 
