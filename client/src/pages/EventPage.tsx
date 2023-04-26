@@ -8,6 +8,9 @@ import Navigation from '../components/Navigation'
 import EventList from '../components/Lists/EventList'
 import MySelect from '../components/UI/select/MySelect'
 import MyInput from '../components/UI/input/MyInput'
+import { Button } from 'react-bootstrap'
+import Modal from '../components/Modal'
+import CreateEventForm from '../components/Forms/CreateEventForm'
 
 const EventPage = () => {
     const {auth, isAuth} = useTypeSelector(state => state.auth)
@@ -26,6 +29,7 @@ const EventPage = () => {
 
     const [selectedSort, setSelectedSort] = useState('');
     const [searchQuery, setSearchQuery] = useState<string>('');
+    const [createEventModalActive , setCreateEventModalActive] = useState(false);
 
     const sortPosts = (sort: string) => {
         setSelectedSort(sort)
@@ -46,7 +50,7 @@ const EventPage = () => {
     return(
         <div>
             <Navigation />
-            <div>
+            <div style={{display: 'flex', msFlexDirection: 'column', flexWrap: 'wrap'}}>
                 <MySelect
                     value={selectedSort}
                     onChange={sortPosts}
@@ -57,9 +61,11 @@ const EventPage = () => {
                         {value: 'secondname', name: 'По фамилии'}
                     ]}
                 />
+                <Button onClick={() => setCreateEventModalActive(true)} style={{width: '250px', height: '50px', backgroundColor: '#77C66E', margin: '1rem 4rem 0rem 4rem', borderColor: '#77C66E'}}>Создать мероприятие</Button>
             </div>
             <div>
                 <EventList events={sorted} users={users}/>
+                <Modal active={createEventModalActive} setActive={setCreateEventModalActive} modalHeader='Создать мероприятие'><CreateEventForm setIsOpen={setCreateEventModalActive} employers={users}/></Modal>
             </div>
         </div>
     )

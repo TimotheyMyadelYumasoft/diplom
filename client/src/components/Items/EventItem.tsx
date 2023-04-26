@@ -66,11 +66,6 @@ const EventItem = ({ev, us}: Props) => {
                 }
                 {/* Участники: {ev.participants?.length()} */}
             </Card.Text>
-            <Button onClick={() => setEditModalActive(true)} style={{width: '150px', height: '100px', backgroundColor: '#77C66E', marginLeft: '5px', borderColor: '#77C66E'}}>Изменить пользователя</Button>
-            {/* <Button onClick={() => sureDelete()} style={{width: '150px', height: '100px', backgroundColor: '#77C66E', marginLeft: '15px', borderColor: '#77C66E'}}>Удалить пользователя</Button> */}
-            <td>
-                {/* <Modal active={modalEditActive} setActive={setEditModalActive} modalHeader='Изменить пользователя'><EditUserFrom setIsOpen={setEditModalActive} employerId={ev._id}/></Modal> */}
-            </td>
             </Card.Body>
         </Card>
     )

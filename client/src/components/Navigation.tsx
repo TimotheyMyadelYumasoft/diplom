@@ -42,7 +42,7 @@ const Navigation: FC = () => {
                 <Nav.Link href="/events">Мероприятия</Nav.Link>
                 <Nav.Link href="/candidates">Кандидаты</Nav.Link>
 
-                <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+                <NavDropdown title="Создание пользователей" id="basic-nav-dropdown">
                 <NavDropdown.Item onClick={() => setCreateCandidateModalActive(true)}>Создать кандидата</NavDropdown.Item>
                 <NavDropdown.Item onClick={() => {
                     setCreateUserModalActive(true);
@@ -50,7 +50,6 @@ const Navigation: FC = () => {
                 }}>
                     Создать пользователя
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                 {auth.user.role=='ADMIN'
                 ?
                     <>
