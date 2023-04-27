@@ -223,7 +223,7 @@ const ProfileHeader = () => {
                         <td><h5>Пол: </h5><h3>{user.user?.gender}</h3></td>
                     </tr>
                     <tr>
-                        <td style={{display: 'flex', marginLeft: '10px', marginTop: '10px'}}><h2>Projects</h2></td>
+                        <td style={{display: 'flex', marginLeft: '10px', marginTop: '10px'}}><h2>Состояние запросов</h2></td>
                         <td><h5>Email:</h5><h3>{user.user?.email}</h3></td>
                         <td><h5>Телефон:</h5><h3>{user.user?.phoneNumber}</h3></td>
                         <td><h5>Отдел:</h5><h3>{user.user?.departament}</h3></td>
