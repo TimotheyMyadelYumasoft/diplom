@@ -62,6 +62,11 @@ const ProfileHeader = () => {
     const [modalVacationActive, setVacationModalActive] = useState(false);
     const {auth, user, project, vacation} = useTypeSelector(state => state)
 
+    const {fetchVacations} = useAction()
+    useEffect(() => {
+        fetchVacations()
+    }, [])
+
     const {setVacation} = useAction()
 
     // const uploadBackground =(e: any) =>{
@@ -72,6 +77,7 @@ const ProfileHeader = () => {
     //     //     setProfileImage()
     //     // }
     // }
+    let tag;
 
     const { handleSubmit, control, watch } = useForm<{
         startDate: string;
@@ -223,9 +229,30 @@ const ProfileHeader = () => {
                         <td><h5>Отдел:</h5><h3>{user.user?.departament}</h3></td>
                     </tr>
                     <tr>
-                        <td style={{display: 'block', marginLeft: '10px', width: '150px'}}>{project.projects?.map(proj =>
-                                // <h4 style={{marginRight: '10px', border: 'solid 2px', borderRadius:'15px', padding:'2px 2px'}}>{proj.title}</h4>)}
-                                <Tag key={proj.title}>{proj.title}</Tag>)}
+                        <td style={{display: 'block', marginLeft: '10px', width: '150px'}}>{vacation.vacations.map(vac =>
+                                <>
+                                    { vac.employerId == auth.auth.user.id
+                                    ?
+                                    <>
+                                        {vac.status=='approve'
+                                        ?
+                                            <Tag key={vac._id} style={{background: '#77C66E', width: '26rem'}}>{vac.startDate.slice(0, -13)+' - '+vac.endDate.slice(0, -13)+". Статус запроса: подтвержден"}</Tag>
+                                        :
+                                        <>
+                                            { vac.status=='reject'
+                                            ?
+                                                <Tag key={vac._id} style={{background: '#ff6961', width: '26rem'}}>{vac.startDate.slice(0, -13)+' - '+vac.endDate.slice(0, -13)+". Статус запроса: откланен"}</Tag>
+                                            :
+                                                <Tag key={vac._id} style={{width: '26rem'}}>{vac.startDate.slice(0, -13)+' - '+vac.endDate.slice(0, -13)+". Статус запроса: пока не рассмотрен"}</Tag>
+                                            }
+                                        </>
+                                        }
+                                    </>
+                                    :
+                                    ''
+                                    }
+                                </>
+                            )}
                         </td>
                         <td>
                             <Modal active={modalEditActive} setActive={setEditModalActive} modalHeader='Изменить пользователя'><EditUserFrom setIsOpen={setEditModalActive} employerId=''/></Modal>
