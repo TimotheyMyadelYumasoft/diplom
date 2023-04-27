@@ -14,6 +14,7 @@ import {Tag } from 'antd'
 import { Control, Controller, useForm } from "react-hook-form";
 import { DatePicker, DatePickerProps } from "antd";
 import dayjs from "dayjs";
+import EditBirthday from '../Forms/EditBirthday';
 
 interface RHFDatePickerFieldProps {
   control: Control<any>;
@@ -57,6 +58,7 @@ const RHFDatePickerField = (props: RHFDatePickerFieldProps) => {
 const ProfileHeader = () => {
 
     const [modalEditActive, setEditModalActive] = useState(false);
+    const [modalEditBirthdayActive, setEditBirthdayModalActive] = useState(false);
     const [modalVacationActive, setVacationModalActive] = useState(false);
     const {auth, user, project, vacation} = useTypeSelector(state => state)
 
@@ -199,14 +201,16 @@ const ProfileHeader = () => {
                 </thead>
                 <tbody>
                     <tr>
-                        <td style={{display: 'flex', marginLeft: '10px', marginTop: '10px'}}><h2>Skills</h2></td>
+                        <td style={{display: 'flex', marginLeft: '10px', marginTop: '10px'}}>
+                        {/* <Button >Изменить фотографию</Button> */}
+                        </td>
                         <td><h5>День рождения</h5><h3>{user.user?.birthDay?.split('T')[0]}</h3></td>
                         <td><h5>День найма</h5><h3>{user.user?.hiredDate?.split('T')[0]}</h3></td>
                         { user.user?.firedDate ? <td><h5>День увольнения</h5><h3>{user.user?.firedDate?.split('T')[0]}</h3></td> : ''}
                     </tr>
                     <tr>
                         <td style={{display: 'flex', marginLeft: '10px'}}>
-                            {user.user.skills?.map((skill) => (<Tag key={skill}>{skill}</Tag>))}
+                            <Button onClick={() => setEditBirthdayModalActive(true)} style={{width: '150px', height: '100px', backgroundColor: 'black'}}>Изменить день рождения</Button>
                         </td>
                         <td><h5>Имя:</h5><h3>{user.user?.firstname}</h3></td>
                         <td><h5>Фамилия:</h5><h3>{user.user?.secondname}</h3></td>
@@ -225,6 +229,7 @@ const ProfileHeader = () => {
                         </td>
                         <td>
                             <Modal active={modalEditActive} setActive={setEditModalActive} modalHeader='Изменить пользователя'><EditUserFrom setIsOpen={setEditModalActive} employerId=''/></Modal>
+                            <Modal active={modalEditBirthdayActive} setActive={setEditBirthdayModalActive} modalHeader='Изменить дату рождения'><EditBirthday setIsOpen={setEditBirthdayModalActive} employerId=''/></Modal>
                         </td>
                     </tr>
                 </tbody>

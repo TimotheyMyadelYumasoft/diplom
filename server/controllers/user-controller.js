@@ -200,6 +200,18 @@ class UserController {
             next(e);
         }
     }
+
+    async editUserBirthday(req, res, next) {
+        try{
+            console.log('edit birthDay')
+            const {_id, birthday} = req.body;
+            console.log(birthday)
+            const user = await userService.editUserBirthdayById(_id, birthday)
+            return res.json(user)
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 module.exports = new UserController();

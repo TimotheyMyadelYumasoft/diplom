@@ -200,6 +200,17 @@ class UserService {
 
         return user;
     }
+
+    async editUserBirthdayById(_id, birthDay) {
+        const candidate = await UserModel.findById(_id)
+        if (!candidate) {
+            throw ApiError.BadRequest(`Даннного пользователя ${email} не существует`)
+        }
+        console.log(_id)
+        console.log(birthDay)
+        const user = await UserModel.findByIdAndUpdate(_id, {birthDay: birthDay});
+        return user
+    }
 }
 
 module.exports = new UserService();
