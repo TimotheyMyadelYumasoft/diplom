@@ -72,7 +72,9 @@ const VacationItem = ({vac, emp}: Props) => {
 
           { auth.user.role =='ADMIN' || auth.user.role=='RECRUITED'
           ?
-          <Button onClick={() => sureDelete()} style={{width: '150px', height: '60px', backgroundColor: '#77C66E', marginLeft: '15px', borderColor: '#77C66E'}}>Удалить выходной</Button>
+          <>
+            <Button onClick={() => sureDelete()} style={{width: '150px', height: '60px', backgroundColor: '#77C66E', margin: '1rem 0px 0px 6rem', borderColor: '#77C66E'}}>Удалить выходной</Button>
+          </>
           :
           ''
           }
