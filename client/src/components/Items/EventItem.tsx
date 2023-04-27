@@ -28,7 +28,7 @@ const EventItem = ({ev, us}: Props) => {
     }, [auth])
 
     const sureDelete = () => {
-        let res = prompt('Вы точно хотите удалить пользователя из системы? Напишите Да, чтобы подтвердить', 'Нет')?.toLowerCase();
+        let res = prompt('Вы точно хотите удалить мероприятие из системы? Напишите Да, чтобы подтвердить', 'Нет')?.toLowerCase();
         let yes = 'да'.toLowerCase();
         console.log(res)
         if(res == yes){

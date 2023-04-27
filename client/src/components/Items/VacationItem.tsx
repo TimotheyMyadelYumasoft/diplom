@@ -15,7 +15,7 @@ const VacationItem = ({vac, emp}: Props) => {
   const {auth} = useTypeSelector(state => state.auth)
 
   const sureReject = () => {
-    let res = prompt('Вы точно хотите удалить пользователя из системы? Напишите Да, чтобы подтвердить', 'Нет')?.toLowerCase();
+    let res = prompt('Вы точно хотите отказать в выходном? Напишите Да, чтобы подтвердить', 'Нет')?.toLowerCase();
     let yes = 'да'.toLowerCase();
     console.log(res)
     if(res == yes){
@@ -25,7 +25,7 @@ const VacationItem = ({vac, emp}: Props) => {
   }
 
   const sureAccept = () => {
-    let res = prompt('Вы точно хотите удалить пользователя из системы? Напишите Да, чтобы подтвердить', 'Нет')?.toLowerCase();
+    let res = prompt('Вы точно хотите одобрить выходной? Напишите Да, чтобы подтвердить', 'Нет')?.toLowerCase();
     let yes = 'да'.toLowerCase();
     console.log(res)
     if(res == yes){
@@ -35,7 +35,7 @@ const VacationItem = ({vac, emp}: Props) => {
   }
 
   const sureDelete = () => {
-    let res = prompt('Вы точно хотите удалить пользователя из системы? Напишите Да, чтобы подтвердить', 'Нет')?.toLowerCase();
+    let res = prompt('Вы точно хотите удалить выходной из системы? Напишите Да, чтобы подтвердить', 'Нет')?.toLowerCase();
     let yes = 'да'.toLowerCase();
     console.log(res)
     if(res == yes){
