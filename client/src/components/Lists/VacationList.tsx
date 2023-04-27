@@ -30,17 +30,22 @@ const VacationList = () => {
                             {value: 'all', name: 'Выходные всех'}
                         ]}
                     />
+                {   auth.user.role=='ADMIN' || auth.user.role=='RECRUITER'
+                ?
                 <OffCanvas name="Принять выходные" >
-                    {vacations?.map( vac =>
-                    <>
-                        {users?.map(employer =>
-                            <>
-                                {employer._id == vac.employerId && vac.status!=='approve' && vac.status!=='reject' ?  <VacationItem vac={vac} emp={employer} /> : ''}
-                            </>
-                        )}
-                    </>
+                {vacations?.map( vac =>
+                <>
+                    {users?.map(employer =>
+                        <>
+                            {employer._id == vac.employerId && vac.status!=='approve' && vac.status!=='reject' ?  <VacationItem vac={vac} emp={employer} /> : ''}
+                        </>
                     )}
+                </>
+                )}
                 </OffCanvas>
+                :
+                ''
+                }
             </div>
             <div style={{display: 'flex', msFlexDirection: 'column', flexWrap: 'wrap'}}>
             {vacations?.map( vac =>

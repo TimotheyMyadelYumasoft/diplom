@@ -2,6 +2,7 @@ import { Button, Card } from "react-bootstrap";
 import { IVacation } from "../../types/vacation";
 import { IUser } from "../../types/user";
 import { useAction } from "../../hooks/useAction";
+import { useTypeSelector } from "../../hooks/useTypedSelector";
 
 type Props = {
     vac: IVacation;
@@ -11,6 +12,7 @@ type Props = {
 const VacationItem = ({vac, emp}: Props) => {
 
   const {approveVacation, deleteVacation, fetchVacations} = useAction()
+  const {auth} = useTypeSelector(state => state.auth)
 
   const sureReject = () => {
     let res = prompt('Вы точно хотите удалить пользователя из системы? Напишите Да, чтобы подтвердить', 'Нет')?.toLowerCase();
@@ -66,7 +68,12 @@ const VacationItem = ({vac, emp}: Props) => {
           ''
           }
 
-            <Button onClick={() => sureDelete()} style={{width: '150px', height: '60px', backgroundColor: '#77C66E', marginLeft: '15px', borderColor: '#77C66E'}}>Удалить выходной</Button>
+          { auth.user.role =='ADMIN' || auth.user.role=='RECRUITED'
+          ?
+          <Button onClick={() => sureDelete()} style={{width: '150px', height: '60px', backgroundColor: '#77C66E', marginLeft: '15px', borderColor: '#77C66E'}}>Удалить выходной</Button>
+          :
+          ''
+          }
         </Card.Body>
       </Card>
     )

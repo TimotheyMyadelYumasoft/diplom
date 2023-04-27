@@ -66,7 +66,12 @@ const EventItem = ({ev, us}: Props) => {
                 }
                 {/* Участники: {ev.participants?.length()} */}
             </Card.Text>
+            { auth.auth.user.role =='ADMIN' || auth.auth.user.role=='RECRUITED'
+            ?
             <Button onClick={() => sureDelete()} style={{width: '150px', height: '60px', backgroundColor: '#77C66E', marginLeft: '15px', borderColor: '#77C66E'}}>Удалить мероприятие</Button>
+            :
+            ''
+            }
             </Card.Body>
         </Card>
     )

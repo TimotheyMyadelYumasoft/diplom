@@ -7,7 +7,6 @@ import Table from 'react-bootstrap/Table';
 import Image from 'react-bootstrap/Image'
 import Modal from '../Modal';
 import EditUserFrom from '../Forms/EditUserFrom';
-import ProjectItem from '../Items/ProjectItem';
 import {Tag } from 'antd'
 
 
@@ -92,7 +91,7 @@ const ProfileHeader = () => {
                 alert('Оба поля даты пытые');
             }
             else{
-                setVacation(dayjs(startDate).toString(), dayjs(startDate).toString(), 'vacation', auth.auth.user.id)
+                setVacation(dayjs(startDate).toString(), dayjs(endDate).toString(), 'vacation', auth.auth.user.id)
 
             }
         }
@@ -113,7 +112,7 @@ const ProfileHeader = () => {
                 alert('Дата начала идет перед датой конца. Поменяйте пожалуйста')
             }
             else{
-                setVacation(dayjs(startDate).toString(), dayjs(startDate).toString(), 'sickLeave', auth.auth.user.id)
+                setVacation(dayjs(startDate).toString(), dayjs(endDate).toString(), 'sickLeave', auth.auth.user.id)
             }
         }
     }

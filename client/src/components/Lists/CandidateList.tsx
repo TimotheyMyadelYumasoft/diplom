@@ -17,7 +17,6 @@ const CandidateList = ({employers}: Props) => {
     useEffect(()=> {
         fetchUsers();
     },[users])
-    console.log(employers)
 
     return (
         <div style={{display: 'flex', msFlexDirection: 'column', flexWrap: 'wrap'}}>

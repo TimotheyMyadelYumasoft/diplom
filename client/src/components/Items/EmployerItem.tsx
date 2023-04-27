@@ -9,6 +9,7 @@ import CreateUserByCandidate from '../Forms/CreateUserByCandidate'
 import { useEffect, useState } from "react";
 import { useAction } from "../../hooks/useAction";
 import MySelect from "../UI/select/MySelect";
+import { useTypeSelector } from "../../hooks/useTypedSelector";
 
 
 type Props = {
@@ -21,6 +22,7 @@ const EmployerItem = ({empl}: Props) => {
     const [selectedSort, setSelectedSort] = useState('')
     const nav = useNavigate()
     const {deleteUserById, fetchUsers, setStatusCandidate} = useAction()
+    const {auth} = useTypeSelector(state => state.auth)
 
     const sureDelete = () => {
         let res = prompt('Вы точно хотите удалить пользователя из системы? Напишите Да, чтобы подтвердить', 'Нет')?.toLowerCase();
@@ -67,32 +69,46 @@ const EmployerItem = ({empl}: Props) => {
             <Card.Text>
                 Отдел: {empl.departament}
             </Card.Text>
-            { empl.statusCandidate!=='hired' && !empl.password
+            { auth.user.role=='RECRUITER' || auth.user.role=='ADMIN'
             ?
-            <MySelect value={selectedSort}
-                onChange={setStatus}
-                defaultValue='изменить статус кандидата'
-                options={[
-                    {value: 'rejected', name: 'отклонен'},
-                    {value: 'wait', name: 'ожидает'},
-                    {value: 'review', name: 'рассматривается'},
-                    {value: 'accepted', name: 'найм кандидата'}
-                ]}/>
-            : ''
+            <>
+                { empl.statusCandidate!=='hired' && !empl.password
+                ?
+                <MySelect value={selectedSort}
+                    onChange={setStatus}
+                    defaultValue='изменить статус кандидата'
+                    options={[
+                        {value: 'rejected', name: 'отклонен'},
+                        {value: 'wait', name: 'ожидает'},
+                        {value: 'review', name: 'рассматривается'},
+                        {value: 'accepted', name: 'найм кандидата'}
+                    ]}/>
+                : ''
+                }
+            </>
+            :
+            ''
             }
-            <Button onClick={() => setEditModalActive(true)} style={{width: '150px', height: '100px', backgroundColor: '#77C66E', marginLeft: '2rem', borderColor: '#77C66E'}}>{empl.password ? 'Изменить пользователя' : 'Изменить кандидата'}</Button>
-            <Button onClick={() => sureDelete()} style={{width: '150px', height: '100px', backgroundColor: '#77C66E', marginLeft: '15px', borderColor: '#77C66E'}}>{empl.password ? 'Удалить пользователя' : 'Удалить кандидата из базы'}</Button>
-
-            { empl.statusCandidate=='accepted' && !empl.password
+            { auth.user.role=='RECRUITER' || auth.user.role=='ADMIN'
             ?
-            <Button onClick={() => setCreateCandidateModalActive(true)} style={{width: '250px', height: '50px', backgroundColor: '#77C66E', margin: '1rem 4rem 0rem 4rem', borderColor: '#77C66E'}}>Создать пользователя</Button>
-            : ''
-            }
+            <>
+                <Button onClick={() => setEditModalActive(true)} style={{width: '150px', height: '100px', backgroundColor: '#77C66E', marginLeft: '2rem', borderColor: '#77C66E'}}>{empl.password ? 'Изменить пользователя' : 'Изменить кандидата'}</Button>
+                <Button onClick={() => sureDelete()} style={{width: '150px', height: '100px', backgroundColor: '#77C66E', marginLeft: '15px', borderColor: '#77C66E'}}>{empl.password ? 'Удалить пользователя' : 'Удалить кандидата из базы'}</Button>
 
-            { empl.statusCandidate!=='hired' && empl.statusCandidate=='accepted'
-            ?
-            <Button onClick={() => sureClear()} style={{width: '250px', height: '60px', backgroundColor: '#77C66E', margin: '1rem 4rem 0rem 4rem', borderColor: '#77C66E'}}>Удалить из списка кандидатов</Button>
-            : ''
+                { empl.statusCandidate=='accepted' && !empl.password
+                ?
+                <Button onClick={() => setCreateCandidateModalActive(true)} style={{width: '250px', height: '50px', backgroundColor: '#77C66E', margin: '1rem 4rem 0rem 4rem', borderColor: '#77C66E'}}>Создать пользователя</Button>
+                : ''
+                }
+
+                { empl.statusCandidate!=='hired' && empl.statusCandidate=='accepted'
+                ?
+                <Button onClick={() => sureClear()} style={{width: '250px', height: '60px', backgroundColor: '#77C66E', margin: '1rem 4rem 0rem 4rem', borderColor: '#77C66E'}}>Удалить из списка кандидатов</Button>
+                : ''
+                }
+            </>
+            :
+            ''
             }
             <td>
                 <Modal active={modalEditActive} setActive={setEditModalActive} modalHeader='Изменить пользователя'><EditUserFrom setIsOpen={setEditModalActive} employerId={empl._id}/></Modal>

@@ -41,9 +41,14 @@ const EventPage = () => {
     return(
         <div>
             <Navigation />
-            <div style={{display: 'flex', msFlexDirection: 'column', flexWrap: 'wrap'}}>
-                <Button onClick={() => setCreateEventModalActive(true)} style={{width: '250px', height: '50px', backgroundColor: '#77C66E', margin: '1rem 4rem 0rem 4rem', borderColor: '#77C66E'}}>Создать мероприятие</Button>
-            </div>
+            { auth.user.role=='RECRUITER' || auth.user.role=='ADMIN'
+            ?
+                <div style={{display: 'flex', msFlexDirection: 'column', flexWrap: 'wrap'}}>
+                    <Button onClick={() => setCreateEventModalActive(true)} style={{width: '250px', height: '50px', backgroundColor: '#77C66E', margin: '1rem 4rem 0rem 4rem', borderColor: '#77C66E'}}>Создать мероприятие</Button>
+                </div>
+            :
+            ''
+            }
             <div>
                 <EventList events={sorted} users={users}/>
                 <Modal active={createEventModalActive} setActive={setCreateEventModalActive} modalHeader='Создать мероприятие'><CreateEventForm setIsOpen={setCreateEventModalActive} employers={users}/></Modal>

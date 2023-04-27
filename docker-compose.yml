@@ -12,5 +12,20 @@ services:
     ports:
       - 27017:27017
 
+  backend:
+    build: ./server
+    command: npm run dev
+    restart: always
+    volumes:
+      - ./server:/app/backend
+    ports:
+      - "7000:7000"
+    env_file:
+      - server/.env
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/diplom
+    depends_on:
+      - mongodb
+
 volumes:
-  mongo_db_data: {}
+  mongo_db_data:

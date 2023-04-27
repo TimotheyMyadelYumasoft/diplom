@@ -34,7 +34,7 @@ const EventList = ({events, users}: Props) => {
 
     const handleSubmitFilter = () => {
         let int = parseInt(DateOfEvent.split(' ')[1])
-        int++;
+        // int++;
         setSelectedDate(DateOfEvent.split(' ')[3]+'-'+monthIs(DateOfEvent.split(' ')[2])+'-'+int)
         console.log(DateOfEvent.split(' ')[3]+'-'+monthIs(DateOfEvent.split(' ')[2])+'-'+int)
     }
@@ -92,7 +92,16 @@ const EventList = ({events, users}: Props) => {
                 {selectedDate[0] == '2'
                 ?
                     <>
-                        {console.log('here')}
+                        {events?.map( event =>
+                            <>
+                            {event.startDate.split('T')[0]==selectedDate
+                            ?
+                            <EventItem ev={event} us={users} />
+                            :
+                            ''
+                            }
+                            </>
+                        )}
                     </>
                 :
                    <>
