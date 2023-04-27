@@ -14,22 +14,19 @@ type Props = {
 
 const EditBirthday = ({ setIsOpen, employerId }: Props) => {
 
-    const {fetchUsers} = useAction()
+    const {refresh} = useAction()
     const { auth } = useTypeSelector(state => state.auth);
 
     const [ Email, setEmail] = useState<string>('')
 
-    const {updateThisUser} = useAction()
+    const {updateThisUser, editBirthdayUser} = useAction()
     const handleSubmitEditBirthday = async( event: React.SyntheticEvent) => {
         event.preventDefault();
-        if(employerId == ''){
-            setIsOpen(false);
-        }
-        else {
-            setIsOpen(false);
-            fetchUsers()
-        }
+        console.log('auth.user.id ')
         console.log(DateOfEvent)
+        editBirthdayUser(auth.user.id ,DateOfEvent)
+        setIsOpen(false);
+        refresh()
     }
 
     const { handleSubmit, control, watch } = useForm<{

@@ -88,3 +88,19 @@ export const createUser = (email: string, password: string, role: string) => {
         }
     }
 }
+
+export const editBirthdayUser = (_id: string, birthDay: string) => {
+    return async (dispatch: Dispatch<UserAction>) => {
+        try{
+            const response = await UserService.editBirthdayUserById(_id, birthDay)
+            console.log(birthDay)
+            console.log(response)
+            dispatch({
+                type: UserActionTypes.UPDATE_BIRTHDAY_USER,
+                payload: response.data
+            })
+        } catch(e) {
+            console.log(e)
+        }
+    }
+}

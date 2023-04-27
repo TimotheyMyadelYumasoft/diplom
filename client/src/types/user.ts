@@ -7,6 +7,7 @@ export enum UserActionTypes {
     CREATE_CANDIDATE='CREATE_CANDIDATE',
     APPROVE_CANDIDATE='APPROVE_CANDIDATE',
     SET_STATUS_CANDIDATE='SET_STATUS_CANDIDATE',
+    UPDATE_BIRTHDAY_USER='UPDATE_BIRTHDAY_USER',
 
     UPDATE_BACKGROUND_IMAGE='UPDATE_BACKGROUND_IMAGE',
     UPDATE_PROFILE_IMAGE='UPDATE_PROFILE_IMAGE',
@@ -83,12 +84,18 @@ interface ApproveCandidateAction {
     payload: IUser
 }
 
+interface UpdateBirthdayUser {
+    type: UserActionTypes.UPDATE_BIRTHDAY_USER,
+    payload: IUser
+}
+
 export type UserAction =
     CreateUserAction
     | FetchUsersAction
     | FetchUserByIdAction
     | UpdateUserAction
     | DeleteUserByIdAction
+    | UpdateBirthdayUser
 
     | CreateCandidateAction
     | SetStatusCandidateAction

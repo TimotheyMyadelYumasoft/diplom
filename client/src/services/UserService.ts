@@ -18,4 +18,8 @@ export default class UserService {
     static async deleteUserById(_id: string) : Promise<AxiosResponse<IUser>> {
         return $api.post<IUser>(`/user/del`, {_id: _id})
     }
+    static async editBirthdayUserById(_id: string, birthDay: string): Promise<AxiosResponse<IUser>> {
+        console.log(birthDay)
+        return $api.post<IUser>(`/user/edit_birthday`, {_id: _id, birthday: birthDay})
+    }
 }

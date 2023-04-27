@@ -24,9 +24,9 @@ const EventPage = () => {
         fetchUsers()
     }, [auth])
 
-    useEffect(() => {
-        fetchAllEvents()
-    }, [events])
+    // useEffect(() => {
+    //     fetchAllEvents()
+    // }, [events])
 
     let sorted = events;
 

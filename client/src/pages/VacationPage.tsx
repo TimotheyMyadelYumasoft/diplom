@@ -17,9 +17,9 @@ const VacationPage = () => {
         fetchVacations();
     }, [auth])
 
-    useEffect(() => {
-        fetchVacations()
-    }, [vacation.vacations])
+    // useEffect(() => {
+    //     fetchVacations()
+    // }, [vacation.vacations])
 
 
     return (

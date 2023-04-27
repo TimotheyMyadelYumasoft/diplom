@@ -20,7 +20,7 @@ const EventItem = ({ev, us}: Props) => {
 
     const [modalEditActive, setEditModalActive] = useState(false);
     const nav = useNavigate()
-    const {deleteUserById, fetchUsers, deleteEventById} = useAction()
+    const {deleteUserById, fetchUsers, deleteEventById, fetchAllEvents} = useAction()
     const {user, auth} = useTypeSelector(state => state)
 
     useEffect(() => {
@@ -33,6 +33,7 @@ const EventItem = ({ev, us}: Props) => {
         console.log(res)
         if(res == yes){
             deleteEventById(ev._id);
+            fetchAllEvents()
         }
     }
 

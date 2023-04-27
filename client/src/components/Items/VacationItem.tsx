@@ -20,6 +20,7 @@ const VacationItem = ({vac, emp}: Props) => {
     console.log(res)
     if(res == yes){
       approveVacation(vac._id, 'reject');
+      fetchVacations();
     }
   }
 
@@ -29,6 +30,7 @@ const VacationItem = ({vac, emp}: Props) => {
     console.log(res)
     if(res == yes){
       approveVacation(vac._id, 'approve');
+      fetchVacations();
     }
   }
 
