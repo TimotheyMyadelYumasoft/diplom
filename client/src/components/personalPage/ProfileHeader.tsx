@@ -15,6 +15,9 @@ import { Control, Controller, useForm } from "react-hook-form";
 import { DatePicker, DatePickerProps } from "antd";
 import dayjs from "dayjs";
 import EditBirthday from '../Forms/EditBirthday';
+import {Calendar} from 'react-bootstrap-icons'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 interface RHFDatePickerFieldProps {
   control: Control<any>;
@@ -158,13 +161,39 @@ const ProfileHeader = () => {
     return(
 
         <Card>
-            <Image src='https://www.yumasoft.com/fonts/svg/yumasoft_logo.svg' style={{width: '100%', height: '300px'}}/>
+            <Image src='https://www.yumasoft.com/fonts/svg/yumasoft_logo.svg' style={{ margin: 'auto', marginTop: '1rem', width: '25%', height: '100px'}}/>
             <table >
                 <thead>
                     <tr>
                         <th><Image src='https://www.yumasoft.com/fonts/svg/yumasoft_logo.svg'
                             style={{width: '250px', height: '250px', borderRadius: '150px', backgroundColor: 'black'}} /></th>
-                        <th></th>
+                        <th style={{display: 'block', marginLeft: '10px', marginTop:'2rem', width: '150px'}}>
+                            <td style={{display: 'flex', marginLeft: '10px', marginTop: '10px'}}><h2>Состояние запросов</h2></td>
+                            {vacation.vacations.map(vac =>
+                                <>
+                                    { vac.employerId == auth.auth.user.id
+                                    ?
+                                    <>
+                                        {vac.status=='approve'
+                                        ?
+                                            <Tag key={vac._id} style={{background: '#77C66E', width: '26rem'}}>{vac.startDate.slice(0, -13)+' - '+vac.endDate.slice(0, -13)+". Статус запроса: подтвержден"}</Tag>
+                                        :
+                                        <>
+                                            { vac.status=='reject'
+                                            ?
+                                                <Tag key={vac._id} style={{background: '#ff6961', width: '26rem'}}>{vac.startDate.slice(0, -13)+' - '+vac.endDate.slice(0, -13)+". Статус запроса: откланен"}</Tag>
+                                            :
+                                                <Tag key={vac._id} style={{width: '26rem'}}>{vac.startDate.slice(0, -13)+' - '+vac.endDate.slice(0, -13)+". Статус запроса: пока не рассмотрен"}</Tag>
+                                            }
+                                        </>
+                                        }
+                                    </>
+                                    :
+                                    ''
+                                    }
+                                </>
+                            )}
+                        </th>
                         <th>
                             <div>
                             <Button onClick={() => setEditModalActive(true)} style={{width: '150px', height: '100px', backgroundColor: 'black'}}>Изменить пользователя</Button>
@@ -216,44 +245,19 @@ const ProfileHeader = () => {
                     </tr>
                     <tr>
                         <td style={{display: 'flex', marginLeft: '10px'}}>
-                            <Button onClick={() => setEditBirthdayModalActive(true)} style={{width: '150px', height: '100px', backgroundColor: 'black'}}>Изменить день рождения</Button>
+                            <Button onClick={() => setEditBirthdayModalActive(true)} style={{width: '50px', height: '45px', backgroundColor: '#77C66E', borderColor: '#77C66E'}}><Calendar /></Button>
                         </td>
                         <td><h5>Имя:</h5><h3>{user.user?.firstname}</h3></td>
                         <td><h5>Фамилия:</h5><h3>{user.user?.secondname}</h3></td>
                         <td><h5>Пол: </h5><h3>{user.user?.gender}</h3></td>
                     </tr>
                     <tr>
-                        <td style={{display: 'flex', marginLeft: '10px', marginTop: '10px'}}><h2>Состояние запросов</h2></td>
+                        <td style={{display: 'flex', marginLeft: '10px', marginTop: '10px'}}></td>
                         <td><h5>Email:</h5><h3>{user.user?.email}</h3></td>
                         <td><h5>Телефон:</h5><h3>{user.user?.phoneNumber}</h3></td>
                         <td><h5>Отдел:</h5><h3>{user.user?.departament}</h3></td>
                     </tr>
                     <tr>
-                        <td style={{display: 'block', marginLeft: '10px', width: '150px'}}>{vacation.vacations.map(vac =>
-                                <>
-                                    { vac.employerId == auth.auth.user.id
-                                    ?
-                                    <>
-                                        {vac.status=='approve'
-                                        ?
-                                            <Tag key={vac._id} style={{background: '#77C66E', width: '26rem'}}>{vac.startDate.slice(0, -13)+' - '+vac.endDate.slice(0, -13)+". Статус запроса: подтвержден"}</Tag>
-                                        :
-                                        <>
-                                            { vac.status=='reject'
-                                            ?
-                                                <Tag key={vac._id} style={{background: '#ff6961', width: '26rem'}}>{vac.startDate.slice(0, -13)+' - '+vac.endDate.slice(0, -13)+". Статус запроса: откланен"}</Tag>
-                                            :
-                                                <Tag key={vac._id} style={{width: '26rem'}}>{vac.startDate.slice(0, -13)+' - '+vac.endDate.slice(0, -13)+". Статус запроса: пока не рассмотрен"}</Tag>
-                                            }
-                                        </>
-                                        }
-                                    </>
-                                    :
-                                    ''
-                                    }
-                                </>
-                            )}
-                        </td>
                         <td>
                             <Modal active={modalEditActive} setActive={setEditModalActive} modalHeader='Изменить пользователя'><EditUserFrom setIsOpen={setEditModalActive} employerId=''/></Modal>
                             <Modal active={modalEditBirthdayActive} setActive={setEditBirthdayModalActive} modalHeader='Изменить дату рождения'><EditBirthday setIsOpen={setEditBirthdayModalActive} employerId=''/></Modal>
