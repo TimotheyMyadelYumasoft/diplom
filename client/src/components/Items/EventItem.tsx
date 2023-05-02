@@ -10,6 +10,9 @@ import { IEvent } from "../../types/event";
 import { IUser} from '../../types/user'
 import { useTypeSelector } from "../../hooks/useTypedSelector";
 import { fetchAllEvents } from "../../store/action-creators/event";
+import {Trash} from 'react-bootstrap-icons'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 
 type Props = {
@@ -43,7 +46,7 @@ const EventItem = ({ev, us}: Props) => {
         <Card.Body style={{alignContent: 'center'}}>
             <Card.Title>{ev.title}</Card.Title>
             <Card.Text>
-                Дата проведения: {ev.startDate.split('T')[0]}
+                Дата проведения: {ev.startDate?.split('T')[0]}
             </Card.Text>
             <Card.Text>
                 Описание: {ev.description}
@@ -69,7 +72,16 @@ const EventItem = ({ev, us}: Props) => {
             </Card.Text>
             { auth.auth.user.role =='ADMIN' || auth.auth.user.role=='RECRUITED'
             ?
-            <Button onClick={() => sureDelete()} style={{width: '150px', height: '60px', backgroundColor: '#77C66E', marginLeft: '15px', borderColor: '#77C66E'}}>Удалить мероприятие</Button>
+            <OverlayTrigger
+                    key={'bottom'}
+                    placement={'bottom'}
+                    overlay={
+                        <Tooltip id={`tooltip-${'bottom'}`}>
+                            Удалить мероприятие
+                        </Tooltip>
+                    }>
+                <Button onClick={() => sureDelete()} style={{width: '50px', height: '45px', backgroundColor: '#77C66E', marginLeft: '2rem', borderColor: '#77C66E'}}><Trash /></Button>
+            </OverlayTrigger>
             :
             ''
             }

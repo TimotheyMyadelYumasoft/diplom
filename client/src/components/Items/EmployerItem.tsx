@@ -10,6 +10,9 @@ import { useEffect, useState } from "react";
 import { useAction } from "../../hooks/useAction";
 import MySelect from "../UI/select/MySelect";
 import { useTypeSelector } from "../../hooks/useTypedSelector";
+import {PencilSquare , Trash, Trash3Fill} from 'react-bootstrap-icons'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 
 type Props = {
@@ -50,8 +53,13 @@ const EmployerItem = ({empl}: Props) => {
     }
 
     return (
-      <Card >
-      {/* <Card.Img variant="top" src='https://www.yumasoft.com/fonts/svg/yumasoft_logo.svg' style={{width: '100%', height: '400px', borderRadius: '200px', backgroundColor: 'black'}} /> */}
+      <Card style={{ width: '25rem', margin:'2rem 0rem 2rem 0rem', display: 'grid', justifyItems: 'center'}}>
+        { empl.password
+        ?
+            <Card.Img variant="top" src='https://www.yumasoft.com/fonts/svg/yumasoft_logo.svg' style={{width: '75%', height: '300px', borderRadius: '200px', backgroundColor: 'black', alignItems: 'center'}} />
+        :
+        ''
+        }
         <Card.Body style={{alignContent: 'center'}}>
             <Card.Title>{empl.firstname} {empl.secondname}</Card.Title>
             <Card.Text>
@@ -92,18 +100,44 @@ const EmployerItem = ({empl}: Props) => {
             { auth.user.role=='RECRUITER' || auth.user.role=='ADMIN'
             ?
             <>
-                <Button onClick={() => setEditModalActive(true)} style={{width: '150px', height: '100px', backgroundColor: '#77C66E', marginLeft: '2rem', borderColor: '#77C66E'}}>{empl.password ? 'Изменить пользователя' : 'Изменить кандидата'}</Button>
-                <Button onClick={() => sureDelete()} style={{width: '150px', height: '100px', backgroundColor: '#77C66E', marginLeft: '15px', borderColor: '#77C66E'}}>{empl.password ? 'Удалить пользователя' : 'Удалить кандидата из базы'}</Button>
-
+                <OverlayTrigger
+                    key={'bottom'}
+                    placement={'bottom'}
+                    overlay={
+                        <Tooltip id={`tooltip-${'bottom'}`}>
+                        {empl.password ? 'Изменить пользователя' : 'Изменить кандидата'}
+                        </Tooltip>
+                    }>
+                    <Button onClick={() => setEditModalActive(true)} style={{width: '50px', height: '45px', backgroundColor: '#77C66E', marginLeft: '2rem', borderColor: '#77C66E'}}><PencilSquare /></Button>
+                </OverlayTrigger>
+                <OverlayTrigger
+                    key={'bottom'}
+                    placement={'bottom'}
+                    overlay={
+                        <Tooltip id={`tooltip-${'bottom'}`}>
+                        {empl.password ? 'Удалить пользователя' : 'Удалить кандидата из базы'}
+                        </Tooltip>
+                    }>
+                    <Button onClick={() => sureDelete()} style={{width: '50px', height: '45px', backgroundColor: '#77C66E', marginLeft: '2rem', borderColor: '#77C66E'}}><Trash /></Button>
+                </OverlayTrigger>
                 { empl.statusCandidate=='accepted' && !empl.password
                 ?
-                <Button onClick={() => setCreateCandidateModalActive(true)} style={{width: '250px', height: '50px', backgroundColor: '#77C66E', margin: '1rem 4rem 0rem 4rem', borderColor: '#77C66E'}}>Создать пользователя</Button>
+                <Button onClick={() => setCreateCandidateModalActive(true)} style={{width: '50px', height: '45px', backgroundColor: '#77C66E', marginLeft: '2rem', borderColor: '#77C66E'}}>Создать пользователя</Button>
                 : ''
                 }
 
                 { empl.statusCandidate!=='hired' && empl.statusCandidate=='accepted'
                 ?
-                <Button onClick={() => sureClear()} style={{width: '250px', height: '60px', backgroundColor: '#77C66E', margin: '1rem 4rem 0rem 4rem', borderColor: '#77C66E'}}>Удалить из списка кандидатов</Button>
+                <OverlayTrigger
+                    key={'bottom'}
+                    placement={'bottom'}
+                    overlay={
+                        <Tooltip id={`tooltip-${'bottom'}`}>
+                        Удалить кандидата из списка.
+                        </Tooltip>
+                    }>
+                    <Button onClick={() => sureClear()} style={{width: '50px', height: '45px', backgroundColor: '#77C66E', marginLeft: '2rem', borderColor: '#77C66E'}}><Trash3Fill /></Button>
+                </OverlayTrigger>
                 : ''
                 }
             </>

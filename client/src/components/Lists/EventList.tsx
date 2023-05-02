@@ -10,6 +10,9 @@ import { DatePicker, Select, Space, TimePicker } from 'antd';
 import { Control, Controller, useForm } from "react-hook-form";
 import dayjs from "dayjs";
 import { Button } from "react-bootstrap"
+import {Search} from 'react-bootstrap-icons'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 type Props = {
     events: IEvent[],
@@ -83,8 +86,17 @@ const EventList = ({events, users}: Props) => {
                                 <br />
                                 <span>Дата проведения мероприятия </span>
                                 <DatePicker picker='date' onChange={(value) => setDateOfEvent(dayjs(value).toString())} />
+                                <OverlayTrigger
+                                    key={'top'}
+                                    placement={'top'}
+                                    overlay={
+                                        <Tooltip id={`tooltip-${'top'}`}>
+                                            Найти мероприятия в этот день
+                                        </Tooltip>
+                                    }>
+                                    <Button onClick={handleSubmitFilter} style={{width: '50px', height: '45px', backgroundColor: '#77C66E', borderColor: '#77C66E', marginLeft: '1rem'}}><Search /></Button>
+                                </OverlayTrigger>
                             </div>
-                            <Button onClick={handleSubmitFilter} style={{width: '220px', height: '60px', backgroundColor: '#77C66E', marginLeft: '15px', borderColor: '#77C66E'}}>Найти мероприятия в этот день</Button>
                             <br />
                         </form>
             </div>
@@ -94,7 +106,7 @@ const EventList = ({events, users}: Props) => {
                     <>
                         {events?.map( event =>
                             <>
-                            {event.startDate.split('T')[0]==selectedDate
+                            {event.startDate?.split('T')[0]==selectedDate
                             ?
                             <EventItem ev={event} us={users} />
                             :

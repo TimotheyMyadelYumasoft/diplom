@@ -3,6 +3,9 @@ import { IVacation } from "../../types/vacation";
 import { IUser } from "../../types/user";
 import { useAction } from "../../hooks/useAction";
 import { useTypeSelector } from "../../hooks/useTypedSelector";
+import {Trash, CheckCircleFill, DashCircleFill} from 'react-bootstrap-icons'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 type Props = {
     vac: IVacation;
@@ -64,8 +67,26 @@ const VacationItem = ({vac, emp}: Props) => {
           {vac.status!=='approve'
           ?
           <>
-            <Button onClick={() => sureReject()} style={{width: '150px', height: '60px', backgroundColor: '#77C66E', marginLeft: '15px', borderColor: '#77C66E'}}>Отклонить выходной</Button>
-            <Button onClick={() => sureAccept()} style={{width: '150px', height: '60px', backgroundColor: '#77C66E', marginLeft: '15px', borderColor: '#77C66E'}}>Одобрить выходной</Button>
+          <OverlayTrigger
+                    key={'top'}
+                    placement={'top'}
+                    overlay={
+                        <Tooltip id={`tooltip-${'top'}`}>
+                            Отклонить выходной
+                        </Tooltip>
+                    }>
+            <Button onClick={() => sureReject()} style={{width: '50px', height: '45px', backgroundColor: '#77C66E', marginLeft: '2rem', borderColor: '#77C66E'}}><DashCircleFill /></Button>
+          </OverlayTrigger>
+          <OverlayTrigger
+                    key={'top'}
+                    placement={'top'}
+                    overlay={
+                        <Tooltip id={`tooltip-${'top'}`}>
+                            Одобрить выходной
+                        </Tooltip>
+                    }>
+            <Button onClick={() => sureAccept()} style={{width: '50px', height: '45px', backgroundColor: '#77C66E', marginLeft: '2rem', borderColor: '#77C66E'}}><CheckCircleFill /></Button>
+          </OverlayTrigger>
           </>:
           ''
           }
@@ -73,7 +94,16 @@ const VacationItem = ({vac, emp}: Props) => {
           { auth.user.role =='ADMIN' || auth.user.role=='RECRUITED'
           ?
           <>
-            <Button onClick={() => sureDelete()} style={{width: '150px', height: '60px', backgroundColor: '#77C66E', margin: '1rem 0px 0px 6rem', borderColor: '#77C66E'}}>Удалить выходной</Button>
+          <OverlayTrigger
+                    key={'top'}
+                    placement={'top'}
+                    overlay={
+                        <Tooltip id={`tooltip-${'top'}`}>
+                            Удалить выходной
+                        </Tooltip>
+                    }>
+            <Button onClick={() => sureDelete()} style={{width: '50px', height: '45px', backgroundColor: '#77C66E', marginLeft: '2rem', borderColor: '#77C66E'}}><Trash /></Button>
+          </OverlayTrigger>
           </>
           :
           ''

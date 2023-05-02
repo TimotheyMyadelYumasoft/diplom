@@ -106,7 +106,7 @@ class UserService {
     }
     async createCandidateById(_id, password, statusCandidate) {
         const hashPassword = await bcrypt.hash(password, 3);
-        const candidate = await UserModel.findByIdAndUpdate(_id, {password: hashPassword, statusCandidate: statusCandidate})
+        const candidate = await UserModel.findByIdAndUpdate(_id, {password: hashPassword, statusCandidate: statusCandidate, hiredDate: '2023-04-27T08:30:00Z'})
         console.log(statusCandidate)
         console.log(candidate)
         return await UserModel.findById(_id)
@@ -191,7 +191,7 @@ class UserService {
         const hashPassword = await bcrypt.hash(password, 3);
         const activationLink = uuid.v4();   // uniq str
 
-        const user = await UserModel.create({email, password: hashPassword, activationLink, role: role})
+        const user = await UserModel.create({email, password: hashPassword, activationLink, role: role, hiredDate: '2023-04-27T08:30:00Z'})
         await mailService.sendActivationMail(email, `${process.env.API_URL}/api/user/activate/${activationLink}`);
 
         const userDto = new UserDto(user); // id, email, isActivated

@@ -29,13 +29,13 @@ function EmployeesPage() {
         setSelectedSort(sort)
         console.log(sort)
         if(sort == 'firstname') {
-            employers = employers.sort((a, b) => a.firstname.localeCompare(b.firstname));
+            employers = employers.sort((a, b) => a.firstname?.localeCompare(b.firstname));
         }
         else if (sort == 'email') {
-            employers = employers.sort((a, b) => a.email.localeCompare(b.email));
+            employers = employers.sort((a, b) => a.email?.localeCompare(b.email));
         }
         else if (sort == 'secondname') {
-            employers = employers.sort((a, b) => a.secondname.localeCompare(b.secondname));
+            employers = employers.sort((a, b) => a.secondname?.localeCompare(b.secondname));
         }
     }
 

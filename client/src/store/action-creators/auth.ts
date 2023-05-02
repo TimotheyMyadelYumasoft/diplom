@@ -16,6 +16,7 @@ export const login = (email: string, password: string) => {
             localStorage.setItem('token', response.data.accessToken)
         }
         catch(e) {
+            alert('Данные были неправильно введены')
             console.log(e)
         }
     }

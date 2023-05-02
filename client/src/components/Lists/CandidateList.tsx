@@ -20,7 +20,7 @@ const CandidateList = ({employers}: Props) => {
 
     return (
         <div style={{display: 'flex', msFlexDirection: 'column', flexWrap: 'wrap'}}>
-            <div >
+            <div style={{backgroundColor: '#f2f2f2'}}>
                 <div className="candidate__header__reject">
                     <h2>Кандидат отклонен</h2>
                 </div>
@@ -42,7 +42,7 @@ const CandidateList = ({employers}: Props) => {
                 )}
                 </div>
             </div>
-            <div>
+            <div style={{backgroundColor: '#f2f2f2'}}>
                 <div className="candidate__header__review">
                     <h2>Кандидат рассматривается</h2>
                 </div>
