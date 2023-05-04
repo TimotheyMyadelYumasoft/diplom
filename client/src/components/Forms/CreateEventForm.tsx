@@ -8,11 +8,14 @@ import MySelect from "../UI/select/MySelect";
 import RHFDatePickerField from "../UI/RHFDatePickerField";
 import { Control, Controller, useForm } from "react-hook-form";
 import dayjs from "dayjs";
+import '../../style/Button.css'
+import {PlusSquareFill} from 'react-bootstrap-icons'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 
 
 import React from 'react';
-import type { DatePickerProps, TimePickerProps } from 'antd';
 import { DatePicker, Select, Space, TimePicker } from 'antd';
 
 
@@ -114,9 +117,18 @@ const CreateEventForm = ({ setIsOpen, employers }: Props) => {
                     </form>
                 </div>
 
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
+                <OverlayTrigger
+                    key={'bottom'}
+                    placement={'bottom'}
+                    overlay={
+                        <Tooltip id={`tooltip-${'bottom'}`}>
+                            Создать мероприятие
+                        </Tooltip>
+                    }>
+                    <Button variant="primary" type="submit" className="submit-btn">
+                        <PlusSquareFill />
+                    </Button>
+                </OverlayTrigger>
             </Form>
         </div>
     )

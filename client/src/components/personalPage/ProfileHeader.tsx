@@ -2,22 +2,21 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useTypeSelector } from '../../hooks/useTypedSelector';
 import { useAction } from '../../hooks/useAction';
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Table from 'react-bootstrap/Table';
 import Image from 'react-bootstrap/Image'
 import Modal from '../Modal';
 import EditUserFrom from '../Forms/EditUserFrom';
 import {Tag } from 'antd'
 
-
-
-import { Control, Controller, useForm } from "react-hook-form";
-import { DatePicker, DatePickerProps } from "antd";
 import dayjs from "dayjs";
-import EditBirthday from '../Forms/EditBirthday';
-import {Calendar} from 'react-bootstrap-icons'
+import { Control, Controller, useForm } from "react-hook-form";
+import { Card } from 'react-bootstrap';
+import ProgressBar from 'react-bootstrap/ProgressBar';
+import { DatePicker, Select, Space, TimePicker } from 'antd';
+import '../../style/Button.css'
+import {Calendar2Heart, CalendarRangeFill} from 'react-bootstrap-icons'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+
 
 interface RHFDatePickerFieldProps {
   control: Control<any>;
@@ -64,6 +63,8 @@ const ProfileHeader = () => {
     const [modalEditBirthdayActive, setEditBirthdayModalActive] = useState(false);
     const [modalVacationActive, setVacationModalActive] = useState(false);
     const {auth, user, project, vacation} = useTypeSelector(state => state)
+    const [ DateOfStart, setDateOfStart] = useState<string>('')
+    const [ DateOfEnd, setDateOfEnd] = useState<string>('')
 
     const {fetchVacations} = useAction()
     useEffect(() => {
@@ -88,7 +89,9 @@ const ProfileHeader = () => {
       }>();
 
     const sendVacation = (startDate: string, endDate: string) => {
-        if(startDate && endDate == 'Invalid Date'){
+        console.log(startDate, endDate)
+        if(startDate == 'Invalid Date' || endDate == 'Invalid Date' || startDate == '' || endDate == ''){
+            console.log(startDate, endDate)
             alert('Заполните поля даты, для создания запроса на отпуск');
         }
         else{
@@ -96,10 +99,7 @@ const ProfileHeader = () => {
             monthIs(startDate.split(' ')[2]) > monthIs(endDate.split(' ')[2]) && startDate.split(' ')[3] == endDate.split(' ')[3] ||
             startDate.split(' ')[3] > endDate.split(' ')[3]
             ){
-                alert('Дата начала идет перед датой конца. Поменяйте пожалуйста')
-            }
-            else if(startDate === endDate){
-                alert('Оба поля даты пытые');
+                alert('Дата начала идет перед датой конца. Поменяйте значения пожалуйста')
             }
             else{
                 setVacation(dayjs(startDate).toString(), dayjs(endDate).toString(), 'vacation', auth.auth.user.id)
@@ -109,18 +109,15 @@ const ProfileHeader = () => {
     }
 
     const sendSickVacation = (startDate: string, endDate: string) => {
-        if(startDate && endDate == 'Invalid Date'){
-            alert('Заполните поля даты, для создания запроса на отпуск');
-        }
-        else if(startDate === endDate){
-            alert('Оба поля даты пытые');
+        if(startDate == 'Invalid Date' || endDate == 'Invalid Date' || startDate == '' || endDate == ''){
+            alert('Заполните поля даты, для создания запроса на больничный');
         }
         else{
             if(startDate.split(' ')[1] > endDate.split(' ')[1] && monthIs(startDate.split(' ')[2]) == monthIs(endDate.split(' ')[2]) && startDate.split(' ')[3] == endDate.split(' ')[3] ||
             monthIs(startDate.split(' ')[2]) > monthIs(endDate.split(' ')[2]) && startDate.split(' ')[3] == endDate.split(' ')[3] ||
             startDate.split(' ')[3] > endDate.split(' ')[3]
             ){
-                alert('Дата начала идет перед датой конца. Поменяйте пожалуйста')
+                alert('Дата начала идет перед датой конца. Поменяйте значения пожалуйста')
             }
             else{
                 setVacation(dayjs(startDate).toString(), dayjs(endDate).toString(), 'sickLeave', auth.auth.user.id)
@@ -159,113 +156,96 @@ const ProfileHeader = () => {
     }
 
     return(
-
-        <Card>
-            <Image src='https://www.yumasoft.com/fonts/svg/yumasoft_logo.svg' style={{ margin: 'auto', marginTop: '1rem', width: '25%', height: '100px'}}/>
-            <table >
-                <thead>
-                    <tr>
-                        <th><Image src='https://www.yumasoft.com/fonts/svg/yumasoft_logo.svg'
-                            style={{width: '250px', height: '250px', borderRadius: '150px', backgroundColor: 'black'}} /></th>
-                        <th style={{display: 'block', marginLeft: '10px', marginTop:'2rem', width: '150px'}}>
-                            <td style={{display: 'flex', marginLeft: '10px', marginTop: '10px'}}><h2>Состояние запросов</h2></td>
-                            {vacation.vacations.map(vac =>
-                                <>
-                                    { vac.employerId == auth.auth.user.id
-                                    ?
-                                    <>
-                                        {vac.status=='approve'
-                                        ?
-                                            <Tag key={vac._id} style={{background: '#77C66E', width: '26rem'}}>{vac.startDate.slice(0, -13)+' - '+vac.endDate.slice(0, -13)+". Статус запроса: подтвержден"}</Tag>
-                                        :
-                                        <>
-                                            { vac.status=='reject'
-                                            ?
-                                                <Tag key={vac._id} style={{background: '#ff6961', width: '26rem'}}>{vac.startDate.slice(0, -13)+' - '+vac.endDate.slice(0, -13)+". Статус запроса: откланен"}</Tag>
-                                            :
-                                                <Tag key={vac._id} style={{width: '26rem'}}>{vac.startDate.slice(0, -13)+' - '+vac.endDate.slice(0, -13)+". Статус запроса: пока не рассмотрен"}</Tag>
-                                            }
-                                        </>
-                                        }
-                                    </>
-                                    :
-                                    ''
-                                    }
-                                </>
-                            )}
-                        </th>
-                        <th>
-                            <div>
-                            <Button onClick={() => setEditModalActive(true)} style={{width: '150px', height: '100px', backgroundColor: 'black'}}>Изменить пользователя</Button>
-                            </div>
-                        </th>
-                        <th>
-                            <div>
-                            <form
+        <div>
+            <Image
+                src='https://www.yumasoft.com/fonts/svg/yumasoft_logo.svg'
+                style={{ marginTop: '1rem', width: '25%', height: '100px', display: 'block',
+                marginLeft: 'auto',
+                marginRight: 'auto'
+            }}
+            />
+            <div>
+                <div style={{display: 'flex', msFlexDirection: 'column', flexWrap: 'wrap'}}>
+                    <Image
+                        src='https://www.yumasoft.com/fonts/svg/yumasoft_logo.svg'
+                        style={{width: '250px', height: '250px', borderRadius: '150px', backgroundColor: 'black', margin: '1rem 0rem 1rem 3rem'}}
+                    />
+                    <div>
+                    <Card style={{ width: '40rem', margin: '1rem 0rem 0rem 4rem', paddingBottom: '2rem'}}>
+                        <Card.Title as='h1' style={{textAlign: 'center', margin: '1rem'}}>{user.user?.secondname} {user.user?.firstname}</Card.Title>
+                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Email: {user.user?.email}</Card.Text>
+                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Номер телефона: {user.user?.phoneNumber}</Card.Text>
+                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Страна проживания: {user.user?.location}</Card.Text>
+                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Отдел: {user.user?.departament}</Card.Text>
+                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>День рождения: {user.user?.birthDay?.split('T')[0]}</Card.Text>
+                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>День найма: {user.user?.hiredDate?.split('T')[0]}</Card.Text>
+                        {  user.user?.firedDate
+                        ?
+                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>День увольнения: {user.user?.firedDate?.split('T')[0]}</Card.Text>
+                        :
+                        ''
+                        }
+                    </Card>
+                    </div>
+                    <div>
+                        <Card style={{ width: '35rem', margin: '1rem 0rem 0rem 4rem', paddingBottom: '2rem'}}>
+                            <Card.Title as='h1' style={{textAlign: 'center', margin: '1rem'}}>Информация об отпусках</Card.Title>
+                            <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Количество отпускных пользователя: 12</Card.Text>
+                            <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Отпускных доступно пользователю: 12</Card.Text>
+                            <ProgressBar style={{margin: '1rem 2rem 0rem 2rem'}}>
+                                <ProgressBar variant='warning' now={50}/>
+                            </ProgressBar>
+                                    <form
                             onSubmit={handleSubmit((data) => {
                                 console.log("data ready to submit", data);
                             })}
                             >
-                            <div>
-                                <br />
-                                <span>C </span>
-                                <RHFDatePickerField
-                                placeholder="Start Date"
-                                control={control}
-                                name="startDate"
-                                />
-                                <br />
-                                <span>До </span>
-                                <RHFDatePickerField
-                                placeholder="End Date"
-                                control={control}
-                                name="endDate"
-                                />
-                            </div>
-                            <br />
-                            <Button onClick={() => sendVacation(dayjs(watch("startDate")).toString() , dayjs(watch("endDate")).toString())} style={{width: '150px', height: '100px', marginRight: '10px'}}>
-                                Запрос на отпуск
-                            </Button>
-                            <Button onClick={() => sendSickVacation(dayjs(watch("startDate")).toString() , dayjs(watch("endDate")).toString())} style={{width: '150px', height: '100px'}}>
-                                Запрос на выходной иного вида
-                            </Button>
+                                <div style={{margin: '2rem 0rem 0rem 2rem'}}>
+                                    <span>Дата начала </span>
+                                    <DatePicker picker='date' onChange={(value) => setDateOfStart(dayjs(value).toString())} />
+                                    <br />
+                                    <br />
+                                    <span>Дата окончания</span>
+                                    <DatePicker picker='date' onChange={(value) => setDateOfEnd(dayjs(value).toString())} />
+                                    <br />
+                                    <br />
+                                    <OverlayTrigger
+                                    key={'bottom'}
+                                    placement={'bottom'}
+                                    overlay={
+                                        <Tooltip id={`tooltip-${'bottom'}`}>
+                                            Запрос на отпуск
+                                        </Tooltip>
+                                    }>
+                                        <Button onClick={() => sendVacation(DateOfStart, DateOfEnd)}
+                                            className='common-btn'
+                                        >
+                                            <CalendarRangeFill />
+                                        </Button>
+                                    </OverlayTrigger>
+
+                                    <OverlayTrigger
+                                    key={'bottom'}
+                                    placement={'bottom'}
+                                    overlay={
+                                        <Tooltip id={`tooltip-${'bottom'}`}>
+                                            Запрос на больничный
+                                        </Tooltip>
+                                    }>
+                                        <Button onClick={() => sendSickVacation(DateOfStart, DateOfEnd)}
+                                            className='common-btn'
+                                        >
+                                            <Calendar2Heart />
+                                        </Button>
+                                    </OverlayTrigger>
+                                </div>
                             </form>
-                            </div>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style={{display: 'flex', marginLeft: '10px', marginTop: '10px'}}>
-                        {/* <Button >Изменить фотографию</Button> */}
-                        </td>
-                        <td><h5>День рождения</h5><h3>{user.user?.birthDay?.split('T')[0]}</h3></td>
-                        <td><h5>День найма</h5><h3>{user.user?.hiredDate?.split('T')[0]}</h3></td>
-                        { user.user?.firedDate ? <td><h5>День увольнения</h5><h3>{user.user?.firedDate?.split('T')[0]}</h3></td> : ''}
-                    </tr>
-                    <tr>
-                        <td style={{display: 'flex', marginLeft: '10px'}}>
-                            <Button onClick={() => setEditBirthdayModalActive(true)} style={{width: '50px', height: '45px', backgroundColor: '#77C66E', borderColor: '#77C66E'}}><Calendar /></Button>
-                        </td>
-                        <td><h5>Имя:</h5><h3>{user.user?.firstname}</h3></td>
-                        <td><h5>Фамилия:</h5><h3>{user.user?.secondname}</h3></td>
-                        <td><h5>Пол: </h5><h3>{user.user?.gender}</h3></td>
-                    </tr>
-                    <tr>
-                        <td style={{display: 'flex', marginLeft: '10px', marginTop: '10px'}}></td>
-                        <td><h5>Email:</h5><h3>{user.user?.email}</h3></td>
-                        <td><h5>Телефон:</h5><h3>{user.user?.phoneNumber}</h3></td>
-                        <td><h5>Отдел:</h5><h3>{user.user?.departament}</h3></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <Modal active={modalEditActive} setActive={setEditModalActive} modalHeader='Изменить пользователя'><EditUserFrom setIsOpen={setEditModalActive} employerId=''/></Modal>
-                            <Modal active={modalEditBirthdayActive} setActive={setEditBirthdayModalActive} modalHeader='Изменить дату рождения'><EditBirthday setIsOpen={setEditBirthdayModalActive} employerId=''/></Modal>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </Card>
+
+                        </Card>
+                    </div>
+                </div>
+            </div>
+        </div>
     )
 }
 
