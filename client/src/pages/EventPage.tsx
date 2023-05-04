@@ -14,6 +14,7 @@ import CreateEventForm from '../components/Forms/CreateEventForm'
 import {PlusSquareFill} from 'react-bootstrap-icons'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+import '../style/Button.css'
 
 const EventPage = () => {
     const {auth, isAuth} = useTypeSelector(state => state.auth)
@@ -46,7 +47,7 @@ const EventPage = () => {
             <Navigation />
             { auth.user.role=='RECRUITER' || auth.user.role=='ADMIN'
             ?
-                <div style={{display: 'flex', msFlexDirection: 'column', flexWrap: 'wrap'}}>
+                <div style={{display: 'flex', msFlexDirection: 'column', flexWrap: 'wrap', margin: '1rem 0rem 0rem 2rem'}}>
                     <OverlayTrigger
                     key={'bottom'}
                     placement={'bottom'}
@@ -55,7 +56,7 @@ const EventPage = () => {
                             Создать мероприятие
                         </Tooltip>
                     }>
-                        <Button onClick={() => setCreateEventModalActive(true)} style={{width: '50px', height: '45px', backgroundColor: '#77C66E', margin: '1rem 4rem 0rem 4rem', borderColor: '#77C66E'}}><PlusSquareFill /></Button>
+                        <Button onClick={() => setCreateEventModalActive(true)} className="common-btn"><PlusSquareFill /></Button>
                     </OverlayTrigger>
                 </div>
             :

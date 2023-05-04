@@ -1,0 +1,61 @@
+.common-btn {
+    width: 3rem;
+    height: 45px;
+    background-color: black;
+    margin-left: 2rem;
+    border-color: black;
+}
+
+.common-btn:hover {
+    width: 3rem;
+    height: 45px;
+    background-color: black;
+    color: #ffc107;
+    margin-left: 2rem;
+    border-color: black;
+}
+
+.logout-btn {
+    width: 5rem;
+    height: 45px;
+    background-color: #ffc107;
+    color: black;
+    margin-right: 1rem;
+    border-color: black;
+}
+
+.accept-vacation-btn {
+    width: 12rem;
+    height: 45px;
+    background-color: #ffc107;
+    color: black;
+    margin-top: 1rem;
+    border-color: black;
+}
+
+.accept-vacation-btn:hover {
+    width: 12rem;
+    height: 45px;
+    background-color: black;
+    color: #ffc107;
+    margin-top: 1rem;
+    border-color: black;
+}
+
+.submit-btn {
+    width: 10rem;
+    height: 45px;
+    background-color: #ffc107;
+    color: black;
+    margin-right: 1rem;
+    border-color: black;
+}
+
+.submit-btn:hover {
+    width: 10rem;
+    height: 45px;
+    background-color: black;
+    color: #ffc107;
+    margin-right: 1rem;
+    border-color: black;
+}

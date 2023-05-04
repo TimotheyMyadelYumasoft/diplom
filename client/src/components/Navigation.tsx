@@ -10,6 +10,7 @@ import { useTypeSelector } from '../hooks/useTypedSelector';
 import Modal from './Modal';
 import CreateCandidate from "./Forms/CreateCandidate";
 import CreateUser from "./Forms/CreateUser";
+import {DoorOpen} from 'react-bootstrap-icons'
 
 const Navigation: FC = () => {
     const {auth, isAuth} = useTypeSelector(state => state.auth)
@@ -30,7 +31,7 @@ const Navigation: FC = () => {
     }, [])
 
     return (
-        <Navbar bg="dark" variant="dark">
+        <Navbar bg="black" variant="dark">
         <Container className="ms-5">
             <Navbar.Brand href="/">Yumasoft management system</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -73,7 +74,7 @@ const Navigation: FC = () => {
             </Nav>
             </Navbar.Collapse>
         </Container>
-        <Button onClick={() => logout()} className="me-5">Logout</Button>
+        <Button onClick={() => logout()} className="logout-btn"><DoorOpen /></Button>
 
         <Modal active={modalCreateCandidateActive} setActive={setCreateCandidateModalActive} modalHeader='Создать кандидата'><CreateCandidate setIsOpen={setCreateCandidateModalActive} /></Modal>
         <Modal active={modalCreateUserActive} setActive={setCreateUserModalActive} modalHeader='Создать пользователя'><CreateUser setIsOpen={setCreateUserModalActive} role={role}/></Modal>

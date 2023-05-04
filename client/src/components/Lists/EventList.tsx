@@ -13,6 +13,7 @@ import { Button } from "react-bootstrap"
 import {Search} from 'react-bootstrap-icons'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+import '../../style/Button.css'
 
 type Props = {
     events: IEvent[],
@@ -94,7 +95,7 @@ const EventList = ({events, users}: Props) => {
                                             Найти мероприятия в этот день
                                         </Tooltip>
                                     }>
-                                    <Button onClick={handleSubmitFilter} style={{width: '50px', height: '45px', backgroundColor: '#77C66E', borderColor: '#77C66E', marginLeft: '1rem'}}><Search /></Button>
+                                    <Button onClick={handleSubmitFilter} className="common-btn"><Search /></Button>
                                 </OverlayTrigger>
                             </div>
                             <br />

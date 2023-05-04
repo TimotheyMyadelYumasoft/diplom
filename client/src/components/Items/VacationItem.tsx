@@ -6,6 +6,7 @@ import { useTypeSelector } from "../../hooks/useTypedSelector";
 import {Trash, CheckCircleFill, DashCircleFill} from 'react-bootstrap-icons'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+import "../../style/Button.css"
 
 type Props = {
     vac: IVacation;
@@ -51,7 +52,9 @@ const VacationItem = ({vac, emp}: Props) => {
   }
 
     return (
-      <Card style={{ width: '25rem', margin:'2rem 0rem 2rem 0rem', display: 'grid', justifyItems: 'center'}}>
+      <Card style={{ width: '25rem', margin:'2rem 0rem 2rem 0rem', display: 'grid', justifyItems: 'center'}}
+      bg={'warning'}
+      >
         <Card.Body>
           <Card.Title>Тип отпуска: {vac.type == 'vacation' ? 'отпуск' : 'больничный'}</Card.Title>
           <Card.Text>
@@ -75,7 +78,7 @@ const VacationItem = ({vac, emp}: Props) => {
                             Отклонить выходной
                         </Tooltip>
                     }>
-            <Button onClick={() => sureReject()} style={{width: '50px', height: '45px', backgroundColor: '#77C66E', marginLeft: '2rem', borderColor: '#77C66E'}}><DashCircleFill /></Button>
+            <Button onClick={() => sureReject()} className="common-btn"><DashCircleFill /></Button>
           </OverlayTrigger>
           <OverlayTrigger
                     key={'top'}
@@ -85,7 +88,7 @@ const VacationItem = ({vac, emp}: Props) => {
                             Одобрить выходной
                         </Tooltip>
                     }>
-            <Button onClick={() => sureAccept()} style={{width: '50px', height: '45px', backgroundColor: '#77C66E', marginLeft: '2rem', borderColor: '#77C66E'}}><CheckCircleFill /></Button>
+            <Button onClick={() => sureAccept()} className="common-btn"><CheckCircleFill /></Button>
           </OverlayTrigger>
           </>:
           ''
@@ -102,7 +105,7 @@ const VacationItem = ({vac, emp}: Props) => {
                             Удалить выходной
                         </Tooltip>
                     }>
-            <Button onClick={() => sureDelete()} style={{width: '50px', height: '45px', backgroundColor: '#77C66E', marginLeft: '2rem', borderColor: '#77C66E'}}><Trash /></Button>
+            <Button onClick={() => sureDelete()} className="common-btn"><Trash /></Button>
           </OverlayTrigger>
           </>
           :

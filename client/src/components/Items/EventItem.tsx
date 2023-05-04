@@ -13,6 +13,7 @@ import { fetchAllEvents } from "../../store/action-creators/event";
 import {Trash} from 'react-bootstrap-icons'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+import "../../style/Button.css"
 
 
 type Props = {
@@ -41,7 +42,9 @@ const EventItem = ({ev, us}: Props) => {
     }
 
     return (
-      <Card style={{ width: '90rem', margin:'2rem 6rem 2rem 6rem', display: 'grid', justifyItems: 'left'}} >
+      <Card style={{ width: '90rem', margin:'2rem 6rem 2rem 6rem', display: 'grid', justifyItems: 'left'}} 
+      bg={'warning'}
+      >
       {/* <Card.Img variant="top" src='https://www.yumasoft.com/fonts/svg/yumasoft_logo.svg' style={{width: '100%', height: '400px', borderRadius: '200px', backgroundColor: 'black'}} /> */}
         <Card.Body style={{alignContent: 'center'}}>
             <Card.Title>{ev.title}</Card.Title>
@@ -80,7 +83,7 @@ const EventItem = ({ev, us}: Props) => {
                             Удалить мероприятие
                         </Tooltip>
                     }>
-                <Button onClick={() => sureDelete()} style={{width: '50px', height: '45px', backgroundColor: '#77C66E', marginLeft: '2rem', borderColor: '#77C66E'}}><Trash /></Button>
+                <Button onClick={() => sureDelete()} className="common-btn"><Trash /></Button>
             </OverlayTrigger>
             :
             ''

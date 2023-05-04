@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import '../../../style/Button.css'
 
 type Props = {
     name: string;
@@ -15,10 +16,10 @@ const OffCanvas = ({children, name, ...props}: Props) => {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow} className="me-2">
+      <Button variant="primary" onClick={handleShow} className="accept-vacation-btn">
         {name}
       </Button>
-      <Offcanvas show={show} onHide={handleClose} {...props}>
+      <Offcanvas show={show} onHide={handleClose} scroll={true} {...props}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>{name}</Offcanvas.Title>
         </Offcanvas.Header>

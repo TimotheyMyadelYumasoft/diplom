@@ -17,51 +17,10 @@ import {Calendar2Heart, CalendarRangeFill} from 'react-bootstrap-icons'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
-
-interface RHFDatePickerFieldProps {
-  control: Control<any>;
-  name: string;
-  placeholder?: string;
-}
-
-const RHFDatePickerField = (props: RHFDatePickerFieldProps) => {
-  return (
-    <Controller
-      control={props.control}
-      name={props.name}
-      rules={{
-        required: "This field is required"
-      }}
-      render={({ field, fieldState }) => {
-        return (
-          <>
-            <DatePicker
-              placeholder={props.placeholder}
-              status={fieldState.error ? "error" : undefined}
-              ref={field.ref}
-              name={field.name}
-              onBlur={field.onBlur}
-              value={field.value ? dayjs(field.value) : null}
-              onChange={(date) => {
-                field.onChange(date ? date.valueOf() : null);
-              }}
-            />
-            <br />
-            {fieldState.error ? (
-              <span style={{ color: "red" }}>{fieldState.error?.message}</span>
-            ) : null}
-          </>
-        );
-      }}
-    />
-  );
-};
-
 const ProfileHeader = () => {
 
     const [modalEditActive, setEditModalActive] = useState(false);
     const [modalEditBirthdayActive, setEditBirthdayModalActive] = useState(false);
-    const [modalVacationActive, setVacationModalActive] = useState(false);
     const {auth, user, project, vacation} = useTypeSelector(state => state)
     const [ DateOfStart, setDateOfStart] = useState<string>('')
     const [ DateOfEnd, setDateOfEnd] = useState<string>('')
@@ -73,15 +32,6 @@ const ProfileHeader = () => {
 
     const {setVacation} = useAction()
 
-    // const uploadBackground =(e: any) =>{
-    //     const file = e.target.files[0];
-    //     const reader = new FileReader();
-    //     reader.readAsDataURL(file);
-    //     // reader.onload = () = {
-    //     //     setProfileImage()
-    //     // }
-    // }
-    let tag;
 
     const { handleSubmit, control, watch } = useForm<{
         startDate: string;

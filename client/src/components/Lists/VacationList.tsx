@@ -32,7 +32,7 @@ const VacationList = () => {
                     />
                 {   auth.user.role=='ADMIN' || auth.user.role=='RECRUITER'
                 ?
-                <OffCanvas name="Принять выходные" >
+                <OffCanvas name="Принять выходные">
                 {vacations?.map( vac =>
                 <>
                     {users?.map(employer =>
