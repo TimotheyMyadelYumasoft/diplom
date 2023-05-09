@@ -21,7 +21,7 @@ const ProfileHeader = () => {
 
     const [modalEditActive, setEditModalActive] = useState(false);
     const [modalEditBirthdayActive, setEditBirthdayModalActive] = useState(false);
-    const {auth, user, project, vacation} = useTypeSelector(state => state)
+    const {auth, user, vacation} = useTypeSelector(state => state)
     const [ DateOfStart, setDateOfStart] = useState<string>('')
     const [ DateOfEnd, setDateOfEnd] = useState<string>('')
     let [ uploadImage, setUploadImage] = useState<any>('')

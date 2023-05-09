@@ -1,6 +1,6 @@
 const { Schema, model} = require('mongoose');
 
-const ProjectSchema = new Schema({
+const VacationSchema = new Schema({
     startDate: {type: String},
     endDate: {type: String},
     status: {type: String},
@@ -10,4 +10,4 @@ const ProjectSchema = new Schema({
     reviewerComment: [{type: String}],
 })
 
-module.exports = model('Vacation', ProjectSchema);
+module.exports = model('Vacation', VacationSchema);

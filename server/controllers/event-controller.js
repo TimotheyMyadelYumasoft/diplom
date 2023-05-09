@@ -5,8 +5,8 @@ class EventController {
     async create(req, res, next) {
         try{
             const {participants, title, description, startDate} = req.body
-            const project = await eventService.create(participants, title, description, startDate)
-            return res.json(project)
+            const event = await eventService.create(participants, title, description, startDate)
+            return res.json(event)
         }
         catch (e) {
             next(e);
@@ -16,8 +16,8 @@ class EventController {
     async edit(req, res, next) {
         try{
             const { _id, participants, title, description, startDate } = req.body
-            const project = await eventService.editEvent(_id, participants, title, description, startDate)
-            return res.json(project)
+            const event = await eventService.editEvent(_id, participants, title, description, startDate)
+            return res.json(event)
         }
         catch (e) {
             next(e);

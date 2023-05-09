@@ -8,17 +8,13 @@ import Navigation from '../components/Navigation'
 
 function PersonalPage() {
 
-    const {auth, user, project} = useTypeSelector(state => state)
-    const {refresh, logout, fetchProjectByIdAction, fetchUserByIdAction} = useAction()
+    const {auth} = useTypeSelector(state => state)
+    const {refresh, logout, fetchUserByIdAction} = useAction()
 
     useEffect(() => {
         fetchUserByIdAction(auth.auth.user.id)
-        fetchProjectByIdAction(auth.auth.user.id)
     }, [auth])
 
-    useEffect(() => {
-        fetchProjectByIdAction(auth.auth.user.id)
-    }, [user])
 
     return (
         <div>

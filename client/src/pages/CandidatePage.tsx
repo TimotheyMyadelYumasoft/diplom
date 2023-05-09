@@ -10,7 +10,7 @@ import MyInput from '../components/UI/input/MyInput'
 const CandidatePage = () => {
     const {auth, isAuth} = useTypeSelector(state => state.auth)
     const {users} = useTypeSelector(state => state.user)
-    const {refresh, logout, fetchProjectByIdAction, fetchUserByIdAction, fetchUsers} = useAction()
+    const {refresh, logout, fetchUserByIdAction, fetchUsers} = useAction()
 
 
     useEffect(() => {

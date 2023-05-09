@@ -104,8 +104,8 @@ class UserController {
 
     async editUser(req, res, next) {
         try{
-            const {_id ,email, password, firstname, secondname, imageUrl, backgroundImage, gender, departament, location, phoneNumber, skills, projectHisory, birthDay, hiredDate, firedDate} = req.body;
-            const user = await userService.editUser(_id, email, password, firstname, secondname, imageUrl, backgroundImage, gender, departament, location, phoneNumber, skills, projectHisory, birthDay, hiredDate, firedDate);
+            const {_id ,email, password, firstname, secondname, imageUrl, backgroundImage, gender, departament, location, phoneNumber, skills, birthDay, hiredDate, firedDate} = req.body;
+            const user = await userService.editUser(_id, email, password, firstname, secondname, imageUrl, backgroundImage, gender, departament, location, phoneNumber, skills, birthDay, hiredDate, firedDate);
             res.json(user)
         } catch(e) {
             next(e);

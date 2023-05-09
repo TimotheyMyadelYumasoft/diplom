@@ -13,7 +13,7 @@ import { IUser } from '../types/user'
 function EmployeesPage() {
     const {auth, isAuth} = useTypeSelector(state => state.auth)
     const {users} = useTypeSelector(state => state.user)
-    const {refresh, logout, fetchProjectByIdAction, fetchUserByIdAction, fetchUsers} = useAction()
+    const {refresh, logout, fetchUserByIdAction, fetchUsers} = useAction()
 
     const [selectedSort, setSelectedSort] = useState('');
     const [searchQuery, setSearchQuery] = useState<string>('');

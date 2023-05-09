@@ -119,7 +119,7 @@ class UserService {
         return user
     }
 
-    async editUser(_id, _email, _password, _firstname, _secondname, _imageUrl, _backgroundImage, _gender, _departament, _location, _phoneNumber, _skills, _project, _birthDay, _hiredDate, _firedDate) {
+    async editUser(_id, _email, _password, _firstname, _secondname, _imageUrl, _backgroundImage, _gender, _departament, _location, _phoneNumber, _skills, _birthDay, _hiredDate, _firedDate) {
         const user = await UserModel.findByIdAndUpdate(_id, {
             email: _email,
             password: _password,
@@ -132,7 +132,6 @@ class UserService {
             location: _location,
             phoneNumber: _phoneNumber,
             skills: _skills,
-            projectHisory: _project,
             birthDay: _birthDay,
             hiredDate: _hiredDate,
             firedDate: _firedDate
