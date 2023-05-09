@@ -29,7 +29,7 @@ const CreateUserByCandidate = ({ setIsOpen, employerId }: Props) => {
     return (
         <div>
             <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-1" controlId="formBasicEmail">
+                <Form.Group className="mb-1" controlId="formBasicEmailCreateUserById">
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" placeholder="Enter password" value={Password} onChange={ e => setPassword(e.target.value)} required/>
                 </Form.Group>

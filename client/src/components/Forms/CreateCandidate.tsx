@@ -33,28 +33,28 @@ const CreateCandidate = ({ setIsOpen }: Props) => {
     return (
         <div>
             <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-1" controlId="formBasicEmail">
+                <Form.Group className="mb-1" controlId="formBasicEmailCandidate">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type="email" placeholder="Enter email" value={Email} onChange={ e => setEmail(e.target.value)} required/>
                 </Form.Group>
 
-                <Form.Group className="mb-1" controlId="formBasicFirstName">
+                <Form.Group className="mb-1" controlId="formBasicFirstNameCandidate">
                     <Form.Label>First Name</Form.Label>
                     <Form.Control type="text" placeholder="Firstname" value={FirstName}  onChange={e => setFirstName(e.target.value)} required/>
                 </Form.Group>
-                <Form.Group className="mb-1" controlId="formBasicSurname">
+                <Form.Group className="mb-1" controlId="formBasicSurnameCandidate">
                     <Form.Label>Surname</Form.Label>
                     <Form.Control type="text" placeholder="Surname" value={Surname}  onChange={e => setSurname(e.target.value)} required/>
                 </Form.Group>
-                <Form.Group className="mb-1" controlId="formBasicPhonenumber">
+                <Form.Group className="mb-1" controlId="formBasicPhonenumberCandidate">
                     <Form.Label>Phone number</Form.Label>
                     <Form.Control type="Phonenumber" placeholder="Phonenumber" value={Phonenumber}  onChange={e => setPhonenumber(e.target.value)} required />
                 </Form.Group>
-                <Form.Group className="mb-1" controlId="formBasicGender">
+                <Form.Group className="mb-1" controlId="formBasicGenderCandidate">
                     <Form.Label>Gender</Form.Label>
                     <Form.Control type="text" placeholder="Gender" value={Gender}  onChange={e => setGender(e.target.value)}  required/>
                 </Form.Group>
-                <Form.Group className="mb-1" controlId="formBasicDepartment">
+                <Form.Group className="mb-1" controlId="formBasicDepartmentCandidate">
                     <Form.Label>Department</Form.Label>
                     <Form.Control type="text" placeholder="Department" value={Department}  onChange={e => setDepartment(e.target.value)} required/>
                 </Form.Group>

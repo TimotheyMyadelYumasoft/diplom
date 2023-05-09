@@ -8,11 +8,17 @@ import Navigation from '../components/Navigation'
 import EmployersList from '../components/Lists/EmployersList'
 import MySelect from '../components/UI/select/MySelect'
 import MyInput from '../components/UI/input/MyInput'
+import { IUser } from '../types/user'
 
 function EmployeesPage() {
     const {auth, isAuth} = useTypeSelector(state => state.auth)
     const {users} = useTypeSelector(state => state.user)
     const {refresh, logout, fetchProjectByIdAction, fetchUserByIdAction, fetchUsers} = useAction()
+
+    const [selectedSort, setSelectedSort] = useState('');
+    const [searchQuery, setSearchQuery] = useState<string>('');
+    // console.log(typeof searchQuery, searchQuery)
+    const [employers, setEmployers] = useState<IUser[]>(users);
 
 
     useEffect(() => {
@@ -20,34 +26,34 @@ function EmployeesPage() {
         fetchUsers()
     }, [auth])
 
-    let employers = users;
 
-    const [searchQuery, setSearchQuery] = useState<string>('');
-    const [selectedSort, setSelectedSort] = useState('');
+    useEffect(() => {
+        setEmployers(users)
+    }, [users])
 
     const sortPosts = (sort: string) => {
         setSelectedSort(sort)
         console.log(sort)
         if(sort == 'firstname') {
-            employers = employers.sort((a, b) => a.firstname?.localeCompare(b.firstname));
+            setEmployers(employers.sort((a, b) => a.firstname?.localeCompare(b.firstname)))
         }
         else if (sort == 'email') {
-            employers = employers.sort((a, b) => a.email?.localeCompare(b.email));
+            setEmployers(employers.sort((a, b) => a.email?.localeCompare(b.email)))
         }
         else if (sort == 'secondname') {
-            employers = employers.sort((a, b) => a.secondname?.localeCompare(b.secondname));
+            setEmployers(employers.sort((a, b) => a.secondname?.localeCompare(b.secondname)))
         }
     }
 
     const changeSearchQuery = (search: string) => {
         setSearchQuery(search)
-        console.log(searchQuery)
+        setEmployers(users.filter(user => user.secondname?.toLowerCase().includes(search.toLowerCase())))
     }
 
     return (
         <div>
             <Navigation />
-            <div>
+            <div style={{display: 'flex', msFlexDirection: 'column', flexWrap: 'wrap', margin: '1rem 0rem 0rem 2rem'}}>
                 <MySelect
                     value={selectedSort}
                     onChange={sortPosts}
@@ -58,15 +64,16 @@ function EmployeesPage() {
                         {value: 'secondname', name: 'По фамилии'}
                     ]}
                 />
-                {/* <MyInput
+                <MyInput
                     value={searchQuery}
                     type='text'
-                    onChange={(e : React.FormEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
-                    placeholder="Search...."
-                /> */}
+                    onChange={(e : React.FormEvent<HTMLInputElement>) => changeSearchQuery(e.currentTarget.value)}
+                    placeholder="Поиск по фамилии...."
+                    style={{width: '25rem', borderRadius: '25px'}}
+                />
             </div>
             <div>
-                <EmployersList employers={employers}/>
+                <EmployersList key={'employers'} employers={employers}/>
             </div>
         </div>
     )

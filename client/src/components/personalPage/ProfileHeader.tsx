@@ -24,6 +24,7 @@ const ProfileHeader = () => {
     const {auth, user, project, vacation} = useTypeSelector(state => state)
     const [ DateOfStart, setDateOfStart] = useState<string>('')
     const [ DateOfEnd, setDateOfEnd] = useState<string>('')
+    let [ uploadImage, setUploadImage] = useState<any>('')
 
     const {fetchVacations} = useAction()
     useEffect(() => {
@@ -105,6 +106,14 @@ const ProfileHeader = () => {
         }
     }
 
+    const handleUploadProfileImage =() => {
+        uploadImage.click()
+    }
+    const fileSelectedHandler = (event: any) => {
+        setUploadImage(event.target.files[0])
+        //Action creator func to upload image
+    }
+
     return(
         <div>
             <Image
@@ -119,6 +128,10 @@ const ProfileHeader = () => {
                     <Image
                         src='https://www.yumasoft.com/fonts/svg/yumasoft_logo.svg'
                         style={{width: '250px', height: '250px', borderRadius: '150px', backgroundColor: 'black', margin: '1rem 0rem 1rem 3rem'}}
+                        onClick={handleUploadProfileImage}
+                    />
+                    <input type="file" onChange={fileSelectedHandler} style={{display: 'none'}}
+                    ref={refImage => uploadImage = refImage}
                     />
                     <div>
                     <Card style={{ width: '40rem', margin: '1rem 0rem 0rem 4rem', paddingBottom: '2rem'}}>

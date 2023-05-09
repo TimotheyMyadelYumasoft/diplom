@@ -77,11 +77,11 @@ const CreateEventForm = ({ setIsOpen, employers }: Props) => {
         <div>
             <Form onSubmit={handleSubmitEventForm}>
 
-                <Form.Group className="mb-1" controlId="formBasicTitle">
+                <Form.Group className="mb-1" controlId="formBasicTitleCreateEvent">
                     <Form.Label>Title</Form.Label>
                     <Form.Control type="text" placeholder="Title" value={Title}  onChange={e => setTitle(e.target.value)} required/>
                 </Form.Group>
-                <Form.Group className="mb-1" controlId="formBasicDescription">
+                <Form.Group className="mb-1" controlId="formBasicDescriptionCreateEvent">
                     <Form.Label>Description</Form.Label>
                     <Form.Control as="textarea" aria-label="With textarea" value={Description}  onChange={e => setDescription(e.target.value)} required/>
                 </Form.Group>
