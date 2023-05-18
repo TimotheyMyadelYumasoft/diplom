@@ -182,7 +182,7 @@ const ProfileHeader = () => {
                                     <br />
                                     <br />
                                     <span>Дата окончания</span>
-                                    <DatePicker picker='date' format={'YYYY/MM/DD'} onChange={(value) => console.log(dayjs(value).toString())} />
+                                    <DatePicker picker='date' onChange={(value) => setDateOfEnd(dayjs(value).toString())} />
                                     <br />
                                     <br />
                                     <OverlayTrigger
