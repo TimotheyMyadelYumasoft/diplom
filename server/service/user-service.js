@@ -16,27 +16,16 @@ class UserService {
         const activationLink = uuid.v4();   // uniq str
 
         const user = await UserModel.create({email, password: hashPassword, activationLink, role: role, backgroundImage: backgroundImage})
-        await mailService.sendActivationMail(email, `${process.env.API_URL}/api/user/activate/${activationLink}`);
 
-        const userDto = new UserDto(user); // id, email, isActivated
+        const userDto = new UserDto(user); // id, email
         const tokens = tokenService.generateTokens({...userDto});
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
         return { ...tokens, user: userDto }
     }
 
-    async activate(activationLink) {
-        const user = await UserModel.findOne({activationLink})
-        if(!user) {
-            throw ApiError.BadRequest('Некорректная ссылка активации ')
-        }
-        user.isActivated = true;
-        await user.save();
-    }
-
     async login(email, password) {
         const user = await UserModel.findOne({email})
-        console.log(user)
         if(!user) {
             throw ApiError.BadRequest('Пользователь с таким email не найден')
         }
@@ -44,10 +33,8 @@ class UserService {
         if(!isPassEquals) {
             throw ApiError.BadRequest('Неверный пароль');
         }
-
         const userDto = new UserDto(user);
         const tokens = tokenService.generateTokens({...userDto});
-
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
         return {...tokens, user: userDto}
@@ -113,40 +100,25 @@ class UserService {
     }
 
     async getUserById(_id) {
-        console.log('_id')
-        console.log(_id)
         const user = await UserModel.findById(_id)
         return user
     }
 
-    async editUser(_id, _email, _password, _firstname, _secondname, _imageUrl, _backgroundImage, _gender, _departament, _location, _phoneNumber, _skills, _birthDay, _hiredDate, _firedDate) {
+    async editUser(_id, position, location, email, firstname, secondname, gender, phoneNumber) {
         const user = await UserModel.findByIdAndUpdate(_id, {
-            email: _email,
-            password: _password,
-            firstname: _firstname,
-            secondname: _secondname,
-            imageUrl: _imageUrl,
-            backgroundImage: _backgroundImage,
-            gender: _gender,
-            departament: _departament,
-            location: _location,
-            phoneNumber: _phoneNumber,
-            skills: _skills,
-            birthDay: _birthDay,
-            hiredDate: _hiredDate,
-            firedDate: _firedDate
+            position: position,
+            location: location,
+            email: email,
+            firstname: firstname,
+            secondname: secondname,
+            gender: gender,
+            phoneNumber: phoneNumber
         })
         return await UserModel.findById(_id)
     }
 
-    async editBackground(id, backgroundImage) {
-        console.log(id + '' + backgroundImage)
-        const user = await UserModel.findByIdAndUpdate(id, {backgroundImage: backgroundImage});
-        return user
-    }
-    async editImage(id, imageUrl) {
-        console.log('imageUrl')
-        await UserModel.findByIdAndUpdate(id, {imageUrl: imageUrl});
+    async editImage(id, image) {
+        await UserModel.findByIdAndUpdate(id, {image: image});
         return await UserModel.findById(id)
     }
 
@@ -157,12 +129,11 @@ class UserService {
     }
 
     async deleteOne(_id) {
-        const vacation = await UserModel.findByIdAndDelete(_id)
-        console.log(vacation)
-        if(!vacation){
+        const user = await UserModel.findByIdAndDelete(_id)
+        if(!user){
             throw ApiError.BadRequest(`Данного пользователя не существует`)
         }
-        return vacation
+        return user
     }
 
     async byField(users, field) {
@@ -182,33 +153,13 @@ class UserService {
         return sortUsers;
     }
 
-    async createUser(email, password, role) {
-        const candidate = await UserModel.findOne({email})
-        if (candidate) {
-            throw ApiError.BadRequest(`Пользователь с почтовым адресом ${email} уже существует`)
-        }
-        const hashPassword = await bcrypt.hash(password, 3);
-        const activationLink = uuid.v4();   // uniq str
-
-        const user = await UserModel.create({email, password: hashPassword, activationLink, role: role, hiredDate: '2023-04-27T08:30:00Z'})
-        await mailService.sendActivationMail(email, `${process.env.API_URL}/api/user/activate/${activationLink}`);
-
-        const userDto = new UserDto(user); // id, email, isActivated
-        const tokens = tokenService.generateTokens({...userDto});
-        await tokenService.saveToken(userDto.id, tokens.refreshToken);
-
-        return user;
-    }
-
-    async editUserBirthdayById(_id, birthDay) {
+    async addUserBirthdayById(_id, birthDay) {
         const candidate = await UserModel.findById(_id)
         if (!candidate) {
             throw ApiError.BadRequest(`Даннного пользователя ${email} не существует`)
         }
-        console.log(_id)
-        console.log(birthDay)
         const user = await UserModel.findByIdAndUpdate(_id, {birthDay: birthDay});
-        return user
+        return await UserModel.findById(_id)
     }
 }
 

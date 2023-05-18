@@ -1,13 +1,10 @@
 const { Schema, model} = require('mongoose');
 
 const VacationSchema = new Schema({
-    startDate: {type: String},
-    endDate: {type: String},
-    status: {type: String},
-    employerId: {type: Schema.Types.ObjectId, ref: 'User'},
-    type: {type: String},
-    employComment: [{type: String}],
-    reviewerComment: [{type: String}],
+    mainDuration: {type: Schema.Types.ObjectId, ref: 'MainVacationDuration'},
+    dayOff: {type: Schema.Types.ObjectId, ref: 'DayOff'},
+    additionalDuration: {type: Number, require: true},
+    usedDuration: {type: Number, required: true},
 })
 
 module.exports = model('Vacation', VacationSchema);
