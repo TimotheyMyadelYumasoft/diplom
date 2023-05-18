@@ -22,4 +22,8 @@ export default class UserService {
         console.log(birthDay)
         return $api.post<IUser>(`/user/edit_birthday`, {_id: _id, birthday: birthDay})
     }
+
+    static async updateProfileImage(_formData: any): Promise<AxiosResponse<IUser>>  {
+        return $api.post<IUser>(`/user/edit_image`, _formData)
+    }
 }

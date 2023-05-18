@@ -59,7 +59,22 @@ const EmployerItem = ({empl}: Props) => {
       >
         { empl.password
         ?
-            <Card.Img variant="top" src='https://www.yumasoft.com/fonts/svg/yumasoft_logo.svg' style={{width: '75%', height: '300px', borderRadius: '200px', backgroundColor: 'black', alignItems: 'center'}} />
+            <>
+            { empl.imageUrl
+            ?
+                <Card.Img
+                variant="top"
+                src={'http://localhost:5000/'+empl?.imageUrl}
+                style={{width: '75%', height: '300px', borderRadius: '200px', backgroundColor: 'black', alignItems: 'center'}}
+                />
+            :
+                <Card.Img
+                variant="top"
+                src='https://www.yumasoft.com/fonts/svg/yumasoft_logo.svg'
+                style={{width: '75%', height: '300px', borderRadius: '200px', backgroundColor: 'black', alignItems: 'center'}}
+                />
+            }
+            </>
         :
         ''
         }

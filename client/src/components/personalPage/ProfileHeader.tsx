@@ -31,7 +31,7 @@ const ProfileHeader = () => {
         fetchVacations()
     }, [])
 
-    const {setVacation} = useAction()
+    const {setVacation, editUserImage} = useAction()
 
 
     const { handleSubmit, control, watch } = useForm<{
@@ -111,7 +111,11 @@ const ProfileHeader = () => {
     }
     const fileSelectedHandler = (event: any) => {
         setUploadImage(event.target.files[0])
-        //Action creator func to upload image
+        console.log(event.target.files[0])
+        const fd = new FormData();
+        fd.append('_id', user.user?._id)
+        fd.append('image', event.target.files[0], event.target.files[0].name)
+        editUserImage(fd)
     }
 
     return(
@@ -125,11 +129,20 @@ const ProfileHeader = () => {
             />
             <div>
                 <div style={{display: 'flex', msFlexDirection: 'column', flexWrap: 'wrap'}}>
-                    <Image
-                        src='https://www.yumasoft.com/fonts/svg/yumasoft_logo.svg'
-                        style={{width: '250px', height: '250px', borderRadius: '150px', backgroundColor: 'black', margin: '1rem 0rem 1rem 3rem'}}
-                        onClick={handleUploadProfileImage}
-                    />
+                    { user.user?.imageUrl
+                    ?
+                        <Image
+                            src={'http://localhost:5000/'+user.user?.imageUrl}
+                            style={{width: '250px', height: '250px', borderRadius: '150px', backgroundColor: 'black', margin: '1rem 0rem 1rem 3rem'}}
+                            onClick={handleUploadProfileImage}
+                        />
+                    :
+                        <Image
+                            src='https://www.yumasoft.com/fonts/svg/yumasoft_logo.svg'
+                            style={{width: '250px', height: '250px', borderRadius: '150px', backgroundColor: 'black', margin: '1rem 0rem 1rem 3rem'}}
+                            onClick={handleUploadProfileImage}
+                        />
+                    }
                     <input type="file" onChange={fileSelectedHandler} style={{display: 'none'}}
                     ref={refImage => uploadImage = refImage}
                     />
@@ -169,7 +182,7 @@ const ProfileHeader = () => {
                                     <br />
                                     <br />
                                     <span>Дата окончания</span>
-                                    <DatePicker picker='date' onChange={(value) => setDateOfEnd(dayjs(value).toString())} />
+                                    <DatePicker picker='date' format={'YYYY/MM/DD'} onChange={(value) => console.log(dayjs(value).toString())} />
                                     <br />
                                     <br />
                                     <OverlayTrigger

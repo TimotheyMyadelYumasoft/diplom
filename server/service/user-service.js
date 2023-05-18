@@ -145,9 +145,9 @@ class UserService {
         return user
     }
     async editImage(id, imageUrl) {
-        console.log(id + '' + imageUrl)
-        const user = await UserModel.findByIdAndUpdate(id, {imageUrl: imageUrl});
-        return user
+        console.log('imageUrl')
+        await UserModel.findByIdAndUpdate(id, {imageUrl: imageUrl});
+        return await UserModel.findById(id)
     }
 
     async resetPassword(_id, password) {

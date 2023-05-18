@@ -104,3 +104,19 @@ export const editBirthdayUser = (_id: string, birthDay: string) => {
         }
     }
 }
+
+export const editUserImage = (formData: any) => {
+    return async (dispatch: Dispatch<UserAction>) => {
+        try{
+            const response = await UserService.updateProfileImage(formData);
+            console.log('responseImage')
+            console.log(response)
+            dispatch({
+                type: UserActionTypes.UPDATE_PROFILE_IMAGE,
+                payload: response.data
+            })
+        } catch(e) {
+            console.log(e)
+        }
+    }
+}

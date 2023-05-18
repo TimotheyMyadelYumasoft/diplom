@@ -1,6 +1,8 @@
 const { validationResult } = require('express-validator');
 const userService = require('../service/user-service');
 const ApiError = require('../exceptions/api-error')
+const uuid = require('uuid')
+const path = require('path')
 
 class UserController {
     async registration(req, res, next) {
@@ -93,8 +95,13 @@ class UserController {
 
     async editImage(req, res, next) {
         try{
-            const {_id, imageUrl} = req.body;
-            const user = await userService.editImage(_id, imageUrl);
+            const {_id} = req.body;
+            const {image} = req.files;
+            let fileName = uuid.v4() + '.jpg';
+            image.mv(path.resolve(__dirname, '..', 'static', fileName))
+
+            console.log(image)
+            const user = await userService.editImage(_id, fileName);
             res.json(user)
         }
         catch (e) {
