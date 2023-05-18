@@ -1,5 +1,4 @@
 const EventModel = require('../models/event-model')
-const uuid = require('uuid')
 const ApiError = require('../exceptions/api-error')
 
 class EventService {
@@ -15,7 +14,7 @@ class EventService {
         if(!event){
             throw ApiError.BadRequest(`Мероприятия с данным названием ${title} не существует`)
         }
-        return event
+        return await EventModel.findById(_id)
     }
 
     async getAll() {
