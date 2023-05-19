@@ -4,19 +4,8 @@ const ApiError = require('../exceptions/api-error')
 class VacationController {
     async create(req, res, next) {
         try{
-            const {startDate, endDate, type, employerId} = req.body
-            const vacation = await vacationService.create(startDate, endDate, type, employerId)
-            return res.json(vacation)
-        }
-        catch (e) {
-            next(e);
-        }
-    }
-
-    async approve(req, res, next) {
-        try{
-            const { _id, status} = req.body
-            const vacation = await vacationService.approve(_id, status)
+            const {user, mainDuration} = req.body
+            const vacation = await vacationService.create(user, mainDuration)
             return res.json(vacation)
         }
         catch (e) {
@@ -57,23 +46,22 @@ class VacationController {
         }
     }
 
-    async commentEmployer(req, res, next) {
+    async updateAdditionalDuration(req, res, next) {
         try{
-            const { _id, employComment } = req.body;
-            const vacation = await vacationService.commentEmployer(_id, employComment)
+            const {_id, additionalDuration} = req.body;
+            const vacation = await vacationService.editAdditionalDuration(_id, additionalDuration)
             return res.json(vacation)
-        }
-        catch (e) {
+        } catch (e) {
             next(e);
         }
     }
-    async commentReviewer(req, res, next) {
+
+    async updateUsedDuration(req, res, next) {
         try{
-            const { _id, reviewerComment } = req.body;
-            const vacation = await vacationService.commentReviewer(_id, reviewerComment)
+            const {_id, usedDuration} = req.body;
+            const vacation = await vacationService.editUsedDuration(_id, usedDuration)
             return res.json(vacation)
-        }
-        catch (e) {
+        } catch (e) {
             next(e);
         }
     }

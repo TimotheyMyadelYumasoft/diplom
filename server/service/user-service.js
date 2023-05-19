@@ -7,21 +7,19 @@ const UserDto = require('../dtos/user-dto')
 const ApiError = require('../exceptions/api-error')
 
 class UserService {
-    async registration(email, password, role, backgroundImage) {
+    async registration(email, password, role, statusCandidate, birthDay, hiredDate) {
         const candidate = await UserModel.findOne({email})
         if (candidate) {
             throw ApiError.BadRequest(`Пользователь с почтовым адресом ${email} уже существует`)
         }
         const hashPassword = await bcrypt.hash(password, 3);
-        const activationLink = uuid.v4();   // uniq str
-
-        const user = await UserModel.create({email, password: hashPassword, activationLink, role: role, backgroundImage: backgroundImage})
+        const user = await UserModel.create({email, password: hashPassword, role: role, statusCandidate: statusCandidate, birthDay: birthDay, hiredDate: hiredDate})
 
         const userDto = new UserDto(user); // id, email
         const tokens = tokenService.generateTokens({...userDto});
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
-        return { ...tokens, user: userDto }
+        return user
     }
 
     async login(email, password) {
@@ -83,15 +81,15 @@ class UserService {
         return await UserModel.findById(_id)
     }
 
-    async createCandidate(firstname, secondname, email, phoneNumber, departament, gender) {
+    async createCandidate(firstname, secondname, email, phoneNumber, position, location, gender, birthDay, role, statusCandidate) {
         const candidate = await UserModel.findOne({email: email})
         if(candidate) {
             throw ApiError.BadRequest('Аккаунт на данную почту уже был создан');
         }
-        const user = await UserModel.create({firstname, secondname, email, phoneNumber, departament, gender})
+        const user = await UserModel.create({firstname, secondname, email, phoneNumber, position, location, gender, birthDay, role, statusCandidate})
         return user
     }
-    async createCandidateById(_id, password, statusCandidate) {
+    async createEmployeeByCandidateId(_id, password, statusCandidate) {
         const hashPassword = await bcrypt.hash(password, 3);
         const candidate = await UserModel.findByIdAndUpdate(_id, {password: hashPassword, statusCandidate: statusCandidate, hiredDate: '2023-04-27T08:30:00Z'})
         console.log(statusCandidate)

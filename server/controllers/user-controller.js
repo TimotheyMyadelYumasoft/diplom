@@ -11,8 +11,8 @@ class UserController {
             if(!errors.isEmpty()){
                 return next(ApiError.BadRequest('Ошибка при валидации', errors.array()))
             }
-            const {email, password, role} = req.body;
-            const userData = await userService.registration(email, password, role);
+            const {email, password, role, statusCandidate, birthDay, hiredDate} = req.body;
+            const userData = await userService.registration(email, password, role, statusCandidate, birthDay, hiredDate);
             res.cookie('refreshToken', userData.refreshToken, {maxAge: 30*25*60*60*1000, httpOnly: true})
             return res.json(userData)
         }
@@ -102,7 +102,15 @@ class UserController {
             next(e)
         }
     }
-
+    async createCandidate (req, res, next) {
+        try{
+            const {firstname, secondname, email, phoneNumber, position, location, gender, birthDay, role, statusCandidate} = req.body;
+            const user = await userService.createCandidate(firstname, secondname, email, phoneNumber, position, location, gender, birthDay, role, statusCandidate)
+            res.json(user)
+        } catch(e) {
+            next(e)
+        }
+     }
     async setStatusCandidate(req, res, next) {
         try{
             const { _id, statusCandidate } = req.body;
@@ -112,20 +120,11 @@ class UserController {
             next(e)
         }
     }
-    async createCandidate (req, res, next) {
-        try{
-            const {firstname, secondname, email, phoneNumber, departament, gender} = req.body;
-            const user = await userService.createCandidate(firstname, secondname, email, phoneNumber, departament, gender)
-            res.json(user)
-        } catch(e) {
-            next(e)
-        }
-     }
 
      async createEmployeeByCandidate (req, res, next) {
         try{
             const {_id, password, statusCandidate} = req.body;
-            const candidate = await userService.createCandidateById(_id, password, statusCandidate)
+            const candidate = await userService.createEmployeeByCandidateId(_id, password, statusCandidate)
             res.json(candidate)
         }
         catch(e) {

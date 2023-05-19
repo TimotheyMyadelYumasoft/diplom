@@ -1,12 +1,12 @@
-const PositionService = require('../service/position-service')
+const StatusDayOffService = require('../service/statusDayOff-service')
 const ApiError = require('../exceptions/api-error')
 
-class PositionController {
+class StatusDayOffController {
     async create(req, res, next) {
         try{
             const {name} = req.body
-            const position = await PositionService.create(name)
-            return res.json(position);
+            const statusDayOff = await StatusDayOffService.create(name)
+            return res.json(statusDayOff);
         }
         catch (e) {
             next(e);
@@ -16,8 +16,8 @@ class PositionController {
     async edit(req, res, next) {
         try{
             const {_id, name} = req.body
-            const position = await PositionService.editPosition(_id, name)
-            return res.json(position)
+            const statusDayOff = await StatusDayOffService.editStatusDayOff(_id, name)
+            return res.json(statusDayOff)
         }
         catch (e) {
             next(e);
@@ -26,8 +26,8 @@ class PositionController {
 
     async getAll(req, res, next) {
         try{
-            const positions = await PositionService.getAll()
-            return res.json(positions)
+            const statusDayOffs = await StatusDayOffService.getAll()
+            return res.json(statusDayOffs)
         }
         catch (e) {
             next(e);
@@ -37,8 +37,8 @@ class PositionController {
     async getOne(req, res, next) {
         try{
             const { _id } = req.params;
-            const position = await PositionService.getOne(_id)
-            return res.json(position)
+            const statusDayOff = await StatusDayOffService.getOne(_id)
+            return res.json(statusDayOff)
         }
         catch (e) {
             next(e);
@@ -48,8 +48,8 @@ class PositionController {
     async delOne(req, res, next) {
         try{
             const {_id} = req.body
-            const position = await PositionService.delOne(_id)
-            return res.json(position)
+            const statusDayOff = await StatusDayOffService.delOne(_id)
+            return res.json(statusDayOff)
         }
         catch (e) {
             next(e);
@@ -57,4 +57,4 @@ class PositionController {
     }
 }
 
-module.exports = new PositionController();
+module.exports = new StatusDayOffController();

@@ -4,61 +4,48 @@ const ApiError = require('../exceptions/api-error')
 
 class VacationService {
 
-    async create(startDate, endDate, type, employerId) {
-        const vacation = await VacationModel.create({startDate: startDate, endDate: endDate, type: type, employerId: employerId})
+    async create(user, mainDuration) {
+        const vacation = await VacationModel.create({user: user, mainDuration: mainDuration})
         return vacation
-    }
-
-    async approve(_id, status) {
-        const vacation = await VacationModel.findByIdAndUpdate(_id, {status: status})
-        console.log(vacation)
-        if(!vacation){
-            throw ApiError.BadRequest(`Выходной с данным статусом ${status} не существует`)
-        }
-        return await VacationModel.findById(_id)
     }
 
     async getAll() {
         const vacations = await VacationModel.find()
-        console.log(vacations)
         if(!vacations){
-            throw ApiError.BadRequest(`Выходных не существует`)
+            throw ApiError.BadRequest(`Отпуск не существует`)
         }
         return vacations
     }
 
     async getOneVacation(_id) {
         const vacation = await VacationModel.find({_id: _id})
-        console.log(vacation)
         if(!vacation){
-            throw ApiError.BadRequest(`Данного выходного не существует`)
+            throw ApiError.BadRequest(`Отпуск не существует`)
         }
         return vacation
     }
     async deleteOne(_id) {
         const vacation = await VacationModel.findByIdAndDelete(_id)
-        console.log(vacation)
         if(!vacation){
-            throw ApiError.BadRequest(`Данного выходного не существует`)
+            throw ApiError.BadRequest(`Отпуск не существует`)
         }
         return vacation
     }
 
-    async commentEmployer(_id, _employComment) {
-        const comment = await VacationModel.findByIdAndUpdate(_id, {employComment: [_employComment]})
-        console.log(comment)
-        if(!comment){
-            throw ApiError.BadRequest(`Данного выходного не существует`)
+    async editAdditionalDuration(_id, additionalDuration) {
+        const vacation = await VacationModel.findByIdAndUpdate(_id, {additionalDuration: additionalDuration})
+        if(!vacation){
+            throw ApiError.BadRequest(`Отпуск не существует`)
         }
-        return comment
+        return await VacationModel.findById(_id)
     }
-    async commentReviewer(_id, _reviewerComment) {
-        const comment = await VacationModel.findByIdAndUpdate(_id, {reviewerComment: [_reviewerComment]})
-        console.log(comment)
-        if(!comment){
-            throw ApiError.BadRequest(`Данного выходного не существует`)
+
+    async editUsedDuration(_id, usedDuration) {
+        const vacation = await VacationModel.findByIdAndUpdate(_id, {usedDuration: usedDuration})
+        if(!vacation){
+            throw ApiError.BadRequest(`Отпуск не существует`)
         }
-        return comment
+        return await VacationModel.findById(_id)
     }
 }
 
