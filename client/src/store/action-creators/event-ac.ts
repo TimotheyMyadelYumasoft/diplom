@@ -1,7 +1,6 @@
 import { Dispatch } from "redux"
 import { EventAction, EventActionTypes } from "../../types/event-type"
 import EventService from "../../services/event-service"
-import axios from "axios"
 
 export const fetchAllEvents = () => {
     return async (dispatch: Dispatch<EventAction>) => {

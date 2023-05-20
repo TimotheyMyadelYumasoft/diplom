@@ -10,7 +10,7 @@ type Props = {
 
 const CreateCandidate = ({ setIsOpen }: Props) => {
 
-    const {fetchUsers} = useAction()
+    const {fetchUsers, createCandidate} = useAction()
     const { auth } = useTypeSelector(state => state.auth);
 
     const [ Email, setEmail] = useState<string>('')
@@ -22,10 +22,9 @@ const CreateCandidate = ({ setIsOpen }: Props) => {
 
 
     const requiredTrue = true;
-    const {createCandidate} = useAction()
     const handleSubmit = async( event: React.SyntheticEvent) => {
         event.preventDefault();
-            createCandidate(Email, FirstName, Surname, Gender, Phonenumber, Department);
+            // createCandidate(Email);
             setIsOpen(false);
             fetchUsers()
     }

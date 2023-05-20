@@ -25,6 +25,6 @@ router.use('/dotype', typeDayOffRouterRouter)
 router.use('/dostatus', statusDayOffRouterRouter)
 router.use('/cstatus', statusCandidateRouter)
 router.use('/role', roleRouter)
-router.use('/vduration', mainVacationDurationRouter)
+router.use('/mvduration', mainVacationDurationRouter)
 
 module.exports = router

@@ -22,7 +22,7 @@ const CreateUser = ({ setIsOpen, role }: Props) => {
     const {createUser} = useAction()
     const handleSubmit = async( event: React.SyntheticEvent) => {
         event.preventDefault();
-            createUser(Email, Password, role);
+            // createUser(Email, Password, role);
             setIsOpen(false);
             fetchUsers()
     }

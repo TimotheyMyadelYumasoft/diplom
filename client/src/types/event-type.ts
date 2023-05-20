@@ -10,7 +10,6 @@ export interface IEvent {
     _id: string;
     participants: string[];
     title: string;
-    activationLink: string;
     description: string;
     startDate: string;
 }
@@ -42,7 +41,7 @@ interface DeleteEventAction {
 
 interface CreateEventAction {
     type: EventActionTypes.CREATE_EVENT,
-    payload: IEvent
+    payload: IEvent[];
 }
 
 export type EventAction =

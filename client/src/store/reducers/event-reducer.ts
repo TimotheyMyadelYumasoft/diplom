@@ -2,16 +2,16 @@ import {EventAction, EventActionTypes, EventState} from '../../types/event-type'
 
 const initialState: EventState  = {
     event: {
-        description: '',
         _id: '',
         participants: [],
-        startDate:'',
-        title:''
+        title:'',
+        description: '',
+        startDate:''
     },
     events: []
 }
 
-export const eventReducer = (state: EventState = initialState, action: EventAction): EventState => {
+export const event_Reducer = (state: EventState = initialState, action: EventAction): EventState => {
     switch(action.type){
         case EventActionTypes.FETCH_EVENT:
             return {...state, events: [...action.payload]}

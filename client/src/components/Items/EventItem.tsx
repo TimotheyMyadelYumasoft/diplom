@@ -6,7 +6,7 @@ import Modal from '../Modal';
 import EditUserFrom from '../Forms/EditUserFrom';
 import { useEffect, useState } from "react";
 import { useAction } from "../../hooks/useAction";
-import { IEvent } from "../../types/event";
+import { IEvent } from "../../types/event-type";
 import { IUser} from '../../types/user'
 import { useTypeSelector } from "../../hooks/useTypedSelector";
 import { fetchAllEvents } from "../../store/action-creators/event";

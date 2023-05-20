@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useAction } from "../../hooks/useAction"
 import { useTypeSelector } from "../../hooks/useTypedSelector"
 import EventItem from "../Items/EventItem"
-import {IEvent} from '../../types/event'
+import {IEvent} from '../../types/event-type'
 import { IUser } from "../../types/user"
 import MySelect from "../UI/select/MySelect"
 
