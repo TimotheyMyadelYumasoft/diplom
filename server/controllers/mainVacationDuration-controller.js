@@ -1,7 +1,7 @@
 const MainVacationDurationService = require('../service/mainVacationDuration-service')
 const ApiError = require('../exceptions/api-error')
 
-class LocationController {
+class MainVacationDurationController {
     async create(req, res, next) {
         try{
             const {name, daysCount} = req.body
@@ -17,7 +17,7 @@ class LocationController {
     async edit(req, res, next) {
         try{
             const {_id, name, daysCount} = req.body
-            const mainVacationDurationService = await MainVacationDurationService.editLocation(_id, name, daysCount)
+            const mainVacationDurationService = await MainVacationDurationService.editMainVacationDuration(_id, name, daysCount)
             return res.json(mainVacationDurationService)
         }
         catch (e) {
@@ -58,4 +58,4 @@ class LocationController {
     }
 }
 
-module.exports = new LocationController();
+module.exports = new MainVacationDurationController();

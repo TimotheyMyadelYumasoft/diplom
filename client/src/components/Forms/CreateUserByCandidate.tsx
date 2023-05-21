@@ -3,6 +3,8 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { useTypeSelector } from '../../hooks/useTypedSelector';
 import { useAction } from '../../hooks/useAction';
 import { useEffect, useState } from "react";
+import {CheckCircleFill} from 'react-bootstrap-icons'
+import "../../style/Button.css"
 
 type Props = {
     setIsOpen: (isOpen: boolean) => void;
@@ -40,8 +42,8 @@ const CreateUserByCandidate = ({ setIsOpen, employerId }: Props) => {
                     <Form.Control type="password" placeholder="Enter password" value={Password} onChange={ e => setPassword(e.target.value)} required/>
                 </Form.Group>
 
-                <Button variant="primary" type="submit">
-                    Submit
+                <Button variant="primary" type="submit" className="accept-vacation-btn">
+                    <CheckCircleFill />
                 </Button>
             </Form>
         </div>

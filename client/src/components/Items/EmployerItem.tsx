@@ -57,18 +57,9 @@ const EmployerItem = ({empl}: Props) => {
         }
     }
 
-    const sureClear = () => {
-        let res = prompt('Вы точно хотите удалить кандидата из списка? Напишите Да, чтобы подтвердить', 'Нет')?.toLowerCase();
-        let yes = 'да'.toLowerCase();
-        console.log(res)
-        if(res == yes){
-            setStatusCandidate(empl._id, 'Принят');
-        }
-    }
 
     const setStatus = (sort: string) => {
         setSelectedSort(sort)
-        console.log(sort)
         setStatusCandidate(empl._id, sort);
         fetchUsers()
     }
@@ -205,35 +196,12 @@ const EmployerItem = ({empl}: Props) => {
                         Создать пользователя по кандидату
                         </Tooltip>
                     }>
-                    <Button onClick={() => setCreateCandidateModalActive(true)} className="common-btn"><PersonAdd/></Button>
+                    <Button onClick={() => {setCreateCandidateModalActive(true); fetchUsers();}} className="common-btn"><PersonAdd/></Button>
                 </OverlayTrigger>
                 : ''
                     }
                     </>
                 )}
-
-
-                    <>
-                    {statusCandidates.map(status =>
-                        <>
-                          {empl.statusCandidate==status._id && status.name == 'Приглашен'
-                          ?
-                          <OverlayTrigger
-                          key={'bottom'}
-                          placement={'bottom'}
-                          overlay={
-                              <Tooltip id={`tooltip-${'bottom'}`}>
-                              Удалить кандидата из списка.
-                              </Tooltip>
-                          }>
-                            <Button onClick={() => sureClear()} className="common-btn"><Trash3Fill /></Button>
-                          </OverlayTrigger>
-                          :
-                          ''
-                          }
-                        </>
-                    )}
-                    </>
             </>
             :
             ''

@@ -1,20 +1,20 @@
 const MainVacationDurationModel = require('../models/mainVacationDuration-model')
 const ApiError = require('../exceptions/api-error')
 
-class LocationService {
+class MainVacationDurationService {
 
     async create(name, daysCount) {
         const mainVacationDuration = await MainVacationDurationModel.create({name: name, daysCount: daysCount})
         if(!mainVacationDuration){
-            throw ApiError.BadRequest(`Город не был создан`)
+            throw ApiError.BadRequest(`Категория основного отпуска не была создана`)
         }
         return mainVacationDuration
     }
 
-    async editLocation(_id, name, daysCount) {
+    async editMainVacationDuration(_id, name, daysCount) {
         const mainVacationDuration = await MainVacationDurationModel.findByIdAndUpdate(_id, {name: name, daysCount: daysCount})
         if(!mainVacationDuration){
-            throw ApiError.BadRequest(`Город не изменен`)
+            throw ApiError.BadRequest(`Категория основного отпуска не измененf`)
         }
         return await MainVacationDurationModel.findById(_id)
     }
@@ -22,7 +22,7 @@ class LocationService {
     async getAll() {
         const mainVacationDuration = await MainVacationDurationModel.find()
         if(!mainVacationDuration){
-            throw ApiError.BadRequest(`Города не получены`)
+            throw ApiError.BadRequest(`Категории основного отпуска не получены`)
         }
         return mainVacationDuration
     }
@@ -30,17 +30,17 @@ class LocationService {
     async getOne(_id) {
         const mainVacationDuration = await MainVacationDurationModel.findById(_id)
         if(!mainVacationDuration){
-            throw ApiError.BadRequest(`Город не существует`)
+            throw ApiError.BadRequest(`Категория основного отпуска не существует`)
         }
         return mainVacationDuration
     }
     async delOne(_id){
         const mainVacationDuration = await MainVacationDurationModel.findByIdAndDelete(_id)
         if(!mainVacationDuration){
-            throw ApiError.BadRequest(`Город не удален`)
+            throw ApiError.BadRequest(`Категория основного отпуска не удалена`)
         }
         return mainVacationDuration
     }
 }
 
-module.exports = new LocationService();
+module.exports = new MainVacationDurationService();

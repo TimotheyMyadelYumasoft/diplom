@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import MySelect from "../UI/select/MySelect";
 import { DatePicker } from 'antd';
 import dayjs, { Dayjs } from 'dayjs';
+import {PersonFillAdd} from 'react-bootstrap-icons'
+import "../../style/Button.css"
 
 type Props = {
     setIsOpen: (isOpen: boolean) => void;
@@ -105,6 +107,16 @@ const CreateCandidate = ({ setIsOpen }: Props) => {
                     <Form.Control type="Phonenumber" placeholder="Phonenumber" value={Phonenumber}  onChange={e => setPhonenumber(e.target.value)} required />
                 </Form.Group>
 
+                <Form.Group className="mb-1" controlId="formBasicEmailCandidate">
+                            <Form.Label>День рождения</Form.Label>
+                            <DatePicker
+                                id="startDate"
+                                name="startDate"
+                                format="DD-MM-YYYY"
+                                value={BirthDay}
+                                onChange={(date) => setBirthDay(dayjs(date))}
+                            />
+                </Form.Group>
                 <MySelect value={Position}
                 onChange={setPosition}
                 defaultValue='Выбрать позицию'
@@ -122,27 +134,11 @@ const CreateCandidate = ({ setIsOpen }: Props) => {
                 defaultValue='Выбрать город'
                 options={selectLocation}
                 />
-                <div>
-                {selectRole}
-                <br/>
-                {selectStatusCandidate}
-                <br/>
-                {BirthDay.toString()}
-                </div>
-
-                <Form.Group className="mb-1" controlId="formBasicEmailCandidate">
-                            <DatePicker
-                                id="startDate"
-                                name="startDate"
-                                format="DD-MM-YYYY"
-                                value={BirthDay}
-                                onChange={(date) => setBirthDay(dayjs(date))}
-                            />
-                </Form.Group>
 
 
-                <Button variant="primary" type="submit">
-                    Submit
+
+                <Button variant="primary" type="submit" className="accept-vacation-btn">
+                    <PersonFillAdd />
                 </Button>
             </Form>
         </div>

@@ -3,7 +3,7 @@ import { useAction } from "../../hooks/useAction"
 import { useTypeSelector } from "../../hooks/useTypedSelector"
 import EventItem from "../Items/EventItem"
 import {IEvent} from '../../types/event-type'
-import { IUser } from "../../types/user"
+import { IUser } from "../../types/user-type"
 import MySelect from "../UI/select/MySelect"
 
 import { DatePicker, Select, Space, TimePicker } from 'antd';

@@ -3,7 +3,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { useTypeSelector } from '../../hooks/useTypedSelector';
 import { useAction } from '../../hooks/useAction';
 import { useState } from "react";
-import { IUser } from "../../types/user";
+import { IUser } from "../../types/user-type";
 import MySelect from "../UI/select/MySelect";
 import RHFDatePickerField from "../UI/RHFDatePickerField";
 import { Control, Controller, useForm } from "react-hook-form";

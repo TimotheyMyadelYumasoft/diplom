@@ -79,7 +79,7 @@ const Navigation: FC = () => {
         <Button onClick={() => _logout()} className="logout-btn"><DoorOpen /></Button>
 
         <Modal active={modalCreateCandidateActive} setActive={setCreateCandidateModalActive} modalHeader='Создать кандидата'><CreateCandidate setIsOpen={setCreateCandidateModalActive} /></Modal>
-        <Modal active={modalCreateUserActive} setActive={setCreateUserModalActive} modalHeader='Создать работника'><CreateUser setIsOpen={setCreateUserModalActive} role={modalRole}/></Modal>
+        <Modal active={modalCreateUserActive} setActive={setCreateUserModalActive} modalHeader='Создать работника'><CreateUser setIsOpen={setCreateUserModalActive} userRole={modalRole}/></Modal>
         </Navbar>
     )
 }

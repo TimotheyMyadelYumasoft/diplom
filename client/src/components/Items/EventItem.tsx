@@ -7,13 +7,14 @@ import EditUserFrom from '../Forms/EditUserFrom';
 import { useEffect, useState } from "react";
 import { useAction } from "../../hooks/useAction";
 import { IEvent } from "../../types/event-type";
-import { IUser} from '../../types/user'
 import { useTypeSelector } from "../../hooks/useTypedSelector";
 import { fetchAllEvents } from "../../store/action-creators/event";
 import {Trash} from 'react-bootstrap-icons'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import "../../style/Button.css"
+import { fetchRoleById } from "../../store/action-creators/role-ac";
+import { IUser } from "../../types/user-type";
 
 
 type Props = {
@@ -25,10 +26,11 @@ const EventItem = ({ev, us}: Props) => {
     const [modalEditActive, setEditModalActive] = useState(false);
     const nav = useNavigate()
     const {deleteUserById, fetchUsers, deleteEventById, fetchAllEvents} = useAction()
-    const {user, _auth} = useTypeSelector(state => state)
+    const {_auth, _role} = useTypeSelector(state => state)
 
     useEffect(() => {
         fetchUsers()
+        fetchRoleById(_auth.auth.user._id)
     }, [_auth])
 
     const sureDelete = () => {
@@ -73,7 +75,7 @@ const EventItem = ({ev, us}: Props) => {
                 }
                 {/* Участники: {ev.participants?.length()} */}
             </Card.Text>
-            { _auth.auth.user.role =='ADMIN' || _auth.auth.user.role=='RECRUITER'
+            { _role.role.name =='ADMIN' || _role.role.name=='RECRUITER'
             ?
             <OverlayTrigger
                     key={'bottom'}

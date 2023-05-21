@@ -18,14 +18,16 @@ import '../style/Button.css'
 
 const EventPage = () => {
     const {auth, isAuth} = useTypeSelector(state => state._auth)
-    const {users} = useTypeSelector(state => state.user)
+    const {users} = useTypeSelector(state => state._user)
     const {events} = useTypeSelector(state => state.event)
-    const {fetchAllEvents, fetchUsers} = useAction()
+    const {fetchAllEvents, fetchUsers, fetchRoleById} = useAction()
+    const {role} = useTypeSelector(state => state._role)
 
 
     useEffect(() => {
         fetchAllEvents()
         fetchUsers()
+        fetchRoleById(auth.user._id)
     }, [auth])
 
     // useEffect(() => {
@@ -45,7 +47,7 @@ const EventPage = () => {
     return(
         <div>
             <Navigation />
-            { auth.user.role=='RECRUITER' || auth.user.role=='ADMIN'
+            { role.name=='RECRUITER' || role.name=='ADMIN'
             ?
                 <div style={{display: 'flex', msFlexDirection: 'column', flexWrap: 'wrap', margin: '1rem 0rem 0rem 2rem'}}>
                     <OverlayTrigger

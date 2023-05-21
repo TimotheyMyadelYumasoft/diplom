@@ -1,8 +1,9 @@
 const UserModel = require('../models/user-model')
 const bcrypt = require('bcrypt')
 const uuid = require('uuid')
-const mailService = require('./mail-service')
 const tokenService = require('./token-service')
+const mainVacationDurationModel = require('../models/mainVacationDuration-model')
+const vacationService = require('../service/vacation-service')
 const UserDto = require('../dtos/user-dto')
 const ApiError = require('../exceptions/api-error')
 
@@ -18,6 +19,8 @@ class UserService {
         const userDto = new UserDto(user); // id, email
         const tokens = tokenService.generateTokens({...userDto});
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
+        const mainVacationDuration = await mainVacationDurationModel.findOne({name: 'Стандартный'})
+        const vacation = await vacationService.create(_id, mainVacationDuration._id)
 
         return user
     }
@@ -75,7 +78,6 @@ class UserService {
         if(!user) {
             throw ApiError.BadRequest('Данный пользователь не найден')
         }
-
         const candidate = await UserModel.findByIdAndUpdate(_id, {statusCandidate: statusCandidate})
         return await UserModel.findById(_id)
     }
@@ -91,8 +93,8 @@ class UserService {
     async createEmployeeByCandidateId(_id, password, statusCandidate) {
         const hashPassword = await bcrypt.hash(password, 3);
         const candidate = await UserModel.findByIdAndUpdate(_id, {password: hashPassword, statusCandidate: statusCandidate, hiredDate: new Date})
-        console.log(statusCandidate)
-        console.log(candidate)
+        const mainVacationDuration = await mainVacationDurationModel.findOne({name: 'Стандартный'})
+        const vacation = await vacationService.create(_id, mainVacationDuration._id)
         return await UserModel.findById(_id)
     }
 
