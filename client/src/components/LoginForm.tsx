@@ -13,15 +13,9 @@ const LoginForm: FC = () => {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
 
-    const {auth, isAuth} = useTypeSelector(state => state.auth)
+    const {auth, isAuth} = useTypeSelector(state => state._auth)
 
-    const {login, refresh, logout} = useAction()
-
-    useEffect(() => {
-        if(localStorage.getItem('token')){
-            refresh();
-        }
-    }, [])
+    const {_login} = useAction()
 
     const navigate = useNavigate();
 
@@ -42,7 +36,7 @@ const LoginForm: FC = () => {
                             <Form.Label htmlFor="disabledTextInput">Password</Form.Label>
                             <Form.Control id="disabledTextInput" placeholder="Password" type='password' value={password} onChange={e => setPassword(e.target.value)}/>
                         </Form.Group>
-                        <Button onClick={() => login(email, password)} >Login</Button>
+                        <Button onClick={() => _login(email, password)} >Login</Button>
                 </Form>
             </Card.Body>
         </Card>

@@ -8,11 +8,11 @@ import Navigation from '../components/Navigation'
 
 function PersonalPage() {
 
-    const {auth} = useTypeSelector(state => state)
-    const {refresh, logout, fetchUserByIdAction} = useAction()
+    const {auth} = useTypeSelector(state => state._auth)
+    const {fetchUserByIdAction} = useAction()
 
     useEffect(() => {
-        fetchUserByIdAction(auth.auth.user.id)
+        fetchUserByIdAction(auth.user._id)
     }, [auth])
 
 

@@ -1,5 +1,5 @@
 import { Form } from "react-bootstrap";
-import { IUser } from "../../types/user"
+import { IUser } from "../../types/user-type"
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useNavigate } from "react-router-dom";
@@ -24,9 +24,28 @@ const EmployerItem = ({empl}: Props) => {
     const [modalEditActive, setEditModalActive] = useState(false);
     const [modalCreateCandidateActive, setCreateCandidateModalActive] = useState(false);
     const [selectedSort, setSelectedSort] = useState('')
-    const nav = useNavigate()
-    const {deleteUserById, fetchUsers, setStatusCandidate} = useAction()
-    const {auth} = useTypeSelector(state => state.auth)
+    const {deleteUserById, fetchUsers, setStatusCandidate, fetchRoleById, fetchStatusCandidates} = useAction()
+    const {auth} = useTypeSelector(state => state._auth)
+    const {role} = useTypeSelector(state => state._role)
+    const {statusCandidate, statusCandidates} = useTypeSelector(state => state._statusCandidate)
+
+    const {fetchPositions, fetchLocations, fetchGenders} = useAction()
+    const { _position, _location, _gender} = useTypeSelector(state => state);
+
+    useEffect(() => {
+        fetchPositions()
+        fetchLocations()
+        fetchGenders()
+    }, [])
+
+    const [ Position, setPosition ] = useState<string>('')
+    const [ Location, setLocation ] = useState<string>('')
+    const [ Gender, setGender ] = useState<string>('')
+
+    useEffect(() => {
+        fetchRoleById(auth.user.role)
+        fetchStatusCandidates()
+    }, [])
 
     const sureDelete = () => {
         let res = prompt('Вы точно хотите удалить пользователя из системы? Напишите Да, чтобы подтвердить', 'Нет')?.toLowerCase();
@@ -43,7 +62,7 @@ const EmployerItem = ({empl}: Props) => {
         let yes = 'да'.toLowerCase();
         console.log(res)
         if(res == yes){
-            setStatusCandidate(empl._id, 'hired');
+            setStatusCandidate(empl._id, 'Принят');
         }
     }
 
@@ -51,7 +70,18 @@ const EmployerItem = ({empl}: Props) => {
         setSelectedSort(sort)
         console.log(sort)
         setStatusCandidate(empl._id, sort);
+        fetchUsers()
     }
+
+    let selectStatusCandidate: any = [];
+    statusCandidates.map(status => {
+        let newItem = {
+            "value": status._id,
+            "name": status.name
+        };
+        if(newItem.name !== 'Принят')
+        selectStatusCandidate.push(newItem);
+    })
 
     return (
       <Card style={{ width: '25rem', margin:'2rem 0rem 2rem 0rem', display: 'grid', justifyItems: 'center'}}
@@ -60,11 +90,11 @@ const EmployerItem = ({empl}: Props) => {
         { empl.password
         ?
             <>
-            { empl.imageUrl
+            { empl.image
             ?
                 <Card.Img
                 variant="top"
-                src={'http://localhost:5000/'+empl?.imageUrl}
+                src={'http://localhost:5000/'+empl?.image}
                 style={{width: '75%', height: '300px', borderRadius: '200px', backgroundColor: 'black', alignItems: 'center'}}
                 />
             :
@@ -90,12 +120,42 @@ const EmployerItem = ({empl}: Props) => {
                 Дата найма в компанию: {empl.hiredDate?.split('T')[0]}
             </Card.Text>
             <Card.Text>
-                Страна проживания: {empl.location}
+                Страна проживания: { _location.locations.map(location =>
+                <>
+                    {location._id == empl.location
+                    ?
+                    location.city
+                    :
+                    ''
+                    }
+                </>
+                )}
             </Card.Text>
             <Card.Text>
-                Отдел: {empl.departament}
+                Должность: { _position.positions.map(position =>
+                <>
+                    {position._id == empl.position
+                    ?
+                    position.name
+                    :
+                    ''
+                    }
+                </>
+                )}
             </Card.Text>
-            { auth.user.role=='RECRUITER' || auth.user.role=='ADMIN'
+            <Card.Text>
+                Пол: {_gender.genders.map(gender =>
+                <>
+                    {gender._id == empl.gender
+                    ?
+                    gender.name
+                    :
+                    ''
+                    }
+                </>
+                )}
+            </Card.Text>
+            { role.name=='RECRUITER' || role.name=='ADMIN'
             ?
             <>
                 { empl.statusCandidate!=='hired' && !empl.password
@@ -103,19 +163,14 @@ const EmployerItem = ({empl}: Props) => {
                 <MySelect value={selectedSort}
                     onChange={setStatus}
                     defaultValue='изменить статус кандидата'
-                    options={[
-                        {value: 'rejected', name: 'отклонен'},
-                        {value: 'wait', name: 'ожидает'},
-                        {value: 'review', name: 'рассматривается'},
-                        {value: 'accepted', name: 'найм кандидата'}
-                    ]}/>
+                    options={selectStatusCandidate}/>
                 : ''
                 }
             </>
             :
             ''
             }
-            { auth.user.role=='RECRUITER' || auth.user.role=='ADMIN'
+            { role.name=='RECRUITER' || role.name=='ADMIN'
             ?
             <>
                 <OverlayTrigger
@@ -138,7 +193,9 @@ const EmployerItem = ({empl}: Props) => {
                     }>
                     <Button onClick={() => sureDelete()} className="common-btn"><Trash /></Button>
                 </OverlayTrigger>
-                { empl.statusCandidate=='accepted' && !empl.password
+                {statusCandidates.map(status =>
+                        <>
+                          {empl.statusCandidate==status._id && status.name == 'Приглашен'
                 ?
                 <OverlayTrigger
                     key={'bottom'}
@@ -151,22 +208,32 @@ const EmployerItem = ({empl}: Props) => {
                     <Button onClick={() => setCreateCandidateModalActive(true)} className="common-btn"><PersonAdd/></Button>
                 </OverlayTrigger>
                 : ''
-                }
+                    }
+                    </>
+                )}
 
-                { empl.statusCandidate!=='hired' && empl.statusCandidate=='accepted'
-                ?
-                <OverlayTrigger
-                    key={'bottom'}
-                    placement={'bottom'}
-                    overlay={
-                        <Tooltip id={`tooltip-${'bottom'}`}>
-                        Удалить кандидата из списка.
-                        </Tooltip>
-                    }>
-                    <Button onClick={() => sureClear()} className="common-btn"><Trash3Fill /></Button>
-                </OverlayTrigger>
-                : ''
-                }
+
+                    <>
+                    {statusCandidates.map(status =>
+                        <>
+                          {empl.statusCandidate==status._id && status.name == 'Приглашен'
+                          ?
+                          <OverlayTrigger
+                          key={'bottom'}
+                          placement={'bottom'}
+                          overlay={
+                              <Tooltip id={`tooltip-${'bottom'}`}>
+                              Удалить кандидата из списка.
+                              </Tooltip>
+                          }>
+                            <Button onClick={() => sureClear()} className="common-btn"><Trash3Fill /></Button>
+                          </OverlayTrigger>
+                          :
+                          ''
+                          }
+                        </>
+                    )}
+                    </>
             </>
             :
             ''

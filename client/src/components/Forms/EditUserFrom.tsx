@@ -2,7 +2,8 @@ import { Button, Form } from "react-bootstrap";
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useTypeSelector } from '../../hooks/useTypedSelector';
 import { useAction } from '../../hooks/useAction';
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import MySelect from "../UI/select/MySelect";
 
 type Props = {
     setIsOpen: (isOpen: boolean) => void;
@@ -11,16 +12,25 @@ type Props = {
 
 const EditUserFrom = ({ setIsOpen, employerId }: Props) => {
 
-    const {fetchUsers} = useAction()
-    const { auth } = useTypeSelector(state => state.auth);
+    const {fetchUsers, fetchPositions, fetchLocations, fetchGenders} = useAction()
+    const { _position, _location, _gender} = useTypeSelector(state => state);
+
+    useEffect(() => {
+        fetchPositions()
+        fetchLocations()
+        fetchGenders()
+    }, [])
+
+    const [ Position, setPosition ] = useState<string>('')
+    const [ Location, setLocation ] = useState<string>('')
+    const [ Gender, setGender ] = useState<string>('')
+
+    const { auth } = useTypeSelector(state => state._auth);
 
     const [ Email, setEmail] = useState<string>('')
     const [ FirstName, setFirstName ] = useState<string>('')
     const [ Surname, setSurname ] = useState<string>('')
     const [ Phonenumber, setPhonenumber ] = useState<string>('')
-    const [ Gender, setGender ] = useState<string>('')
-    const [ Department, setDepartment ] = useState<string>('')
-    const [ Country, setCountry ] = useState<string>('')
 
 
     const requiredTrue = true;
@@ -28,15 +38,42 @@ const EditUserFrom = ({ setIsOpen, employerId }: Props) => {
     const handleSubmit = async( event: React.SyntheticEvent) => {
         event.preventDefault();
         if(employerId == ''){
-            updateThisUser(auth.user.id, Email, FirstName, Surname, Gender, Phonenumber, Department, Country);
+            updateThisUser(auth.user._id, Position, Location, Email, FirstName, Surname, Gender, Phonenumber);
             setIsOpen(false);
         }
         else {
-            updateThisUser(employerId, Email, FirstName, Surname, Gender, Phonenumber, Department, Country);
+            updateThisUser(employerId, Position, Location, Email, FirstName, Surname, Gender, Phonenumber);
             setIsOpen(false);
             fetchUsers()
         }
     }
+
+    let selectPosition: any = [];
+    _position.positions.map(position => {
+        let newItem = {
+            "value": position._id,
+            "name": position.name
+        };
+        selectPosition.push(newItem);
+    })
+
+    let selectGender: any = [];
+    _gender.genders.map(gender => {
+        let newItem = {
+            "value": gender._id,
+            "name": gender.name
+        };
+        selectGender.push(newItem);
+    })
+
+    let selectLocation: any = [];
+    _location.locations.map(location => {
+        let newItem = {
+            "value": location._id,
+            "name": location.city
+        };
+        selectLocation.push(newItem);
+    })
 
     return (
         <div>
@@ -58,18 +95,25 @@ const EditUserFrom = ({ setIsOpen, employerId }: Props) => {
                     <Form.Label>Phone number</Form.Label>
                     <Form.Control type="Phonenumber" placeholder="Phonenumber" value={Phonenumber}  onChange={e => setPhonenumber(e.target.value)} required />
                 </Form.Group>
-                <Form.Group className="mb-1" controlId="formBasicGenderEditUser">
-                    <Form.Label>Gender</Form.Label>
-                    <Form.Control type="text" placeholder="Gender" value={Gender}  onChange={e => setGender(e.target.value)}  required/>
-                </Form.Group>
-                <Form.Group className="mb-1" controlId="formBasicDepartmentEditUser">
-                    <Form.Label>Department</Form.Label>
-                    <Form.Control type="text" placeholder="Department" value={Department}  onChange={e => setDepartment(e.target.value)} required/>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicCountryEditUser">
-                    <Form.Label>Страна проживания</Form.Label>
-                    <Form.Control type="text" placeholder="Country" value={Country}  onChange={e => setCountry(e.target.value)} required/>
-                </Form.Group>
+
+                <MySelect value={Position}
+                onChange={setPosition}
+                defaultValue='Выбрать должность'
+                options={selectPosition}
+                />
+
+                <MySelect value={Gender}
+                onChange={setGender}
+                defaultValue='Выбрать пол'
+                options={selectGender}
+                />
+
+                <MySelect value={Location}
+                onChange={setLocation}
+                defaultValue='Выбрать город'
+                options={selectLocation}
+                />
+
                 <Button variant="primary" type="submit">
                     Submit
                 </Button>

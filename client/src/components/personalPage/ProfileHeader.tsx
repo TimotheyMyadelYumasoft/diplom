@@ -21,10 +21,19 @@ const ProfileHeader = () => {
 
     const [modalEditActive, setEditModalActive] = useState(false);
     const [modalEditBirthdayActive, setEditBirthdayModalActive] = useState(false);
-    const {auth, user, vacation} = useTypeSelector(state => state)
+    const {_auth, _user, vacation} = useTypeSelector(state => state)
     const [ DateOfStart, setDateOfStart] = useState<string>('')
     const [ DateOfEnd, setDateOfEnd] = useState<string>('')
     let [ uploadImage, setUploadImage] = useState<any>('')
+
+    const {fetchPositions, fetchLocations, fetchGenders} = useAction()
+    const { _position, _location, _gender} = useTypeSelector(state => state);
+
+    useEffect(() => {
+        fetchPositions()
+        fetchLocations()
+        fetchGenders()
+    }, [])
 
     const {fetchVacations} = useAction()
     useEffect(() => {
@@ -53,7 +62,7 @@ const ProfileHeader = () => {
                 alert('Дата начала идет перед датой конца. Поменяйте значения пожалуйста')
             }
             else{
-                setVacation(dayjs(startDate).toString(), dayjs(endDate).toString(), 'vacation', auth.auth.user.id)
+                setVacation(dayjs(startDate).toString(), dayjs(endDate).toString(), 'vacation', _auth.auth.user._id)
 
             }
         }
@@ -71,7 +80,7 @@ const ProfileHeader = () => {
                 alert('Дата начала идет перед датой конца. Поменяйте значения пожалуйста')
             }
             else{
-                setVacation(dayjs(startDate).toString(), dayjs(endDate).toString(), 'sickLeave', auth.auth.user.id)
+                setVacation(dayjs(startDate).toString(), dayjs(endDate).toString(), 'sickLeave', _auth.auth.user._id)
             }
         }
     }
@@ -113,7 +122,7 @@ const ProfileHeader = () => {
         setUploadImage(event.target.files[0])
         console.log(event.target.files[0])
         const fd = new FormData();
-        fd.append('_id', user.user?._id)
+        fd.append('_id', _user.user?._id)
         fd.append('image', event.target.files[0], event.target.files[0].name)
         editUserImage(fd)
     }
@@ -129,10 +138,10 @@ const ProfileHeader = () => {
             />
             <div>
                 <div style={{display: 'flex', msFlexDirection: 'column', flexWrap: 'wrap'}}>
-                    { user.user?.imageUrl
+                    { _user.user?.image
                     ?
                         <Image
-                            src={'http://localhost:5000/'+user.user?.imageUrl}
+                            src={'http://localhost:5000/'+_user.user?.image}
                             style={{width: '250px', height: '250px', borderRadius: '150px', backgroundColor: 'black', margin: '1rem 0rem 1rem 3rem'}}
                             onClick={handleUploadProfileImage}
                         />
@@ -148,16 +157,44 @@ const ProfileHeader = () => {
                     />
                     <div>
                     <Card style={{ width: '40rem', margin: '1rem 0rem 0rem 4rem', paddingBottom: '2rem'}}>
-                        <Card.Title as='h1' style={{textAlign: 'center', margin: '1rem'}}>{user.user?.secondname} {user.user?.firstname}</Card.Title>
-                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Email: {user.user?.email}</Card.Text>
-                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Номер телефона: {user.user?.phoneNumber}</Card.Text>
-                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Страна проживания: {user.user?.location}</Card.Text>
-                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Отдел: {user.user?.departament}</Card.Text>
-                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>День рождения: {user.user?.birthDay?.split('T')[0]}</Card.Text>
-                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>День найма: {user.user?.hiredDate?.split('T')[0]}</Card.Text>
-                        {  user.user?.firedDate
+                        <Card.Title as='h1' style={{textAlign: 'center', margin: '1rem'}}>{_user.user?.secondname} {_user.user?.firstname}</Card.Title>
+                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Email: {_user.user?.email}</Card.Text>
+                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Номер телефона: {_user.user?.phoneNumber}</Card.Text>
+                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Город проживания: {_location.locations.map(location =>
+                            <>
+                                {location._id == _user.user?.location
+                                ?
+                                location.city
+                                :
+                                ''
+                                }
+                            </>
+                            )}</Card.Text>
+                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Отдел: {_position.positions.map(position =>
+                            <>
+                                {position._id == _user.user?.position
+                                ?
+                                position.name
+                                :
+                                ''
+                                }
+                            </>
+                            )}</Card.Text>
+                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Пол: {_gender.genders.map(gender =>
+                            <>
+                                {gender._id == _user.user?.gender
+                                ?
+                                gender.name
+                                :
+                                ''
+                                }
+                            </>
+                            )}</Card.Text>
+                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>День рождения: {_user.user?.birthDay?.split('T')[0]}</Card.Text>
+                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>День найма: {_user.user?.hiredDate?.split('T')[0]}</Card.Text>
+                        {  _user.user?.firedDate
                         ?
-                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>День увольнения: {user.user?.firedDate?.split('T')[0]}</Card.Text>
+                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>День увольнения: {_user.user?.firedDate?.split('T')[0]}</Card.Text>
                         :
                         ''
                         }

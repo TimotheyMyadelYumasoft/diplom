@@ -7,7 +7,7 @@ import MySelect from '../../components/UI/select/MySelect'
 
 const VacationList = () => {
 
-    const {auth, isAuth} = useTypeSelector(state => state.auth)
+    const {auth, isAuth} = useTypeSelector(state => state._auth)
     const {vacation, vacations} = useTypeSelector(state => state.vacation)
     const {user, users} = useTypeSelector(state => state.user)
 
@@ -55,7 +55,7 @@ const VacationList = () => {
                 <>
                 {users?.map(employer =>
                     <>
-                        {employer._id == vac.employerId && vac.status=='approve' && vac.employerId===auth.user.id ?  <VacationItem vac={vac} emp={employer} /> : ''}
+                        {employer._id == vac.employerId && vac.status=='approve' && vac.employerId===auth.user._id ?  <VacationItem vac={vac} emp={employer} /> : ''}
                     </>
                 )}
                 </>

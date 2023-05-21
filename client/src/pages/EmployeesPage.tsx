@@ -8,12 +8,12 @@ import Navigation from '../components/Navigation'
 import EmployersList from '../components/Lists/EmployersList'
 import MySelect from '../components/UI/select/MySelect'
 import MyInput from '../components/UI/input/MyInput'
-import { IUser } from '../types/user'
+import { IUser } from '../types/user-type'
 
 function EmployeesPage() {
-    const {auth, isAuth} = useTypeSelector(state => state.auth)
-    const {users} = useTypeSelector(state => state.user)
-    const {refresh, logout, fetchUserByIdAction, fetchUsers} = useAction()
+    const {auth, isAuth} = useTypeSelector(state => state._auth)
+    const {users} = useTypeSelector(state => state._user)
+    const {fetchUserByIdAction, fetchUsers} = useAction()
 
     const [selectedSort, setSelectedSort] = useState('');
     const [searchQuery, setSearchQuery] = useState<string>('');
@@ -22,7 +22,7 @@ function EmployeesPage() {
 
 
     useEffect(() => {
-        fetchUserByIdAction(auth.user.id)
+        fetchUserByIdAction(auth.user._id)
         fetchUsers()
     }, [auth])
 

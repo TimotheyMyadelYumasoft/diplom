@@ -1,5 +1,3 @@
-import * as UserActionCreator from './user'
-import * as AuthActionCreator from './auth'
 import * as VacationActionCreator from './vacation'
 import * as EventActionCreator from './event'
 import * as CandidateActionCreator from './candidate'
@@ -14,10 +12,12 @@ import * as _MainVacationDurationActionCreator from './mainVacationDuration-ac'
 import * as _PositionActionCreator from './position-ac'
 import * as _UserActionCreator from './user-ac'
 import * as _VacationActionCreator from './vacation-ac'
+import * as _RoleActionCreator from './role-ac'
+import * as _StatusCandidateActionCreator from './statusCandidate-ac'
+import * as _StatusDayOffActionCreator from './statusDayOff-ac'
+import * as _TypeDayOffActionCreator from './typeDayOff-ac'
 
 export default {
-    ...UserActionCreator,
-    ...AuthActionCreator,
     ...VacationActionCreator,
     ...EventActionCreator,
     ...CandidateActionCreator,
@@ -32,4 +32,8 @@ export default {
     ..._PositionActionCreator,
     ..._UserActionCreator,
     ..._VacationActionCreator,
+    ..._RoleActionCreator,
+    ..._StatusCandidateActionCreator,
+    ..._StatusDayOffActionCreator,
+    ..._TypeDayOffActionCreator,
 }

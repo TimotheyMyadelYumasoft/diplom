@@ -12,7 +12,7 @@ type Props = {
 const CreateUser = ({ setIsOpen, role }: Props) => {
 
     const {fetchUsers} = useAction()
-    const { auth } = useTypeSelector(state => state.auth);
+    const { auth } = useTypeSelector(state => state._auth);
 
     const [ Email, setEmail] = useState<string>('')
     const [ Password, setPassword ] = useState<string>('')

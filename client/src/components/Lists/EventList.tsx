@@ -21,7 +21,7 @@ type Props = {
 }
 
 const EventList = ({events, users}: Props) => {
-    const {auth, isAuth} = useTypeSelector(state => state.auth)
+    const {auth, isAuth} = useTypeSelector(state => state._auth)
     const {fetchUserByIdAction, fetchUsers} = useAction()
     const [selectedSort, setSelectedSort] = useState('');
     const [selectedDate, setSelectedDate] = useState('');

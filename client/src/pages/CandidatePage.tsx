@@ -8,39 +8,17 @@ import MySelect from '../components/UI/select/MySelect'
 import MyInput from '../components/UI/input/MyInput'
 
 const CandidatePage = () => {
-    const {auth, isAuth} = useTypeSelector(state => state.auth)
-    const {users} = useTypeSelector(state => state.user)
-    const {refresh, logout, fetchUserByIdAction, fetchUsers} = useAction()
+    const {auth, isAuth} = useTypeSelector(state => state._auth)
+    const {users} = useTypeSelector(state => state._user)
+    const {fetchUserByIdAction, fetchUsers} = useAction()
 
 
     useEffect(() => {
-        fetchUserByIdAction(auth.user.id)
+        fetchUserByIdAction(auth.user._id)
         fetchUsers()
     }, [auth])
 
     let employers = users;
-
-    const [selectedSort, setSelectedSort] = useState('');
-    const [searchQuery, setSearchQuery] = useState<string>('');
-
-    const sortPosts = (sort: string) => {
-        setSelectedSort(sort)
-        console.log(sort)
-        if(sort == 'firstname') {
-            employers = employers.sort((a, b) => a.firstname?.localeCompare(b.firstname));
-        }
-        else if (sort == 'email') {
-            employers = employers.sort((a, b) => a.email?.localeCompare(b.email));
-        }
-        else if (sort == 'secondname') {
-            employers = employers.sort((a, b) => a.secondname?.localeCompare(b.secondname));
-        }
-    }
-
-    const changeSearchQuery = (search: string) => {
-        setSearchQuery(search)
-        console.log(searchQuery)
-    }
 
     return(
         <div>

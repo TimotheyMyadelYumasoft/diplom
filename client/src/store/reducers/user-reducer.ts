@@ -3,6 +3,7 @@ import {UserAction, UserState, UserActionTypes} from '../../types/user-type'
 const initialState: UserState = {
     users: [],
     user: {
+        _id: '',
         role: '',
         position: '',
         location: '',
@@ -37,7 +38,7 @@ export const user_Reducer = (state: UserState = initialState, action: UserAction
             return {...state, user: action.payload}
 
         case UserActionTypes.CREATE_CANDIDATE:
-                return {...state, user: action.payload}
+                return {...state, users: [...action.payload]}
         case UserActionTypes.APPROVE_CANDIDATE:
             return {...state, user: action.payload}
         case UserActionTypes.SET_STATUS_CANDIDATE:

@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useAction } from "../../hooks/useAction"
 import { useTypeSelector } from "../../hooks/useTypedSelector"
 import EmployerItem from "../Items/EmployerItem"
-import { IUser } from "../../types/user"
+import { IUser } from "../../types/user-type"
 import '../../style/Lists.css'
 
 type Props = {
@@ -10,13 +10,14 @@ type Props = {
 }
 
 const CandidateList = ({employers}: Props) => {
-    const {auth, isAuth} = useTypeSelector(state => state.auth)
-    const {fetchUserByIdAction, fetchUsers} = useAction()
+    const {auth, isAuth} = useTypeSelector(state => state._auth)
+    const {fetchUserByIdAction, fetchUsers, fetchStatusCandidates} = useAction()
+    const {statusCandidate, statusCandidates} = useTypeSelector(state=> state._statusCandidate)
 
-    const {users} = useTypeSelector(state => state.user)
+    const {users} = useTypeSelector(state => state._user)
     useEffect(()=> {
-        fetchUsers();
-    },[users])
+        fetchStatusCandidates()
+    }, [])
 
     return (
         <div style={{display: 'flex', msFlexDirection: 'column', flexWrap: 'wrap'}}>
@@ -24,11 +25,16 @@ const CandidateList = ({employers}: Props) => {
                 <div className="candidate__header__reject">
                     <h2>Кандидат отклонен</h2>
                 </div>
+                <div>
                     {employers?.map( employer =>
-                    <div className="candidate__item">
-                        {!employer.password && employer.statusCandidate=='rejected' ? <EmployerItem empl={employer} /> : ''}
-                    </div>
+                    <>{statusCandidates.map(status =>
+                        <div className="candidate__item">
+                          {employer.statusCandidate==status._id && status.name == 'Отклонен' ?  <EmployerItem empl={employer} /> : ''}
+                        </div>
+                    )}
+                    </>
                 )}
+                </div>
             </div>
             <div>
                 <div className="candidate__header__wait">
@@ -36,9 +42,12 @@ const CandidateList = ({employers}: Props) => {
                 </div>
                 <div>
                     {employers?.map( employer =>
-                    <div className="candidate__item">
-                    {!employer.password && !employer.statusCandidate || !employer.password && employer.statusCandidate=='wait' ?  <EmployerItem empl={employer} /> : ''}
-                    </div>
+                    <>{statusCandidates.map(status =>
+                        <div className="candidate__item">
+                          {employer.statusCandidate==status._id && status.name == 'Ожидает' ?  <EmployerItem empl={employer} /> : ''}
+                        </div>
+                    )}
+                    </>
                 )}
                 </div>
             </div>
@@ -48,9 +57,12 @@ const CandidateList = ({employers}: Props) => {
                 </div>
                 <div>
                     {employers?.map( employer =>
-                    <div className="candidate__item">
-                    {!employer.password && employer.statusCandidate=='review' ?  <EmployerItem empl={employer} /> : ''}
-                    </div>
+                    <>{statusCandidates.map(status =>
+                        <div className="candidate__item">
+                          {employer.statusCandidate==status._id && status.name == 'Рассматривается' ?  <EmployerItem empl={employer} /> : ''}
+                        </div>
+                    )}
+                    </>
                 )}
                 </div>
             </div>
@@ -60,9 +72,12 @@ const CandidateList = ({employers}: Props) => {
                 </div>
                 <div>
                     {employers?.map( employer =>
-                    <div className="candidate__item">
-                    {employer.statusCandidate=='accepted' ? <EmployerItem empl={employer} /> : ''}
-                    </div>
+                    <>{statusCandidates.map(status =>
+                        <div className="candidate__item">
+                          {employer.statusCandidate==status._id && status.name == 'Приглашен' ?  <EmployerItem empl={employer} /> : ''}
+                        </div>
+                    )}
+                    </>
                 )}
                 </div>
             </div>

@@ -2,7 +2,7 @@ import { Button, Form } from "react-bootstrap";
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useTypeSelector } from '../../hooks/useTypedSelector';
 import { useAction } from '../../hooks/useAction';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
     setIsOpen: (isOpen: boolean) => void;
@@ -11,8 +11,13 @@ type Props = {
 
 const CreateUserByCandidate = ({ setIsOpen, employerId }: Props) => {
 
-    const {fetchUsers} = useAction()
-    const { auth } = useTypeSelector(state => state.auth);
+    const {fetchUsers, fetchStatusCandidates} = useAction()
+    const { auth } = useTypeSelector(state => state._auth);
+    const {statusCandidate, statusCandidates} = useTypeSelector(state => state._statusCandidate)
+
+    useEffect(() => {
+        fetchStatusCandidates()
+    }, [])
 
     const [ Password, setPassword] = useState<string>('')
 
@@ -21,9 +26,10 @@ const CreateUserByCandidate = ({ setIsOpen, employerId }: Props) => {
     const {approveCandidate} = useAction()
     const handleSubmit = async( event: React.SyntheticEvent) => {
         event.preventDefault();
-        approveCandidate(employerId, Password, 'hired');
+        statusCandidates.map(status => {
+            if(status.name == 'Принят') approveCandidate(employerId, Password, status._id)
+        })
         setIsOpen(false);
-        fetchUsers()
     }
 
     return (

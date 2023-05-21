@@ -17,7 +17,7 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import '../style/Button.css'
 
 const EventPage = () => {
-    const {auth, isAuth} = useTypeSelector(state => state.auth)
+    const {auth, isAuth} = useTypeSelector(state => state._auth)
     const {users} = useTypeSelector(state => state.user)
     const {events} = useTypeSelector(state => state.event)
     const {fetchAllEvents, fetchUsers} = useAction()

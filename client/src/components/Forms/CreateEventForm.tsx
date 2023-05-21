@@ -31,7 +31,7 @@ const CreateEventForm = ({ setIsOpen, employers }: Props) => {
         endDate: string;
       }>();
 
-    const { auth } = useTypeSelector(state => state.auth);
+    const { auth } = useTypeSelector(state => state._auth);
 
 
     const [selectedSort, setSelectedSort] = useState('')

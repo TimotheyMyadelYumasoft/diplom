@@ -5,6 +5,7 @@ const initialState: AuthState = {
         accessToken: '',
         refreshToken: '',
         user: {
+            _id: '',
             role: '',
             position: '',
             location: '',

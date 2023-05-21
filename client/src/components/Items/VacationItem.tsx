@@ -16,7 +16,7 @@ type Props = {
 const VacationItem = ({vac, emp}: Props) => {
 
   const {approveVacation, deleteVacation, fetchVacations} = useAction()
-  const {auth} = useTypeSelector(state => state.auth)
+  const {auth} = useTypeSelector(state => state._auth)
 
   const sureReject = () => {
     let res = prompt('Вы точно хотите отказать в выходном? Напишите Да, чтобы подтвердить', 'Нет')?.toLowerCase();
@@ -94,7 +94,7 @@ const VacationItem = ({vac, emp}: Props) => {
           ''
           }
 
-          { auth.user.role =='ADMIN' || auth.user.role=='RECRUITED'
+          { auth.user.role =='ADMIN' || auth.user.role=='RECRUITER'
           ?
           <>
           <OverlayTrigger

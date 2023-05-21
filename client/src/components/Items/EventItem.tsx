@@ -25,11 +25,11 @@ const EventItem = ({ev, us}: Props) => {
     const [modalEditActive, setEditModalActive] = useState(false);
     const nav = useNavigate()
     const {deleteUserById, fetchUsers, deleteEventById, fetchAllEvents} = useAction()
-    const {user, auth} = useTypeSelector(state => state)
+    const {user, _auth} = useTypeSelector(state => state)
 
     useEffect(() => {
         fetchUsers()
-    }, [auth])
+    }, [_auth])
 
     const sureDelete = () => {
         let res = prompt('Вы точно хотите удалить мероприятие из системы? Напишите Да, чтобы подтвердить', 'Нет')?.toLowerCase();
@@ -42,7 +42,7 @@ const EventItem = ({ev, us}: Props) => {
     }
 
     return (
-      <Card style={{ width: '90rem', margin:'2rem 6rem 2rem 6rem', display: 'grid', justifyItems: 'left'}} 
+      <Card style={{ width: '90rem', margin:'2rem 6rem 2rem 6rem', display: 'grid', justifyItems: 'left'}}
       bg={'warning'}
       >
       {/* <Card.Img variant="top" src='https://www.yumasoft.com/fonts/svg/yumasoft_logo.svg' style={{width: '100%', height: '400px', borderRadius: '200px', backgroundColor: 'black'}} /> */}
@@ -73,7 +73,7 @@ const EventItem = ({ev, us}: Props) => {
                 }
                 {/* Участники: {ev.participants?.length()} */}
             </Card.Text>
-            { auth.auth.user.role =='ADMIN' || auth.auth.user.role=='RECRUITED'
+            { _auth.auth.user.role =='ADMIN' || _auth.auth.user.role=='RECRUITER'
             ?
             <OverlayTrigger
                     key={'bottom'}

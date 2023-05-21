@@ -4,7 +4,7 @@ import UserService from "../../services/auth-service"
 import axios from "axios"
 
 
-export const login = (email: string, password: string) => {
+export const _login = (email: string, password: string) => {
     return async (dispatch: Dispatch<AuthAction>) => {
         try{
             const response = await UserService.login(email, password)
@@ -37,7 +37,7 @@ export const refresh = () => {
     }
 }
 
-export const logout = () => {
+export const _logout = () => {
     return async (dispatch: Dispatch<AuthAction>) => {
         try{
             await UserService.logout()

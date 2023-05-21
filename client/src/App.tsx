@@ -13,7 +13,7 @@ import EventPage from './pages/EventPage';
 import CandidatePage from './pages/CandidatePage';
 
 const App: FC = () => {
-  const {isAuth} = useTypeSelector(state => state.auth)
+  const {isAuth} = useTypeSelector(state => state._auth)
   const {refresh} = useAction()
 
   useEffect(() => {

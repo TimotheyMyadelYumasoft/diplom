@@ -1,6 +1,5 @@
 import {combineReducers} from 'redux';
 import {userReducer} from './userReducer';
-import {authReducer} from './authReducer';
 import { vacationReducer } from './vacationReducers';
 import { eventReducer } from './eventReducer';
 
@@ -13,10 +12,13 @@ import {mainVacationDuration_Reducer} from './mainVacationDuration-reducer'
 import {position_Reducer} from './position-reducer'
 import {user_Reducer} from './user-reducer'
 import {vacation_Reducer} from './vacation-reducer'
+import {role_Reducer} from './role-reducer'
+import {statusCandidate_Reducer} from './statusCandidate-reducer'
+import {statusDayOff_Reducer} from './statusDayOff-reducer'
+import {typeDayOff_Reducer} from './typeDayOff-reducer'
 
 export const rootReducer = combineReducers({
     user: userReducer,
-    auth: authReducer,
     vacation: vacationReducer,
     event: eventReducer,
     _auth: auth_Reducer,
@@ -28,6 +30,10 @@ export const rootReducer = combineReducers({
     _position: position_Reducer,
     _user: user_Reducer,
     _vacation: vacation_Reducer,
+    _role: role_Reducer,
+    _statusCandidate: statusCandidate_Reducer,
+    _statusDayOff: statusDayOff_Reducer,
+    _typeDayOff: typeDayOff_Reducer,
 })
 
 export type RootState = ReturnType<typeof rootReducer>

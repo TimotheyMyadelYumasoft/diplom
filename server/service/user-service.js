@@ -48,13 +48,12 @@ class UserService {
             throw ApiError.UnauthorizedError();
         }
         const userData = tokenService.validateRefreshToken(refreshToken);
-
         const tokenFromDb = await tokenService.findToken(refreshToken);
         if (!userData || !tokenFromDb) {
             throw ApiError.UnauthorizedError();
         }
 
-        const user = await UserModel.findById(userData.id);
+        const user = await UserModel.findById(userData._id);
         const userDto = new UserDto(user);
         const tokens = tokenService.generateTokens({...userDto});
 
@@ -91,7 +90,7 @@ class UserService {
     }
     async createEmployeeByCandidateId(_id, password, statusCandidate) {
         const hashPassword = await bcrypt.hash(password, 3);
-        const candidate = await UserModel.findByIdAndUpdate(_id, {password: hashPassword, statusCandidate: statusCandidate, hiredDate: '2023-04-27T08:30:00Z'})
+        const candidate = await UserModel.findByIdAndUpdate(_id, {password: hashPassword, statusCandidate: statusCandidate, hiredDate: new Date})
         console.log(statusCandidate)
         console.log(candidate)
         return await UserModel.findById(_id)

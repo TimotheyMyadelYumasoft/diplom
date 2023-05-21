@@ -12,6 +12,7 @@ export enum UserActionTypes {
 }
 
 export interface IUser {
+    _id: string;
     role: string;
     position: string;
     location: string;
@@ -62,7 +63,7 @@ interface DeleteUserByIdAction {
 
 interface CreateCandidateAction {
     type: UserActionTypes.CREATE_CANDIDATE,
-    payload: IUser
+    payload: IUser[]
 }
 
 interface SetStatusCandidateAction {

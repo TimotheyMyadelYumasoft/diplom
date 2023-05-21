@@ -13,22 +13,24 @@ import CreateUser from "./Forms/CreateUser";
 import {DoorOpen} from 'react-bootstrap-icons'
 
 const Navigation: FC = () => {
-    const {auth, isAuth} = useTypeSelector(state => state.auth)
+    const {auth, isAuth} = useTypeSelector(state => state._auth)
 
-    const [role, setRole] = useState('');
+    const [modalRole, setModalRole] = useState('');
     const [modalCreateCandidateActive, setCreateCandidateModalActive] = useState(false);
     const [modalCreateUserActive, setCreateUserModalActive] = useState(false);
     const navigate = useNavigate();
-    const {logout, refresh} = useAction()
+
+    const {_logout, fetchRoleById} = useAction()
+    const {role} = useTypeSelector(state => state._role)
+
+    useEffect(() => {
+        fetchRoleById(auth.user.role)
+    }, [])
+
     if(!isAuth) {
         navigate('/login')
     }
 
-    useEffect(() => {
-        if(localStorage.getItem('token')){
-            refresh();
-        }
-    }, [])
 
     return (
         <Navbar bg="black" variant="dark">
@@ -43,23 +45,23 @@ const Navigation: FC = () => {
                 <Nav.Link href="/events">Мероприятия</Nav.Link>
                 <Nav.Link href="/candidates">Кандидаты</Nav.Link>
 
-                {auth.user.role=='ADMIN' || auth.user.role=='RECRUITER'
+                {role.name=='ADMIN' || role.name=='RECRUITER'
                 ?
                 <NavDropdown title="Создание пользователей" id="basic-nav-dropdown">
                 <NavDropdown.Item onClick={() => setCreateCandidateModalActive(true)}>Создать кандидата</NavDropdown.Item>
                 <NavDropdown.Item onClick={() => {
                     setCreateUserModalActive(true);
-                    setRole('USER');
+                    setModalRole('USER');
                 }}>
                     Создать пользователя
                 </NavDropdown.Item>
-                {auth.user.role=='ADMIN'
+                {role.name=='ADMIN'
                 ?
                     <>
                         <NavDropdown.Divider />
                         <NavDropdown.Item onClick={() => {
                             setCreateUserModalActive(true);
-                            setRole('RECRUITER');
+                            setModalRole('RECRUITER');
                         }}>
                             Создать рекрутера
                         </NavDropdown.Item>
@@ -74,10 +76,10 @@ const Navigation: FC = () => {
             </Nav>
             </Navbar.Collapse>
         </Container>
-        <Button onClick={() => logout()} className="logout-btn"><DoorOpen /></Button>
+        <Button onClick={() => _logout()} className="logout-btn"><DoorOpen /></Button>
 
         <Modal active={modalCreateCandidateActive} setActive={setCreateCandidateModalActive} modalHeader='Создать кандидата'><CreateCandidate setIsOpen={setCreateCandidateModalActive} /></Modal>
-        <Modal active={modalCreateUserActive} setActive={setCreateUserModalActive} modalHeader='Создать пользователя'><CreateUser setIsOpen={setCreateUserModalActive} role={role}/></Modal>
+        <Modal active={modalCreateUserActive} setActive={setCreateUserModalActive} modalHeader='Создать работника'><CreateUser setIsOpen={setCreateUserModalActive} role={modalRole}/></Modal>
         </Navbar>
     )
 }
