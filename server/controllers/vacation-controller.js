@@ -72,6 +72,7 @@ class VacationController {
     async updateAdditionalDuration(req, res, next) {
         try{
             const {_id, additionalDuration} = req.body;
+            console.log(_id, additionalDuration)
             const vacation = await vacationService.editAdditionalDuration(_id, additionalDuration)
             return res.json(vacation)
         } catch (e) {

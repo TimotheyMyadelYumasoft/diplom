@@ -24,11 +24,6 @@ const CreateUser = ({ setIsOpen, userRole }: Props) => {
     useEffect(() => {
         fetchRoles();
         fetchStatusCandidates();
-        statusCandidates.map(status => {
-            if(status.name == 'Принят'){
-            setStatus(status._id)
-            }
-        });
     }, [])
 
     const currentDay = dayjs();
@@ -46,10 +41,14 @@ const CreateUser = ({ setIsOpen, userRole }: Props) => {
         event.preventDefault();
         roles.map(role => {
             if(role.name == userRole){
-                createUser(Email, Password, role._id, Status, BirthDay.toString(), HiredDate.toString());
-                console.log(userRole)
-                setIsOpen(false);
-                fetchUsers()
+                statusCandidates.map(status => {
+                    if(status.name == 'Принят'){
+                        createUser(Email, Password, role._id, status._id, BirthDay.toString(), HiredDate.toString());
+                        console.log(userRole)
+                        setIsOpen(false);
+                        fetchUsers()
+                    }
+                });
             }
          })
     }

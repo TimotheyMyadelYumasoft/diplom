@@ -16,7 +16,7 @@ type Props = {
     vac: IVacation;
 }
 
-const DayOffItem = ({day, emp, vac}: Props) => {
+const DayOffSickItem = ({day, emp, vac}: Props) => {
 
   const {approveDayOff, deleteDayOffById, fetchDayOffs, fetchTypeDayOffById, fetchStatusDayOffById, fetchRoleById, fetchStatusDayOffs, updateUsedDuration, fetchMainVacationDurationById} = useAction()
   const {auth} = useTypeSelector(state => state._auth)
@@ -67,30 +67,18 @@ const DayOffItem = ({day, emp, vac}: Props) => {
     if(res == yes){
       statusDayOffs.map(statusDO => {
         if(statusDO.name == 'принят') {
-          let usedDurationAdd = getNumberOfDays(day.startDate, day.endDate)
-          let newUsedDuration = vac.usedDuration + usedDurationAdd;
-          let staticMainVacationDuration = mainVacationDuration.daysCount + vac.additionalDuration;
-            if(staticMainVacationDuration > newUsedDuration){
-              approveDayOff(day._id, statusDO._id);
-              updateUsedDuration(vac._id, newUsedDuration)
-              fetchDayOffs();
-            }
-            else {
-              alert(`Недостаточное количество дней отпуска у пользователя. Запрос на ${usedDurationAdd}, имея ${staticMainVacationDuration-vac.usedDuration}`)
-            }
+            approveDayOff(day._id, statusDO._id);
+            fetchDayOffs();
         }
       })
     }
   }
 
   const sureDelete = () => {
-    let usedDurationAdd = getNumberOfDays(day.startDate, day.endDate)
-    let newUsedDuration = vac.usedDuration - usedDurationAdd;
     let res = prompt('Вы точно хотите удалить выходной из системы? Напишите Да, чтобы подтвердить', 'Нет')?.toLowerCase();
     let yes = 'да'.toLowerCase();
     if(res == yes){
       deleteDayOffById(day._id);
-      updateUsedDuration(vac._id, newUsedDuration)
       fetchDayOffs();
     }
     else{
@@ -103,16 +91,17 @@ const DayOffItem = ({day, emp, vac}: Props) => {
       bg={'warning'}
       >
         <Card.Body>
-          <Card.Title>Тип выходного: Отпуск</Card.Title>
+          <Card.Title>Тип выходного: Больничный</Card.Title>
           <Card.Text>
-            Начало отпуска: {day.startDate.slice(0, -13)}
+            Начало больничного: {day.startDate.slice(0, -13)}
           </Card.Text>
           <Card.Text>
-            Конец отпуска: {day.endDate.slice(0, -13)}
+            Конец больничного: {day.endDate.slice(0, -13)}
           </Card.Text>
           <Card.Text>
             Пользователь: {emp.firstname} {emp.secondname}
           </Card.Text>
+
           { role.name =='ADMIN' || role.name=='RECRUITER'
           ?
           <>
@@ -135,4 +124,4 @@ const DayOffItem = ({day, emp, vac}: Props) => {
     )
 }
 
-export default DayOffItem;
+export default DayOffSickItem;

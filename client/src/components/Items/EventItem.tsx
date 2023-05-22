@@ -73,7 +73,6 @@ const EventItem = ({ev, us}: Props) => {
                 :
                     ''
                 }
-                {/* Участники: {ev.participants?.length()} */}
             </Card.Text>
             { _role.role.name =='ADMIN' || _role.role.name=='RECRUITER'
             ?

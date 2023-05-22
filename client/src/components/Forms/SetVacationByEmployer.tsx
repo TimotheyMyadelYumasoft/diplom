@@ -16,13 +16,17 @@ type Props = {
 
 const SetVacationByEmployer = ({ setIsOpen, employerId }: Props) => {
 
-    const {fetchUsers, fetchStatusCandidates, fetchMainVacationDurations, createVacation} = useAction()
+    const {fetchUsers, fetchStatusCandidates, fetchMainVacationDurations, updateVacationMainDurationByUser, updateAdditionalDuration, fetchVacations} = useAction()
     const { auth } = useTypeSelector(state => state._auth);
     const { mainVacationDurations } = useTypeSelector(state => state._mainVacationDuration);
+    const { vacations } = useTypeSelector(state => state._vacation);
+    const [isCheck, setIsCheck] = useState(false)
+    const [AdditionalDuration, setAdditionalDuration] = useState(0)
 
     useEffect(() => {
         fetchStatusCandidates()
         fetchMainVacationDurations()
+        fetchVacations()
     }, [])
 
     const [selectedSortLocation, setSelectedSortLocation] = useState('')
@@ -50,21 +54,34 @@ const SetVacationByEmployer = ({ setIsOpen, employerId }: Props) => {
 
     const handleSubmit = async( event: React.SyntheticEvent) => {
         event.preventDefault();
-        createVacation(employerId, selectedSortLocation)
-        setIsOpen(false)
+        vacations.map( vac => {
+            if(vac.user == employerId){
+                updateAdditionalDuration(vac._id, AdditionalDuration)
+                if(selectedSortLocation){
+                    updateVacationMainDurationByUser(employerId, selectedSortLocation)
+                }
+                setIsOpen(false)
+            }
+        })
     }
 
     return (
         <div>
             <Form onSubmit={handleSubmit}>
 
-                    <MySelect value={selectedSortLocation}
-                            onChange={setSortLocation}
-                            defaultValue='Длительность отпуска'
-                            options={selectLocation}
-                    />
+                <Form.Group style={{marginLeft: '6rem', width: '60%'}} controlId="formBasicAdditionalDurationCandidate">
+                    <Form.Label>Дополнительный отпуск</Form.Label>
+                    <div style={{display: 'flex', msFlexDirection: 'column', flexWrap: 'wrap'}}>
+                        <Form.Control type="number" placeholder="AdditionalDuration" value={AdditionalDuration}  onChange={e => setAdditionalDuration(Number(e.target.value))} required />
+                    </div>
+                </Form.Group>
+                <MySelect value={selectedSortLocation}
+                    onChange={setSortLocation}
+                    defaultValue='Длительность отпуска'
+                    options={selectLocation}
+                />
 
-                <Button variant="primary" type="submit" className="accept-vacation-btn">
+                <Button variant="primary" type="submit" className="accept-vacation-btn" style={{ marginLeft: '6rem'}}>
                     <CheckCircleFill />
                 </Button>
             </Form>

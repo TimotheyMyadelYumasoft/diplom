@@ -5,6 +5,8 @@ import OffCanvas from "../UI/Offcanvas/Offcanvas";
 import { useEffect, useState } from "react";
 import MySelect from '../../components/UI/select/MySelect'
 import DayOffSick from "../Items/DayOffSick";
+import DayOffVacation from "../Items/DayOffVacation";
+import DayOffSickItem from "../Items/DayOffSickItem";
 
 const VacationList = () => {
 
@@ -58,7 +60,7 @@ const VacationList = () => {
                             <>
                                 {statusDayOffs?.map(statusDO =>
                                 <>
-                                    {employer._id == vac.user && day.vacation == vac._id && statusDO.name == 'ожидает' && statusDO._id == day.status && day.type== '6467f2fb7dcf487c3671a0c4' ?  <DayOffItem day={day} emp={employer} vac={vac}/> : ''}
+                                    {employer._id == vac.user && day.vacation == vac._id && statusDO.name == 'ожидает' && statusDO._id == day.status && day.type== '6467f2fb7dcf487c3671a0c4' ?  <DayOffVacation day={day} emp={employer} vac={vac}/> : ''}
                                     {employer._id == vac.user && day.vacation == vac._id && statusDO.name == 'ожидает' && statusDO._id == day.status && day.type== '6467f3017dcf487c3671a0c6'  ?  <DayOffSick day={day} emp={employer} vac={vac}/> : ''}
                                 </>
                                 )}
@@ -89,7 +91,7 @@ const VacationList = () => {
                                 {statusDayOffs?.map(statusDO =>
                                 <>
                                     {employer._id == vac.user && day.vacation == vac._id && statusDO.name == 'принят' && statusDO._id == day.status && day.type== '6467f2fb7dcf487c3671a0c4' ?  <DayOffItem day={day} emp={employer} vac={vac}/> : ''}
-                                    {employer._id == vac.user && day.vacation == vac._id && statusDO.name == 'принят' && statusDO._id == day.status && day.type== '6467f3017dcf487c3671a0c6'  ?  <DayOffSick day={day} emp={employer} vac={vac}/> : ''}
+                                    {employer._id == vac.user && day.vacation == vac._id && statusDO.name == 'принят' && statusDO._id == day.status && day.type== '6467f3017dcf487c3671a0c6'  ?  <DayOffSickItem day={day} emp={employer} vac={vac}/> : ''}
                                 </>
                                 )}
                             </>
@@ -110,7 +112,7 @@ const VacationList = () => {
                                 {statusDayOffs?.map(statusDO =>
                                 <>
                                     {employer._id == vac.user && day.vacation == vac._id && statusDO.name == 'принят' && statusDO._id == day.status && day.type== '6467f2fb7dcf487c3671a0c4' ?  <DayOffItem day={day} emp={employer} vac={vac}/> : ''}
-                                    {employer._id == vac.user && day.vacation == vac._id && statusDO.name == 'принят' && statusDO._id == day.status && day.type== '6467f3017dcf487c3671a0c6'  ?  <DayOffSick day={day} emp={employer} vac={vac}/> : ''}
+                                    {employer._id == vac.user && day.vacation == vac._id && statusDO.name == 'принят' && statusDO._id == day.status && day.type== '6467f3017dcf487c3671a0c6'  ?  <DayOffSickItem day={day} emp={employer} vac={vac}/> : ''}
                                 </>
                                 )}
                             </>

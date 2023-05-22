@@ -10,6 +10,7 @@ import { Card, Form, Button } from 'react-bootstrap'
 import {PlusSquareFill, TrashFill} from 'react-bootstrap-icons'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+import { Divider } from 'antd'
 
 const AdminPage = () => {
     const {auth, isAuth} = useTypeSelector(state => state._auth)
@@ -44,6 +45,30 @@ const AdminPage = () => {
                 else if(statusC.name=='Отклонен' && user.statusCandidate == statusC._id) rejectedCandidates++
             })
         }
+    })
+    let usersPositions =[{
+        "name": '',
+        "count": 0
+    }];
+    positions.map(pos => {
+        let count = 0;
+        users.map(user => {
+            if(pos._id == user.position)
+            count++;
+        })
+        usersPositions.push({"name": pos.name, "count": count})
+    })
+    let usersLocations =[{
+        "city": '',
+        "count": 0
+    }];
+    locations.map(loc => {
+        let count = 0;
+        users.map(user => {
+            if(loc._id == user.location)
+            count++;
+        })
+        usersLocations.push({"city": loc.city, "count": count})
     })
 
     const [Position, setPosition] = useState('')
@@ -148,20 +173,21 @@ const AdminPage = () => {
             <div style={{display: 'flex', msFlexDirection: 'column', flexWrap: 'wrap'}}>
             <Card style={{ width: '110rem', margin: '1rem 0rem 0rem 4rem', paddingBottom: '2rem'}}>
             {/* <Card.Title as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Email: {_user.user?.email}</Card.Title> */}
-            <Card.Text as='h1' style={{textAlign: 'center', margin: '1rem'}}>Количество работников компании {companyMembers}</Card.Text>
+            <Card.Text as='h1' style={{textAlign: 'center', margin: '1rem'}}>Статистика о работниках</Card.Text>
 
                 <div style={{display: 'flex', msFlexDirection: 'column', flexWrap: 'wrap'}}>
                 <Card style={{ width: '30rem', margin: '1rem 0rem 0rem 4rem', paddingBottom: '2rem'}}>
-                    <Card.Title as='h1' style={{textAlign: 'center'}}>Кандидаты</Card.Title>
+                    <Card.Title as='h1' style={{textAlign: 'center'}}>Работники</Card.Title>
+                    <Card.Text as='h4' style={{textAlign: 'center', margin: '1rem'}}>Количество работников компании {companyMembers}</Card.Text>
                     <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Количество всех кандидатов на найм в компанию: {candidates}</Card.Text>
-                    <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Количество кандидатов нанятых в компанию: {invitedCandidates}</Card.Text>
-                    <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Количество кандидатов отказанных в найме в компанию: {rejectedCandidates}</Card.Text>
+                    <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Количество кандидатов, получивших приглашение в компанию: {invitedCandidates}</Card.Text>
+                    <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Количество кандидатов, отказанных в найме в компанию: {rejectedCandidates}</Card.Text>
                 </Card>
                 <Card style={{ width: '30rem', margin: '1rem 0rem 0rem 4rem', paddingBottom: '2rem'}}>
                 <Form onSubmit={handleSubmitPositionForm}>
 
                     <Form.Group className="m-2" controlId="formBasicTitleCreateEvent">
-                        <Form.Label>Должность</Form.Label>
+                        <Form.Label>Должности</Form.Label>
                         <Form.Control type="text" placeholder="Должность" value={Position}  onChange={e => setPosition(e.target.value)} required/>
                     </Form.Group>
 
@@ -195,13 +221,27 @@ const AdminPage = () => {
                         <Button onClick={() => sureDeletePosition()} className="submit-btn"><TrashFill /></Button>
                     </OverlayTrigger>
                     </div>
+                    <div>
+                        {usersPositions.map(us => {
+                            if(us.name!=='')
+                            return <>   <Divider/>
+                                        <Card.Text as='h5' style={{margin: '1rem 0rem 0rem 2rem'}}>Должность: {us.name}</Card.Text>
+                                        <Card.Text as='h5' style={{margin: '1rem 0rem 0rem 2rem'}}>Количество специалистов: {us.count}</Card.Text>
+                                    </>
+                        })}
+                    </div>
+                    {/* {selectPosition.map(pos => {
+                        {
+                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Количество кандидатов отказанных в найме в компанию: {rejectedCandidates}</Card.Text>
+                        }
+                    })} */}
                 </Form>
                 </Card>
                 <Card style={{ width: '30rem', margin: '1rem 0rem 0rem 4rem', paddingBottom: '2rem'}}>
                 <Form onSubmit={handleSubmitLocationForm}>
 
                     <Form.Group className="m-2" controlId="formBasicTitleCreateEvent">
-                        <Form.Label>Город</Form.Label>
+                        <Form.Label>Филиалы</Form.Label>
                         <Form.Control type="text" placeholder="Город" value={Location}  onChange={e => setLocation(e.target.value)} required/>
                     </Form.Group>
 
@@ -234,6 +274,15 @@ const AdminPage = () => {
                             }>
                         <Button onClick={() => sureDeleteLocation()} className="submit-btn"><TrashFill /></Button>
                     </OverlayTrigger>
+                    </div>
+                    <div>
+                        {usersLocations.map(us => {
+                            if(us.city!=='')
+                            return <>   <Divider/>
+                                        <Card.Text as='h5' style={{margin: '1rem 0rem 0rem 2rem'}}>Филиал в: {us.city}</Card.Text>
+                                        <Card.Text as='h5' style={{margin: '1rem 0rem 0rem 2rem'}}>Количетство сотрудников филиала: {us.count}</Card.Text>
+                                    </>
+                        })}
                     </div>
                 </Form>
                 </Card>

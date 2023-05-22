@@ -16,7 +16,7 @@ type Props = {
     vac: IVacation;
 }
 
-const DayOffItem = ({day, emp, vac}: Props) => {
+const DayOffVacation = ({day, emp, vac}: Props) => {
 
   const {approveDayOff, deleteDayOffById, fetchDayOffs, fetchTypeDayOffById, fetchStatusDayOffById, fetchRoleById, fetchStatusDayOffs, updateUsedDuration, fetchMainVacationDurationById} = useAction()
   const {auth} = useTypeSelector(state => state._auth)
@@ -84,13 +84,10 @@ const DayOffItem = ({day, emp, vac}: Props) => {
   }
 
   const sureDelete = () => {
-    let usedDurationAdd = getNumberOfDays(day.startDate, day.endDate)
-    let newUsedDuration = vac.usedDuration - usedDurationAdd;
     let res = prompt('Вы точно хотите удалить выходной из системы? Напишите Да, чтобы подтвердить', 'Нет')?.toLowerCase();
     let yes = 'да'.toLowerCase();
     if(res == yes){
       deleteDayOffById(day._id);
-      updateUsedDuration(vac._id, newUsedDuration)
       fetchDayOffs();
     }
     else{
@@ -113,6 +110,33 @@ const DayOffItem = ({day, emp, vac}: Props) => {
           <Card.Text>
             Пользователь: {emp.firstname} {emp.secondname}
           </Card.Text>
+          {day.status==statusDayOff._id
+          ?
+          <>
+          <OverlayTrigger
+                    key={'top'}
+                    placement={'top'}
+                    overlay={
+                        <Tooltip id={`tooltip-${'top'}`}>
+                            Отклонить выходной
+                        </Tooltip>
+                    }>
+            <Button onClick={() => sureReject()} className="common-btn"><DashCircleFill /></Button>
+          </OverlayTrigger>
+          <OverlayTrigger
+                    key={'top'}
+                    placement={'top'}
+                    overlay={
+                        <Tooltip id={`tooltip-${'top'}`}>
+                            Одобрить выходной
+                        </Tooltip>
+                    }>
+            <Button onClick={() => sureAccept()} className="common-btn"><CheckCircleFill /></Button>
+          </OverlayTrigger>
+          </>:
+          ''
+          }
+
           { role.name =='ADMIN' || role.name=='RECRUITER'
           ?
           <>
@@ -135,4 +159,4 @@ const DayOffItem = ({day, emp, vac}: Props) => {
     )
 }
 
-export default DayOffItem;
+export default DayOffVacation;

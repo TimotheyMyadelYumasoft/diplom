@@ -34,7 +34,14 @@ class VacationService {
     }
 
     async editVacationMainDuration(user, mainDuration) {
-        const vacation = await VacationModel.findOneAndUpdate({user: user}, {mainDuration: mainDuration})
+        let vacation;
+        const isVacationCreated = await VacationModel.findOne({user: user})
+        if(!isVacationCreated){
+            console.log('Not exist')
+            vacation = await VacationModel.create({user: user, mainDuration: mainDuration, additionalDuration: 0, usedDuration: 0})
+            return vacation
+        }
+        vacation = await VacationModel.findOneAndUpdate({user: user}, {mainDuration: mainDuration})
         if(!vacation){
             throw ApiError.BadRequest(`Отпуск не существует`)
         }

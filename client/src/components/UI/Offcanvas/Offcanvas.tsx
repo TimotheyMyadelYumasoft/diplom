@@ -19,7 +19,7 @@ const OffCanvas = ({children, name, ...props}: Props) => {
       <Button variant="primary" onClick={handleShow} className="accept-vacation-btn">
         {name}
       </Button>
-      <Offcanvas show={show} onHide={handleClose} scroll={true} {...props}>
+      <Offcanvas show={show} onHide={handleClose} placement='end' scroll={true} {...props}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>{name}</Offcanvas.Title>
         </Offcanvas.Header>

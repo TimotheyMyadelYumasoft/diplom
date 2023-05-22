@@ -99,7 +99,6 @@ export const updateAdditionalDuration = (_id: string, additionalDuration: number
                 type: VacationActionTypes.UPDATE_ADDITIONAL_DURATION_VACATION,
                 payload: response.data
             })
-            console.log(response)
         } catch (e) {
             console.log(e)
         }

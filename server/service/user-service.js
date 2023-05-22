@@ -17,10 +17,8 @@ class UserService {
         const user = await UserModel.create({email: email, password: hashPassword, role: role, statusCandidate: statusCandidate, birthDay: birthDay, hiredDate: hiredDate})
 
         const userDto = new UserDto(user); // id, email
-        const tokens = tokenService.generateTokens({...userDto});
-        await tokenService.saveToken(userDto.id, tokens.refreshToken);
         const mainVacationDuration = await mainVacationDurationModel.findOne({name: 'Стандартный'})
-        const vacation = await vacationService.create(_id, mainVacationDuration._id)
+        const vacation = await vacationService.create(userDto._id, mainVacationDuration._id)
 
         return user
     }
