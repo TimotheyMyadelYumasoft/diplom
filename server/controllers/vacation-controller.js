@@ -35,6 +35,29 @@ class VacationController {
         }
     }
 
+    async getOneVacationByUser(req, res, next) {
+        try{
+            const { user } = req.params;
+            console.log(user)
+            const vacation = await vacationService.getOneVacationByUser(user)
+            return res.json(vacation)
+        }
+        catch (e) {
+            next(e);
+        }
+    }
+    async editVacationMainDuration(req, res, next) {
+        try{
+            const { user, mainDuration } = req.body;
+            console.log(user)
+            const vacation = await vacationService.editVacationMainDuration(user, mainDuration)
+            return res.json(vacation)
+        }
+        catch (e) {
+            next(e);
+        }
+    }
+
     async del(req, res, next) {
         try{
             const { _id } = req.body;

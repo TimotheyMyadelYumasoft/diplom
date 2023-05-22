@@ -2,6 +2,8 @@ export enum VacationActionTypes {
     CREATE_VACATION='CREATE_VACATION',
     FETCH_VACATION='FETCH_VACATION',
     FETCH_VACATION_BY_ID='FETCH_VACATION_BY_ID',
+    FETCH_VACATION_BY_USER='FETCH_VACATION_BY_USER',
+    UPDATE_VACATION_MAIN_DURATION_BY_USER='UPDATE_VACATION_MAIN_DURATION_BY_USER',
     DELETE_VACATION='DELETE_VACATION',
     UPDATE_ADDITIONAL_DURATION_VACATION='UPDATE_ADDITIONAL_DURATION_VACATION',
     UPDATE_USED_DURATION_VACATION='UPDATE_USED_DURATION_VACATION'
@@ -35,6 +37,15 @@ interface FetchVacationByIdAction {
     payload: IVacation
 }
 
+interface FetchVacationByUserAction {
+    type: VacationActionTypes.FETCH_VACATION_BY_USER,
+    payload: IVacation
+}
+
+interface UpdateVacationMainDurationByUserAction {
+    type: VacationActionTypes.UPDATE_VACATION_MAIN_DURATION_BY_USER,
+    payload: IVacation
+}
 interface UpdateAdditionalDurationVacationAction {
     type: VacationActionTypes.UPDATE_ADDITIONAL_DURATION_VACATION,
     payload: IVacation
@@ -54,6 +65,8 @@ export type VacationAction =
     CreateVacationAction
     |FetchVacationAction
     | FetchVacationByIdAction
+    | FetchVacationByUserAction
     | DeleteVacationAction
+    | UpdateVacationMainDurationByUserAction
     | UpdateAdditionalDurationVacationAction
     | UpdateUsedDurationVacationAction

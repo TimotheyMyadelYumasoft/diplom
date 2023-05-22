@@ -12,6 +12,12 @@ export default class VacationService {
     static async fetchVacationById(_id: string): Promise<AxiosResponse<IVacation>> {
         return $api.get<IVacation>(`/vacation/${_id}`)
     }
+    static async fetchVacationByUser(user: string): Promise<AxiosResponse<IVacation>> {
+        return $api.get<IVacation>(`/vacation/user/${user}`)
+    }
+    static async updateVacationMainDurationByUser(user: string, mainDuration: string): Promise<AxiosResponse<IVacation>> {
+        return $api.post<IVacation>(`/vacation/mdupdate`, {user: user, mainDuration: mainDuration})
+    }
     static async deleteVacationById(_id: string): Promise<AxiosResponse<IVacation>> {
         return $api.post<IVacation>(`/vacation/del`, {_id: _id})
     }

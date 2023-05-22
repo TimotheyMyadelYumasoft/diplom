@@ -8,7 +8,7 @@ import MySelect from "../components/UI/select/MySelect";
 
 const VacationPage = () => {
     const {fetchVacations, fetchVacationByIdAction, fetchUsers, fetchUserByIdAction} = useAction();
-    const {vacation, _auth, user} = useTypeSelector(state => state);
+    const {_auth, user} = useTypeSelector(state => state);
 
 
     useEffect(() => {
@@ -16,10 +16,6 @@ const VacationPage = () => {
         fetchUsers();
         fetchVacations();
     }, [_auth])
-
-    // useEffect(() => {
-    //     fetchVacations()
-    // }, [vacation.vacations])
 
 
     return (

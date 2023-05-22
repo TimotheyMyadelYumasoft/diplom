@@ -39,14 +39,16 @@ const CreateEventForm = ({ setIsOpen, employers }: Props) => {
     const [ Title, setTitle] = useState<string>('')
     const [ Description, setDescription ] = useState<string>('')
     const [ Participants, setParticipants ] = useState<Array<string>>([])
-    const [ DateOfEvent, setDateOfEvent] = useState<string>('')
 
+    const currentDay = dayjs();
+    const currentDayAsDayjs = dayjs(currentDay);
+    const [ EventDay, setEventDay ] = useState(currentDayAsDayjs)
 
     const requiredTrue = true;
     const {createEvent, fetchAllEvents} = useAction()
     const handleSubmitEventForm = async( event: React.SyntheticEvent) => {
         event.preventDefault();
-            createEvent(Participants, Title, Description, DateOfEvent)
+            createEvent(Participants, Title, Description, EventDay.toString())
             setIsOpen(false);
             fetchAllEvents()
     }
@@ -111,7 +113,13 @@ const CreateEventForm = ({ setIsOpen, employers }: Props) => {
                         <div>
                             <br />
                             <span>Дата проведения мероприятия </span>
-                            <DatePicker picker='date' onChange={(value) => setDateOfEvent(dayjs(value).toString())} />
+                            <DatePicker
+                                id="startDate"
+                                name="startDate"
+                                format="DD-MM-YYYY"
+                                value={EventDay}
+                                onChange={(date) => setEventDay(dayjs(date))}
+                            />
                         </div>
                         <br />
                     </form>

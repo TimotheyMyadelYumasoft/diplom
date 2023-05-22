@@ -9,7 +9,7 @@ export enum MainVacationDurationActionTypes {
 export interface IMainVacationDuration {
     _id: string;
     name: string;
-    daysCount: Number;
+    daysCount: number;
 }
 
 export interface MainVacationDurationState {

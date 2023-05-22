@@ -5,7 +5,7 @@ const ApiError = require('../exceptions/api-error')
 class VacationService {
 
     async create(user, mainDuration) {
-        const vacation = await VacationModel.create({user: user, mainDuration: mainDuration})
+        const vacation = await VacationModel.create({user: user, mainDuration: mainDuration, additionalDuration: 0, usedDuration: 0})
         return vacation
     }
 
@@ -24,6 +24,23 @@ class VacationService {
         }
         return vacation
     }
+
+    async getOneVacationByUser(user) {
+        const vacation = await VacationModel.findOne({user: user})
+        if(!vacation){
+            throw ApiError.BadRequest(`Отпуск не существует`)
+        }
+        return vacation
+    }
+
+    async editVacationMainDuration(user, mainDuration) {
+        const vacation = await VacationModel.findOneAndUpdate({user: user}, {mainDuration: mainDuration})
+        if(!vacation){
+            throw ApiError.BadRequest(`Отпуск не существует`)
+        }
+        return vacation
+    }
+
     async deleteOne(_id) {
         const vacation = await VacationModel.findByIdAndDelete(_id)
         if(!vacation){

@@ -21,27 +21,26 @@ const ProfileHeader = () => {
 
     const [modalEditActive, setEditModalActive] = useState(false);
     const [modalEditBirthdayActive, setEditBirthdayModalActive] = useState(false);
-    const {_auth, _user, vacation} = useTypeSelector(state => state)
     const [ DateOfStart, setDateOfStart] = useState<string>('')
     const [ DateOfEnd, setDateOfEnd] = useState<string>('')
     let [ uploadImage, setUploadImage] = useState<any>('')
 
-    const {fetchPositions, fetchLocations, fetchGenders} = useAction()
-    const { _position, _location, _gender} = useTypeSelector(state => state);
+    const {fetchPositions, fetchLocations, fetchGenders, fetchVacations, setVacation, editUserImage, fetchVacationByUser, fetchMainVacationDurations, createDayOff, fetchTypeDayOffs, fetchStatusDayOffs} = useAction()
+    const { _position, _location, _gender, _auth, _user, _vacation, _mainVacationDuration, _typeDayOff, _statusDayOff} = useTypeSelector(state => state);
 
     useEffect(() => {
         fetchPositions()
         fetchLocations()
         fetchGenders()
-    }, [])
-
-    const {fetchVacations} = useAction()
-    useEffect(() => {
         fetchVacations()
+        fetchMainVacationDurations()
+        fetchTypeDayOffs()
+        fetchStatusDayOffs()
     }, [])
 
-    const {setVacation, editUserImage} = useAction()
-
+    useEffect(() => {
+        fetchVacationByUser(_auth.auth.user._id)
+    }, [])
 
     const { handleSubmit, control, watch } = useForm<{
         startDate: string;
@@ -62,7 +61,16 @@ const ProfileHeader = () => {
                 alert('Дата начала идет перед датой конца. Поменяйте значения пожалуйста')
             }
             else{
-                setVacation(dayjs(startDate).toString(), dayjs(endDate).toString(), 'vacation', _auth.auth.user._id)
+                let typeToCreateDayOff: string= '';
+                _typeDayOff.typeDayOffs.map(typeDO => {
+                    if(typeDO.name == 'Отпуск') typeToCreateDayOff=typeDO._id
+                })
+
+                let selectstatus: string = '';
+                _statusDayOff.statusDayOffs.map(statusDO => {
+                    if(statusDO.name == 'ожидает') selectstatus = statusDO._id
+                })
+                createDayOff(_vacation.vacation._id, typeToCreateDayOff, selectstatus, dayjs(startDate).toString(), dayjs(endDate).toString())
 
             }
         }
@@ -80,7 +88,16 @@ const ProfileHeader = () => {
                 alert('Дата начала идет перед датой конца. Поменяйте значения пожалуйста')
             }
             else{
-                setVacation(dayjs(startDate).toString(), dayjs(endDate).toString(), 'sickLeave', _auth.auth.user._id)
+                let typeToCreateDayOff: string= '';
+                _typeDayOff.typeDayOffs.map(typeDO => {
+                    if(typeDO.name == 'Больничный') typeToCreateDayOff=typeDO._id
+                })
+
+                let selectstatus: string = '';
+                _statusDayOff.statusDayOffs.map(statusDO => {
+                    if(statusDO.name == 'ожидает') selectstatus = statusDO._id
+                })
+                createDayOff(_vacation.vacation._id, typeToCreateDayOff, selectstatus, dayjs(startDate).toString(), dayjs(endDate).toString())
             }
         }
     }
@@ -126,6 +143,11 @@ const ProfileHeader = () => {
         fd.append('image', event.target.files[0], event.target.files[0].name)
         editUserImage(fd)
     }
+
+    let selectmvd: any = [];
+    _mainVacationDuration.mainVacationDurations.map(mvDuration => {
+        if(mvDuration._id==_vacation.vacation.mainDuration) selectmvd= mvDuration.daysCount;
+    })
 
     return(
         <div>
@@ -203,10 +225,22 @@ const ProfileHeader = () => {
                     <div>
                         <Card style={{ width: '35rem', margin: '1rem 0rem 0rem 4rem', paddingBottom: '2rem'}}>
                             <Card.Title as='h1' style={{textAlign: 'center', margin: '1rem'}}>Информация об отпусках</Card.Title>
-                            <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Количество отпускных пользователя: 12</Card.Text>
-                            <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Отпускных доступно пользователю: 12</Card.Text>
+                            <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Количество отпускных пользователя: {selectmvd}</Card.Text>
+                            <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Количество дополнительных дней отпуска: {_vacation.vacation?.additionalDuration}</Card.Text>
+                            <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Отпускных использовано пользователем:
+                            {_vacation.vacation.usedDuration
+                            ?
+                            _vacation.vacation.usedDuration
+                            :
+                             selectmvd
+                            }</Card.Text>
                             <ProgressBar style={{margin: '1rem 2rem 0rem 2rem'}}>
-                                <ProgressBar variant='warning' now={50}/>
+                            {_vacation.vacation.usedDuration
+                            ?
+                            <ProgressBar variant='warning' now={_vacation.vacation.usedDuration/(selectmvd+_vacation.vacation.additionalDuration)*100}/>
+                            :
+                            <ProgressBar variant='warning' now={0}/>
+                            }
                             </ProgressBar>
                                     <form
                             onSubmit={handleSubmit((data) => {

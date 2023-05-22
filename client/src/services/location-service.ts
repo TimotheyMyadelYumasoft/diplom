@@ -13,6 +13,6 @@ export default class LocationService {
         return $api.get<ILocation>(`/location/${_id}`)
     }
     static async deleteLocationById(_id: string): Promise<AxiosResponse<ILocation>> {
-        return $api.post<ILocation>(`/location/del`, {_id: _id})
+        return $api.post<ILocation>(`/location/del_one`, {_id: _id})
     }
 }

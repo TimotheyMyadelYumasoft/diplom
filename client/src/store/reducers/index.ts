@@ -26,7 +26,7 @@ export const rootReducer = combineReducers({
     _event: event_Reducer,
     _gender: gender_Reducer,
     _location: location_Reducer,
-    _mainVacationDuration_Reducer: mainVacationDuration_Reducer,
+    _mainVacationDuration: mainVacationDuration_Reducer,
     _position: position_Reducer,
     _user: user_Reducer,
     _vacation: vacation_Reducer,

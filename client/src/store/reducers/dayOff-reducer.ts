@@ -16,7 +16,7 @@ const initialState: DayOffState  = {
 export const dayOff_Reducer = (state: DayOffState = initialState, action: DayOffAction): DayOffState => {
     switch(action.type){
         case DayOffActionTypes.CREATE_DAYOFF:
-            return {...state, dayOffs: [...action.payload]}
+            return {...state, dayOff: action.payload}
         case DayOffActionTypes.APPROVE_DAYOFF:
             return {...state, dayOff: action.payload}
         case DayOffActionTypes.FETCH_DAYOFF:

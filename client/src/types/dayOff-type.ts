@@ -32,7 +32,7 @@ interface FetchDayOffByIdAction {
 
 interface CreateDayOffAction {
     type: DayOffActionTypes.CREATE_DAYOFF,
-    payload: IDayOff[]
+    payload: IDayOff
 }
 
 interface ApproveDayOffAction {

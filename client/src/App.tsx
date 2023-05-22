@@ -11,6 +11,7 @@ import { useAction } from './hooks/useAction';
 import {privateRoutes, publicRoutes} from './router/index'
 import EventPage from './pages/EventPage';
 import CandidatePage from './pages/CandidatePage';
+import AdminPage from './pages/AdminPage';
 
 const App: FC = () => {
   const {isAuth} = useTypeSelector(state => state._auth)
@@ -33,6 +34,7 @@ const App: FC = () => {
           <Route path='/vacation' element={<VacationPage />} />
           <Route path='/events' element={<EventPage />} />
           <Route path='/candidates' element={<CandidatePage />} />
+          <Route path='/admin' element={<AdminPage />} />
     </Routes>
     :
     <Routes>

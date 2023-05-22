@@ -37,6 +37,10 @@ const EditUserFrom = ({ setIsOpen, employerId }: Props) => {
     const {updateThisUser} = useAction()
     const handleSubmit = async( event: React.SyntheticEvent) => {
         event.preventDefault();
+        if(!Position || !Location || !Gender){
+            alert('Выберите необходимые поля')
+            return setIsOpen(false);
+        }
         if(employerId == ''){
             updateThisUser(auth.user._id, Position, Location, Email, FirstName, Surname, Gender, Phonenumber);
             setIsOpen(false);

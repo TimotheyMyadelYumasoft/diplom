@@ -10,10 +10,11 @@ import { useEffect, useState } from "react";
 import { useAction } from "../../hooks/useAction";
 import MySelect from "../UI/select/MySelect";
 import { useTypeSelector } from "../../hooks/useTypedSelector";
-import {PencilSquare , Trash, Trash3Fill, PersonAdd} from 'react-bootstrap-icons'
+import {PencilSquare , Trash, Trash3Fill, PersonAdd, Calendar2CheckFill} from 'react-bootstrap-icons'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import "../../style/Button.css"
+import SetVacationByEmployer from "../Forms/SetVacationByEmployer";
 
 
 type Props = {
@@ -23,8 +24,9 @@ const EmployerItem = ({empl}: Props) => {
 
     const [modalEditActive, setEditModalActive] = useState(false);
     const [modalCreateCandidateActive, setCreateCandidateModalActive] = useState(false);
+    const [modalVacationActive, setVacationModalActive] = useState(false);
     const [selectedSort, setSelectedSort] = useState('')
-    const {deleteUserById, fetchUsers, setStatusCandidate, fetchRoleById, fetchStatusCandidates} = useAction()
+    const {deleteUserById, fetchUsers, setStatusCandidate, fetchRoleById, fetchStatusCandidates, createVacation} = useAction()
     const {auth} = useTypeSelector(state => state._auth)
     const {role} = useTypeSelector(state => state._role)
     const {statusCandidate, statusCandidates} = useTypeSelector(state => state._statusCandidate)
@@ -184,6 +186,16 @@ const EmployerItem = ({empl}: Props) => {
                     }>
                     <Button onClick={() => sureDelete()} className="common-btn"><Trash /></Button>
                 </OverlayTrigger>
+                <OverlayTrigger
+                    key={'bottom'}
+                    placement={'bottom'}
+                    overlay={
+                        <Tooltip id={`tooltip-${'bottom'}`}>
+                        Изменить длительность отпуска
+                        </Tooltip>
+                    }>
+                    <Button onClick={() => {setVacationModalActive(true); fetchUsers();}} className="common-btn"><Calendar2CheckFill /></Button>
+                </OverlayTrigger>
                 {statusCandidates.map(status =>
                         <>
                           {empl.statusCandidate==status._id && status.name == 'Приглашен'
@@ -209,6 +221,7 @@ const EmployerItem = ({empl}: Props) => {
             <td>
                 <Modal active={modalEditActive} setActive={setEditModalActive} modalHeader='Изменить пользователя'><EditUserFrom setIsOpen={setEditModalActive} employerId={empl._id}/></Modal>
                 <Modal active={modalCreateCandidateActive} setActive={setCreateCandidateModalActive} modalHeader='Создать пользователя'><CreateUserByCandidate setIsOpen={setCreateCandidateModalActive} employerId={empl._id}/></Modal>
+                <Modal active={modalVacationActive} setActive={setVacationModalActive} modalHeader='Изменить длительность отпуска'><SetVacationByEmployer setIsOpen={setVacationModalActive} employerId={empl._id}/></Modal>
             </td>
             </Card.Body>
         </Card>

@@ -48,6 +48,7 @@ class PositionController {
     async delOne(req, res, next) {
         try{
             const {_id} = req.body
+            console.log(_id)
             const position = await PositionService.delOne(_id)
             return res.json(position)
         }

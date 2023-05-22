@@ -24,6 +24,11 @@ const CreateUser = ({ setIsOpen, userRole }: Props) => {
     useEffect(() => {
         fetchRoles();
         fetchStatusCandidates();
+        statusCandidates.map(status => {
+            if(status.name == 'Принят'){
+            setStatus(status._id)
+            }
+        });
     }, [])
 
     const currentDay = dayjs();
@@ -37,11 +42,6 @@ const CreateUser = ({ setIsOpen, userRole }: Props) => {
     const requiredTrue = true;
     const {createUser} = useAction()
     const handleSubmit = async( event: React.SyntheticEvent) => {
-
-        statusCandidates.map(status => {
-            if(status.name == 'Принят')
-            setStatus(status._id)
-        })
         console.log(Status)
         event.preventDefault();
         roles.map(role => {

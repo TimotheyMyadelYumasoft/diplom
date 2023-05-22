@@ -13,6 +13,6 @@ export default class PositionService {
         return $api.get<IPosition>(`/position/${_id}`)
     }
     static async deletePositionById(_id: string): Promise<AxiosResponse<IPosition>> {
-        return $api.post<IPosition>(`/position/del`, {_id: _id})
+        return $api.post<IPosition>(`/position/del_one`, {_id: _id})
     }
 }

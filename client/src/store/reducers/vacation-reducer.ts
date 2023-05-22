@@ -24,6 +24,10 @@ export const vacation_Reducer = (state: VacationState = initialState, action: Va
             return {...state, vacations: [ ...action.payload]}
         case VacationActionTypes.FETCH_VACATION_BY_ID:
             return {...state, vacation: action.payload}
+        case VacationActionTypes.FETCH_VACATION_BY_USER:
+            return {...state, vacation: action.payload}
+        case VacationActionTypes.UPDATE_VACATION_MAIN_DURATION_BY_USER:
+            return {...state, vacation: action.payload}
         case VacationActionTypes.DELETE_VACATION:
             return {...state, vacation: action.payload}
 

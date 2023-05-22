@@ -27,7 +27,7 @@ const EventPage = () => {
     useEffect(() => {
         fetchAllEvents()
         fetchUsers()
-        fetchRoleById(auth.user._id)
+        fetchRoleById(auth.user.role)
     }, [auth])
 
     // useEffect(() => {

@@ -1,50 +1,85 @@
 import { Button, Card } from "react-bootstrap";
-import { IVacation } from "../../types/vacation";
-import { IUser } from "../../types/user";
+import {IDayOff} from '../../types/dayOff-type'
+import { IUser } from "../../types/user-type";
 import { useAction } from "../../hooks/useAction";
 import { useTypeSelector } from "../../hooks/useTypedSelector";
 import {Trash, CheckCircleFill, DashCircleFill} from 'react-bootstrap-icons'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import "../../style/Button.css"
+import { useEffect } from "react";
+import { IVacation } from "../../types/vacation-type";
 
 type Props = {
-    vac: IVacation;
+    day: IDayOff;
     emp: IUser;
+    vac: IVacation;
 }
 
-const VacationItem = ({vac, emp}: Props) => {
+const DayOffSick = ({day, emp, vac}: Props) => {
 
-  const {approveVacation, deleteVacation, fetchVacations} = useAction()
+  const {approveDayOff, deleteDayOffById, fetchDayOffs, fetchTypeDayOffById, fetchStatusDayOffById, fetchRoleById, fetchStatusDayOffs, updateUsedDuration, fetchMainVacationDurationById} = useAction()
   const {auth} = useTypeSelector(state => state._auth)
+  const {typeDayOff} = useTypeSelector(state => state._typeDayOff)
+  const {statusDayOff, statusDayOffs} = useTypeSelector(state => state._statusDayOff)
+  const {role} =useTypeSelector(state => state._role)
+  const {mainVacationDuration} = useTypeSelector(state => state._mainVacationDuration)
+
+  useEffect(() => {
+    fetchTypeDayOffById(day.type)
+    fetchStatusDayOffById(day.status)
+    fetchRoleById(auth.user.role)
+    fetchStatusDayOffs()
+    fetchMainVacationDurationById(vac.mainDuration)
+  }, [])
 
   const sureReject = () => {
     let res = prompt('Вы точно хотите отказать в выходном? Напишите Да, чтобы подтвердить', 'Нет')?.toLowerCase();
     let yes = 'да'.toLowerCase();
-    console.log(res)
     if(res == yes){
-      approveVacation(vac._id, 'reject');
-      fetchVacations();
+      statusDayOffs.map(statusDO => {
+        if(statusDO.name == 'отклонен') {
+          approveDayOff(day._id, statusDO._id);
+          fetchDayOffs();
+        }
+      })
     }
   }
+
+  function getNumberOfDays(start: string, end: string) {
+    const date1 = new Date(start);
+    const date2 = new Date(end);
+
+    // One day in milliseconds
+    const oneDay = 1000 * 60 * 60 * 24;
+
+    // Calculating the time difference between two dates
+    const diffInTime = date2.getTime() - date1.getTime();
+
+    // Calculating the no. of days between two dates
+    const diffInDays = Math.round(diffInTime / oneDay);
+    return diffInDays;
+    }
 
   const sureAccept = () => {
     let res = prompt('Вы точно хотите одобрить выходной? Напишите Да, чтобы подтвердить', 'Нет')?.toLowerCase();
     let yes = 'да'.toLowerCase();
-    console.log(res)
     if(res == yes){
-      approveVacation(vac._id, 'approve');
-      fetchVacations();
+      statusDayOffs.map(statusDO => {
+        if(statusDO.name == 'принят') {
+            approveDayOff(day._id, statusDO._id);
+            fetchDayOffs();
+        }
+      })
     }
   }
 
   const sureDelete = () => {
     let res = prompt('Вы точно хотите удалить выходной из системы? Напишите Да, чтобы подтвердить', 'Нет')?.toLowerCase();
     let yes = 'да'.toLowerCase();
-    console.log(res)
     if(res == yes){
-      deleteVacation(vac._id);
-      fetchVacations();
+      deleteDayOffById(day._id);
+      fetchDayOffs();
     }
     else{
       alert('Не был удален')
@@ -56,18 +91,18 @@ const VacationItem = ({vac, emp}: Props) => {
       bg={'warning'}
       >
         <Card.Body>
-          <Card.Title>Тип отпуска: {vac.type == 'vacation' ? 'отпуск' : 'больничный'}</Card.Title>
+          <Card.Title>Тип выходного: Больничный</Card.Title>
           <Card.Text>
-            Начало {vac.type == 'vacation' ? 'отпуска' : 'больничного'}: {vac.startDate.slice(0, -13)}
+            Начало больничного: {day.startDate.slice(0, -13)}
           </Card.Text>
           <Card.Text>
-            Конец {vac.type == 'vacation' ? 'отпуска' : 'больничного'}: {vac.endDate.slice(0, -13)}
+            Конец больничного: {day.endDate.slice(0, -13)}
           </Card.Text>
           <Card.Text>
             Пользователь: {emp.firstname} {emp.secondname}
           </Card.Text>
 
-          {vac.status!=='approve'
+          {statusDayOff.name=='ожидает'
           ?
           <>
           <OverlayTrigger
@@ -94,7 +129,7 @@ const VacationItem = ({vac, emp}: Props) => {
           ''
           }
 
-          { auth.user.role =='ADMIN' || auth.user.role=='RECRUITER'
+          { role.name =='ADMIN' || role.name=='RECRUITER'
           ?
           <>
           <OverlayTrigger
@@ -116,4 +151,4 @@ const VacationItem = ({vac, emp}: Props) => {
     )
 }
 
-export default VacationItem;
+export default DayOffSick;

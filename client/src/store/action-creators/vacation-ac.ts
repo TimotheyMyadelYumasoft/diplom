@@ -31,12 +31,42 @@ export const fetchVacations = () => {
     }
 }
 
-export const fetchVacationByIdAction = (_id: any) => {
+export const fetchVacationById = (_id: any) => {
     return async (dispatch: Dispatch<VacationAction>) => {
         try {
             const response = await VacationService.fetchVacationById(_id)
             dispatch({
                 type: VacationActionTypes.FETCH_VACATION_BY_ID,
+                payload: response.data
+            })
+        }
+        catch(e) {
+            console.log(e)
+        }
+    }
+}
+
+export const fetchVacationByUser = (user: any) => {
+    return async (dispatch: Dispatch<VacationAction>) => {
+        try {
+            const response = await VacationService.fetchVacationByUser(user)
+            dispatch({
+                type: VacationActionTypes.FETCH_VACATION_BY_USER,
+                payload: response.data
+            })
+        }
+        catch(e) {
+            console.log(e)
+        }
+    }
+}
+
+export const updateVacationMainDurationByUser = (user: string, mainDuration: string) => {
+    return async (dispatch: Dispatch<VacationAction>) => {
+        try {
+            const response = await VacationService.updateVacationMainDurationByUser(user, mainDuration)
+            dispatch({
+                type: VacationActionTypes.UPDATE_VACATION_MAIN_DURATION_BY_USER,
                 payload: response.data
             })
         }
@@ -79,7 +109,7 @@ export const updateAdditionalDuration = (_id: string, additionalDuration: number
 export const updateUsedDuration = (_id: string, usedDuration: number) => {
     return async (dispatch: Dispatch<VacationAction>) => {
         try{
-            const response = await VacationService.updateAdditionalDuration(_id, usedDuration)
+            const response = await VacationService.updateUsedDuration(_id, usedDuration)
             dispatch({
                 type: VacationActionTypes.UPDATE_USED_DURATION_VACATION,
                 payload: response.data

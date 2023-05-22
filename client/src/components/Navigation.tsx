@@ -73,6 +73,12 @@ const Navigation: FC = () => {
                 :
                 ''
                 }
+                {role.name=='ADMIN'
+                ?
+                <Nav.Link href="/admin">Страница администратора</Nav.Link>
+                :
+                ''
+                }
             </Nav>
             </Navbar.Collapse>
         </Container>
