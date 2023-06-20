@@ -3,8 +3,8 @@ import {AxiosResponse} from 'axios'
 import { IVacation } from "../types/vacation-type";
 
 export default class VacationService {
-    static async createVacation(user: string, mainDuration: string): Promise<AxiosResponse<IVacation[]>> {
-        return $api.post<IVacation[]>(`/vacation/create`, {user: user, mainDuration: mainDuration})
+    static async createVacation(startDate: string, endDate: string, type: string, employerId: string): Promise<AxiosResponse<IVacation>> {
+        return $api.post<IVacation>(`/vacation/create`, {startDate: startDate, endDate: endDate, type: type, employerId: employerId})
     }
     static async fetchVacations(): Promise<AxiosResponse<IVacation[]>> {
         return $api.get<IVacation[]>(`/vacation`)

@@ -7,9 +7,8 @@ import { useState } from "react";
 
 const FilterVacationFrom = () => {
 
-    const {vacations, vacation} = useTypeSelector(state => state.vacation)
+    const {vacations, vacation} = useTypeSelector(state => state._vacation)
 
-    
 
     return (
         <div>

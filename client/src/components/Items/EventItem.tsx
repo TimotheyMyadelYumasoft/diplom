@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { useAction } from "../../hooks/useAction";
 import { IEvent } from "../../types/event-type";
 import { useTypeSelector } from "../../hooks/useTypedSelector";
-import { fetchAllEvents } from "../../store/action-creators/event";
+import { fetchAllEvents } from "../../store/action-creators/event-ac";
 import {Trash} from 'react-bootstrap-icons'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';

@@ -7,8 +7,8 @@ import FilterVacationFrom from "../components/Forms/FilterVacationFrom";
 import MySelect from "../components/UI/select/MySelect";
 
 const VacationPage = () => {
-    const {fetchVacations, fetchVacationByIdAction, fetchUsers, fetchUserByIdAction} = useAction();
-    const {_auth, user} = useTypeSelector(state => state);
+    const {fetchVacations, fetchVacationById, fetchUsers, fetchUserByIdAction} = useAction();
+    const {_auth, _user} = useTypeSelector(state => state);
 
 
     useEffect(() => {

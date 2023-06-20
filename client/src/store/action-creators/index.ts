@@ -1,7 +1,3 @@
-import * as VacationActionCreator from './vacation'
-import * as EventActionCreator from './event'
-import * as CandidateActionCreator from './candidate'
-
 import * as _AuthActionCreator from './auth-ac'
 import * as _CandidateActionCreator from './candidate-ac'
 import * as _DayOffActionCreator from './dayOff-ac'
@@ -18,10 +14,6 @@ import * as _StatusDayOffActionCreator from './statusDayOff-ac'
 import * as _TypeDayOffActionCreator from './typeDayOff-ac'
 
 export default {
-    ...VacationActionCreator,
-    ...EventActionCreator,
-    ...CandidateActionCreator,
-
     ..._AuthActionCreator,
     ..._CandidateActionCreator,
     ..._DayOffActionCreator,

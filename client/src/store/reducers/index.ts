@@ -1,7 +1,4 @@
 import {combineReducers} from 'redux';
-import {userReducer} from './userReducer';
-import { vacationReducer } from './vacationReducers';
-import { eventReducer } from './eventReducer';
 
 import {auth_Reducer} from './auth-reducer'
 import {dayOff_Reducer} from './dayOff-reducer'
@@ -18,9 +15,6 @@ import {statusDayOff_Reducer} from './statusDayOff-reducer'
 import {typeDayOff_Reducer} from './typeDayOff-reducer'
 
 export const rootReducer = combineReducers({
-    user: userReducer,
-    vacation: vacationReducer,
-    event: eventReducer,
     _auth: auth_Reducer,
     _dayOff: dayOff_Reducer,
     _event: event_Reducer,

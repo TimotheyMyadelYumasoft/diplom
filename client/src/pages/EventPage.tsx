@@ -19,7 +19,7 @@ import '../style/Button.css'
 const EventPage = () => {
     const {auth, isAuth} = useTypeSelector(state => state._auth)
     const {users} = useTypeSelector(state => state._user)
-    const {events} = useTypeSelector(state => state.event)
+    const {events} = useTypeSelector(state => state._event)
     const {fetchAllEvents, fetchUsers, fetchRoleById} = useAction()
     const {role} = useTypeSelector(state => state._role)
 

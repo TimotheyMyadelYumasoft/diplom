@@ -2,14 +2,10 @@ import { Dispatch } from "redux"
 import { VacationAction, VacationActionTypes } from "../../types/vacation-type"
 import VacationService from "../../services/vacation-service"
 
-export const createVacation = (user: string, mainDuration: string) => {
+export const createVacation = (startDate: string, endDate: string, type: string, employerId: string) => {
     return async (dispatch: Dispatch<VacationAction>) => {
         try {
-            const response = await VacationService.createVacation(user, mainDuration)
-            dispatch({
-                type: VacationActionTypes.CREATE_VACATION,
-                payload: response.data
-            })
+            const response = await VacationService.createVacation(startDate, endDate, type ,employerId)
         } catch (e) {
             console.log(e)
         }
@@ -56,6 +52,16 @@ export const fetchVacationByUser = (user: any) => {
             })
         }
         catch(e) {
+            console.log(e)
+        }
+    }
+}
+
+export const setVacation = (startDate: string, endDate: string, type: string, employerId: string) => {
+    return async (dispatch: Dispatch<VacationAction>) => {
+        try {
+            const response = await VacationService.createVacation(startDate, endDate, type ,employerId)
+        } catch (e) {
             console.log(e)
         }
     }
