@@ -131,7 +131,7 @@ const CreateCandidate = ({ setIsOpen }: Props) => {
 
                 <MySelect value={Location}
                 onChange={setLocation}
-                defaultValue='Выбрать город'
+                defaultValue='Выбрать филиал'
                 options={selectLocation}
                 />
 

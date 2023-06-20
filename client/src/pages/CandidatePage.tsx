@@ -18,6 +18,10 @@ const CandidatePage = () => {
         fetchUsers()
     }, [auth])
 
+    useEffect(() => {
+        employers = users;
+    }, [users])
+
     let employers = users;
 
     return(

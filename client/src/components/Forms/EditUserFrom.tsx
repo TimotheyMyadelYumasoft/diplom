@@ -4,6 +4,9 @@ import { useTypeSelector } from '../../hooks/useTypedSelector';
 import { useAction } from '../../hooks/useAction';
 import { useEffect, useState } from "react";
 import MySelect from "../UI/select/MySelect";
+import {PersonAdd} from 'react-bootstrap-icons'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 type Props = {
     setIsOpen: (isOpen: boolean) => void;
@@ -114,13 +117,20 @@ const EditUserFrom = ({ setIsOpen, employerId }: Props) => {
 
                 <MySelect value={Location}
                 onChange={setLocation}
-                defaultValue='Выбрать город'
+                defaultValue='Выбрать филиал'
                 options={selectLocation}
                 />
 
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
+                <OverlayTrigger
+                    key={'bottom'}
+                    placement={'bottom'}
+                    overlay={
+                        <Tooltip id={`tooltip-${'bottom'}`}>
+                        Изменить пользователя
+                        </Tooltip>
+                    }>
+                    <Button type='submit' className="common-btn"><PersonAdd/></Button>
+                </OverlayTrigger>
             </Form>
         </div>
     )

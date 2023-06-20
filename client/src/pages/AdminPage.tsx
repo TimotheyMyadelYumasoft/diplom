@@ -32,6 +32,28 @@ const AdminPage = () => {
         fetchLocations()
     }, [])
 
+    useEffect(() => {
+        positions.map(pos => {
+            let count = 0;
+            users.map(user => {
+                if(pos._id == user.position)
+                count++;
+            })
+            usersPositions.push({"name": pos.name, "count": count})
+        })
+    }, [positions])
+
+    useEffect(() => {
+        locations.map(loc => {
+            let count = 0;
+            users.map(user => {
+                if(loc._id == user.location)
+                count++;
+            })
+            usersLocations.push({"city": loc.city, "count": count})
+        })
+    }, [locations])
+
     let companyMembers = 0;
     let candidates = 0;
     let invitedCandidates = 0;
@@ -187,13 +209,13 @@ const AdminPage = () => {
                 <Form onSubmit={handleSubmitPositionForm}>
 
                     <Form.Group className="m-2" controlId="formBasicTitleCreateEvent">
-                        <Form.Label>Должности</Form.Label>
-                        <Form.Control type="text" placeholder="Должность" value={Position}  onChange={e => setPosition(e.target.value)} required/>
+                        <Form.Label>Вакансии</Form.Label>
+                        <Form.Control type="text" placeholder="Вакансия" value={Position}  onChange={e => setPosition(e.target.value)} required/>
                     </Form.Group>
 
                     <MySelect value={selectedSortPosition}
                             onChange={setSortPosition}
-                            defaultValue='Выбрать должность'
+                            defaultValue='Выбрать вакансию'
                             options={selectPosition}
                     />
 
@@ -203,7 +225,7 @@ const AdminPage = () => {
                             placement={'bottom'}
                             overlay={
                                 <Tooltip id={`tooltip-${'bottom'}`}>
-                                    Добавить должность
+                                    Добавить вакансию
                                 </Tooltip>
                             }>
                             <Button variant="primary" type="submit" className="submit-btn">
@@ -215,7 +237,7 @@ const AdminPage = () => {
                             placement={'bottom'}
                             overlay={
                                 <Tooltip id={`tooltip-${'bottom'}`}>
-                                    Удалить должность
+                                    Удалить вакансию
                                 </Tooltip>
                             }>
                         <Button onClick={() => sureDeletePosition()} className="submit-btn"><TrashFill /></Button>
@@ -225,7 +247,7 @@ const AdminPage = () => {
                         {usersPositions.map(us => {
                             if(us.name!=='')
                             return <>   <Divider/>
-                                        <Card.Text as='h5' style={{margin: '1rem 0rem 0rem 2rem'}}>Должность: {us.name}</Card.Text>
+                                        <Card.Text as='h5' style={{margin: '1rem 0rem 0rem 2rem'}}>Вакансия: {us.name}</Card.Text>
                                         <Card.Text as='h5' style={{margin: '1rem 0rem 0rem 2rem'}}>Количество специалистов: {us.count}</Card.Text>
                                     </>
                         })}
@@ -242,12 +264,12 @@ const AdminPage = () => {
 
                     <Form.Group className="m-2" controlId="formBasicTitleCreateEvent">
                         <Form.Label>Филиалы</Form.Label>
-                        <Form.Control type="text" placeholder="Город" value={Location}  onChange={e => setLocation(e.target.value)} required/>
+                        <Form.Control type="text" placeholder="Филиал" value={Location}  onChange={e => setLocation(e.target.value)} required/>
                     </Form.Group>
 
                     <MySelect value={selectedSortLocation}
                             onChange={setSortLocation}
-                            defaultValue='Выбрать город'
+                            defaultValue='Выбрать филиал'
                             options={selectLocation}
                     />
 
@@ -257,7 +279,7 @@ const AdminPage = () => {
                             placement={'bottom'}
                             overlay={
                                 <Tooltip id={`tooltip-${'bottom'}`}>
-                                    Добавить город
+                                    Добавить филиал
                                 </Tooltip>
                             }>
                             <Button variant="primary" type="submit" className="submit-btn">
@@ -269,7 +291,7 @@ const AdminPage = () => {
                             placement={'bottom'}
                             overlay={
                                 <Tooltip id={`tooltip-${'bottom'}`}>
-                                    Удалить город
+                                    Удалить филиал
                                 </Tooltip>
                             }>
                         <Button onClick={() => sureDeleteLocation()} className="submit-btn"><TrashFill /></Button>

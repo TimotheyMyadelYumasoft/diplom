@@ -13,7 +13,7 @@ import { Card } from 'react-bootstrap';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import { DatePicker, Select, Space, TimePicker } from 'antd';
 import '../../style/Button.css'
-import {Calendar2Heart, CalendarRangeFill} from 'react-bootstrap-icons'
+import {Calendar2Heart, CalendarRangeFill, PersonAdd} from 'react-bootstrap-icons'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
@@ -178,11 +178,21 @@ const ProfileHeader = () => {
                     ref={refImage => uploadImage = refImage}
                     />
                     <div>
-                    <Card style={{ width: '40rem', margin: '1rem 0rem 0rem 4rem', paddingBottom: '2rem'}}>
-                        <Card.Title as='h1' style={{textAlign: 'center', margin: '1rem'}}>{_user.user?.secondname} {_user.user?.firstname}</Card.Title>
+                    <Card style={{ width: '40rem', height: '30rem', margin: '1rem 0rem 0rem 4rem', paddingBottom: '2rem'}}>
+                        <Card.Title as='h1' style={{textAlign: 'center', margin: '1rem'}}>{_user.user?.secondname} {_user.user?.firstname}
+                        <OverlayTrigger
+                    key={'bottom'}
+                    placement={'bottom'}
+                    overlay={
+                        <Tooltip id={`tooltip-${'bottom'}`}>
+                        Изменить пользователя
+                        </Tooltip>
+                    }>
+                    <Button onClick={() => {setEditModalActive(true); fetchVacationByUser(_auth.auth.user._id);}} className="common-btn"><PersonAdd/></Button>
+                </OverlayTrigger></Card.Title>
                         <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Email: {_user.user?.email}</Card.Text>
                         <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Номер телефона: {_user.user?.phoneNumber}</Card.Text>
-                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Город проживания: {_location.locations.map(location =>
+                        <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Филиал: {_location.locations.map(location =>
                             <>
                                 {location._id == _user.user?.location
                                 ?
@@ -223,7 +233,7 @@ const ProfileHeader = () => {
                     </Card>
                     </div>
                     <div>
-                        <Card style={{ width: '35rem', margin: '1rem 0rem 0rem 4rem', paddingBottom: '2rem'}}>
+                        <Card style={{ width: '40rem', height: '30rem', margin: '1rem 0rem 0rem 4rem', paddingBottom: '2rem'}}>
                             <Card.Title as='h1' style={{textAlign: 'center', margin: '1rem'}}>Информация об отпусках</Card.Title>
                             <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Количество отпускных пользователя: {selectmvd}</Card.Text>
                             <Card.Text as='h4' style={{margin: '1rem 0rem 0rem 2rem'}}>Количество дополнительных дней отпуска: {_vacation.vacation?.additionalDuration}</Card.Text>
@@ -289,6 +299,9 @@ const ProfileHeader = () => {
                             </form>
 
                         </Card>
+                    </div>
+                    <div>
+                        <Modal active={modalEditActive} setActive={setEditModalActive} modalHeader='Изменить пользователя'><EditUserFrom setIsOpen={setEditModalActive} employerId={_auth.auth.user._id}/></Modal>
                     </div>
                 </div>
             </div>

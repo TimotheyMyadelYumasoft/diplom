@@ -72,7 +72,7 @@ const CreateEventForm = ({ setIsOpen, employers }: Props) => {
             "value": employer._id,
             "name": employer.firstname+' '+employer.secondname
         };
-        select.push(newItem);
+        if(employer.password)   select.push(newItem);
     })
 
     return (

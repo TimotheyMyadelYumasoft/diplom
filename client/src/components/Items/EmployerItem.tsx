@@ -113,7 +113,7 @@ const EmployerItem = ({empl}: Props) => {
                 Дата найма в компанию: {empl.hiredDate?.split('T')[0]}
             </Card.Text>
             <Card.Text>
-                Страна проживания: { _location.locations.map(location =>
+                Филиал: { _location.locations.map(location =>
                 <>
                     {location._id == empl.location
                     ?
